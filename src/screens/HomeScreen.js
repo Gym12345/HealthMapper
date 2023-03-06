@@ -3,9 +3,12 @@ import {View, Text, Button} from 'react-native';
 
 import styled from 'styled-components';
 
+import HeaderBar from '../components/Global/HeaderBar';
+
 const HomeScreen = props => {
   return (
     <Container>
+      <HeaderBar.centerOnly centerTitle="HomeScreen" />
       <Text>This is a HomeScreen!</Text>
       <ButtonWrapper
         onPress={() => {
@@ -17,9 +20,7 @@ const HomeScreen = props => {
   );
 };
 
-const Container = styled.View`
-  align-items: center;
-`;
+const Container = styled.SafeAreaView``;
 const ButtonWrapper = styled.TouchableOpacity`
   margin-top: 50px;
   background-color: lightgray;

@@ -1,11 +1,21 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {SafeAreaView, Text} from 'react-native';
+
+import HeaderBar from '../components/Global/HeaderBar';
+import Icons from '../aseets/Icons';
 
 const TestScreen = props => {
   return (
-    <View>
+    <SafeAreaView>
+      <HeaderBar.leftCenter
+        leadingAction={() => {
+          props.navigation.goBack();
+        }}
+        leadingIcon={<Icons.arrowBack />}
+        centerTitle="TestScreen"
+      />
       <Text>This is a TestScreen!</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 
