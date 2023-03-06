@@ -15,7 +15,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
+import 'react-native-gesture-handler';
 import {
   Colors,
   DebugInstructions,
@@ -24,11 +24,16 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import {NavigationContainer} from '@react-navigation/native';
+
+import {Navigator} from './src/navigation/Navigator';
+import HomeScreen from './src/screens/HomeScreen';
+
 function App() {
   return (
-    <SafeAreaView>
-      <Text>부위별 병원 추천 서비스</Text>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Navigator />
+    </NavigationContainer>
   );
 }
 
