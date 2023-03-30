@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import HeaderBar from '../components/Global/HeaderBar';
+import HeaderBar from '../../components/Global/HeaderBar';
 
 const LoginScreen = props => {
   const [userId, setUserId] = useState('');
@@ -26,8 +26,7 @@ const LoginScreen = props => {
       //성공 경로
       if (response.data.success == true) {
         console.log('로그인 성공:', response.data.message);
-        alert('로그인 성공');
-        props.navigation.navigate('home', {userId: userId});
+        props.navigation.navigate('test', {userId: userId});
       }
       //실패경로
       else {

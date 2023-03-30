@@ -28,15 +28,23 @@ import {ThemeProvider} from 'styled-components';
 import {mainTheme} from './src/constants/Palette';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
-import {Navigator} from './src/navigation/Navigator';
-import HomeScreen from './src/screens/HomeScreen';
+import {AuthNavigator} from './src/navigation/Navigator';
+import {Provider} from 'react-redux';
+import {configureStore} from '@reduxjs/toolkit';
+
+/* 
+const store = configureStore({
+  rootReducer: auth,
+  middleware: getDefaultMiddleware => getDefaultMiddleware(),
+});
+*/
 
 function App() {
   return (
     <ThemeProvider theme={mainTheme}>
       <SafeAreaProvider>
         <NavigationContainer>
-          <Navigator />
+          <AuthNavigator />
         </NavigationContainer>
       </SafeAreaProvider>
     </ThemeProvider>
