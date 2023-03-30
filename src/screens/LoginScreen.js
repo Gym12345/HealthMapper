@@ -10,10 +10,9 @@ const LoginScreen = props => {
 
   const handleLogin = async () => {
     try {
-      //response는 서버에 데이터 요청을 보내고 받는 응답.
-      //현재 서버에 json데이터 형식으로 데이터를 보내고 있음.
+      // 안드로이드 api test시에는 ip주소 입력.
       const response = await axios.post(
-        'http://localhost:8090/Health/Health1/LoginController',
+        'http://172.30.1.55:8090/Health/Health1/LoginController',
         {
           userId: userId,
           userPw: userPw,
@@ -28,7 +27,7 @@ const LoginScreen = props => {
       if (response.data.success == true) {
         console.log('로그인 성공:', response.data.message);
         alert('로그인 성공');
-        // 로그인 성공 시 home화면으로 진입.
+        props.navigation.navigate('home', {userId: userId});
       }
       //실패경로
       else {

@@ -8,8 +8,14 @@ import HeaderBar from '../components/Global/HeaderBar';
 const HomeScreen = props => {
   return (
     <Container>
-      <HeaderBar.centerOnly centerTitle="HomeScreen" />
-      <Text>This is a HomeScreen!</Text>
+      <HeaderBar.leftCenter
+        leadingAction={() => {
+          props.navigation.goBack();
+        }}
+        leadingIcon={<Icons.arrowBack />}
+        centerTitle="HomeScreen"
+      />
+      <Text>현재 입력한 계정의 ID는 {props.route.params.userId}입니다.</Text>
       <ButtonWrapper
         onPress={() => {
           props.navigation.navigate('test');
