@@ -25,15 +25,17 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import {NavigationContainer} from '@react-navigation/native';
-
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Navigator} from './src/navigation/Navigator';
 import HomeScreen from './src/screens/HomeScreen';
 
 function App() {
   return (
-    <NavigationContainer>
-      <Navigator />
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Navigator />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 

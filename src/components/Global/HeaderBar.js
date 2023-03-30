@@ -119,10 +119,10 @@ export default HeaderBar = {
 };
 
 const HeaderContainer = styled.View`
+  background-color: skyblue;
   flex-direction: row;
   align-items: center;
   height: ${StatusBarHeight + 20}px;
-
   justify-content: space-between;
   padding-horizontal: 16px;
 `;
