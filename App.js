@@ -24,18 +24,22 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {NavigationContainer} from '@react-navigation/native';
+import {ThemeProvider} from 'styled-components';
+import {mainTheme} from './src/constants/Palette';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {NavigationContainer} from '@react-navigation/native';
 import {Navigator} from './src/navigation/Navigator';
 import HomeScreen from './src/screens/HomeScreen';
 
 function App() {
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Navigator />
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <ThemeProvider theme={mainTheme}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Navigator />
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </ThemeProvider>
   );
 }
 

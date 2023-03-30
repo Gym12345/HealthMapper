@@ -119,7 +119,7 @@ export default HeaderBar = {
 };
 
 const HeaderContainer = styled.View`
-  background-color: skyblue;
+  background-color: ${props => props.theme.colors.patientColor};
   flex-direction: row;
   align-items: center;
   height: ${StatusBarHeight + 20}px;

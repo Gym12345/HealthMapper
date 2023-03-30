@@ -4,6 +4,7 @@ import {View, Text, Button} from 'react-native';
 import styled from 'styled-components';
 
 import HeaderBar from '../components/Global/HeaderBar';
+import Palette from '../constants/Palette';
 
 const HomeScreen = props => {
   return (
@@ -35,7 +36,7 @@ const ButtonWrapper = styled.TouchableOpacity`
   border-radius: 50px;
 `;
 const ButtonText = styled.Text`
-  color: black;
+  color: ${props => props.theme.colors.patientColor};
 `;
 
 export default HomeScreen;
