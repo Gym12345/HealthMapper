@@ -2,10 +2,10 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import Icons from '../../aseets/Icons';
 import HeaderBar from '../../components/Global/HeaderBar';
+import Icons from '../../aseets/Icons';
 
-const HomeScreen = props => {
+const SignupScreen = props => {
   return (
     <Container>
       <HeaderBar.leftCenter
@@ -13,19 +13,14 @@ const HomeScreen = props => {
           props.navigation.goBack();
         }}
         leadingIcon={<Icons.arrowBack />}
-        centerTitle="Home(Test)Screen"
+        centerTitle="회원가입"
       />
-      <TestText>
-        현재 입력한 계정의 ID의 이름은 {props.route.params.userId}입니다.
-      </TestText>
+      <IsText>회원가입 스크린</IsText>
     </Container>
   );
 };
 
 const Container = styled.SafeAreaView``;
-const TestText = styled.Text`
-  color: ${props => props.theme.colors.patientColor};
-  font-size: 40px;
-`;
+const IsText = styled.Text``;
 
-export default HomeScreen;
+export default SignupScreen;

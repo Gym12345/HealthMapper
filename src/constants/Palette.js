@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Colors = {
-  patientColor: 'rgb(136,95,255)', // userClass = normalUser에 관한 Color
+  patientColor: 'rgb(136,95,255)', // userClass = normalUser에 관한 Color #885FFF
   hospitalOwnerColor: 'rgb(66,153,174 )', // userClass = hospitalOwner 관한 Color
   alertColor: 'rgb(226,26,58)',
   white: 'rgb(255,255,255)',

@@ -122,7 +122,7 @@ const HeaderContainer = styled.View`
   background-color: ${props => props.theme.colors.patientColor};
   flex-direction: row;
   align-items: center;
-  height: ${StatusBarHeight + 20}px;
+  height: ${StatusBarHeight + 30}px;
   justify-content: space-between;
   padding-horizontal: 16px;
 `;
