@@ -52,6 +52,9 @@ function App() {
 }
 
 const styles = StyleSheet.create({
+  Container: {
+    backgroundColor: '#000000',
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import InputForm from '../../components/Auth/InputForm';
 import DivisionLine from '../../components/Auth/DivisionLine';
 import ClassSelector from '../../components/Auth/ClassSelector';
+import Icons from '../../aseets/Icons';
 
 const {width, height} = Dimensions.get('window');
 
@@ -20,7 +21,7 @@ const LoginScreen = props => {
     try {
       // 안드로이드 api test시에는 ip주소 입력.
       const response = await fetch(
-        'http://localhost:8090/Health/Health1/LoginController',
+        'http://172.30.1.7:8090/Health/Health1/LoginController',
         {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -57,6 +58,8 @@ const LoginScreen = props => {
         <ClassSelector setSelectedValue={setUserClass} />
         <InputForm
           id="id"
+          autoCapitalize="none"
+          isPasswordForm={false}
           placeholder="아이디를 입력해주세요."
           onChangeText={text => {
             setUserId(text);
@@ -65,6 +68,8 @@ const LoginScreen = props => {
         />
         <InputForm
           id="password"
+          autoCapitalize="none"
+          isPasswordForm={true}
           placeholder="비밀번호를 입력해주세요."
           onChangeText={text => {
             setUserPw(text);
@@ -76,15 +81,19 @@ const LoginScreen = props => {
             올바른 아이디와 패스워드 및 용도를 선택해주세요.
           </ErrorText>
         )}
-        <LoginButtonWrapper isLogin={true} onPress={handleLogin}>
+        <LoginButtonWrapper
+          activeOapcity={0.5}
+          isLogin={true}
+          onPress={handleLogin}>
           <LoginButtonText isLogin={true}>로그인</LoginButtonText>
         </LoginButtonWrapper>
 
         <TextButtonContainer>
-          <TextButtonWrapper onPress={() => {}}>
+          <TextButtonWrapper activeOapcity={0.5} onPress={() => {}}>
             <FindIdText>아이디 찾기</FindIdText>
           </TextButtonWrapper>
           <TextButtonWrapper
+            activeOapcity={0.5}
             onPress={() => props.navigation.navigate('signup')}>
             <SignUpText>회원가입</SignUpText>
           </TextButtonWrapper>
@@ -92,7 +101,10 @@ const LoginScreen = props => {
       </AuthContainer>
       <DivisionLine DivisionText="or" />
       <BottomContainer>
-        <LoginButtonWrapper isLogin={false} onPress={() => {}}>
+        <LoginButtonWrapper
+          isLogin={false}
+          activeOapcity={0.5}
+          onPress={() => {}}>
           <LoginButtonText isLogin={false}>
             로그인 없이 서비스 사용하기
           </LoginButtonText>
@@ -108,7 +120,7 @@ const TitleContainer = styled.View`
   margin-top: ${height / 10}px;
 `;
 const TitleText = styled.Text`
-  font-size: 30px;
+  font-size: 35px;
   font-weight: bold;
   color: ${props => props.theme.colors.patientColor};
 `;

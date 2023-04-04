@@ -39,20 +39,18 @@ const ClassSelector = props => {
 const FormWrapper = styled.View`
   margin-top: ${height / 30}px;
   align-items: center;
+  justify-content: space-around;
   flex-direction: row;
-  padding: 10px;
-  height: 40px;
 `;
 const ButtonWrapper = styled.TouchableOpacity`
-  margin-horizontal: 20px;
   flex-direction: row;
   align-items: center;
+  margin-right: 10px;
 `;
 const ButtonText = styled.Text`
   color: ${props =>
     props.active ? props.theme.colors.patientColor : props.theme.colors.gray3};
-  margin-horizontal: 5px;
-  font-size: 17px;
+  font-size: 20px;
 `;
 
 export default ClassSelector;

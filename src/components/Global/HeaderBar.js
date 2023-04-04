@@ -10,7 +10,7 @@ const StatusBarHeight =
 class LeftRightCenter extends Component {
   render() {
     return (
-      <HeaderContainer>
+      <HeaderContainer isPatient={this.props.isPatient}>
         <LeadingIcon onPress={this.props.leadingLeftAction}>
           {this.props.leadingLeftIcon}
         </LeadingIcon>
@@ -27,7 +27,7 @@ class LeftRightCenter extends Component {
 class centerRight extends Component {
   render() {
     return (
-      <HeaderContainer>
+      <HeaderContainer isPatient={this.props.isPatient}>
         <EmptySizedBox />
         <CenterTitle>{this.props.centerTitle}</CenterTitle>
         <ActionIcon onPress={this.props.leadingAction}>
@@ -41,7 +41,7 @@ class centerRight extends Component {
 class centerOnly extends Component {
   render() {
     return (
-      <HeaderContainer>
+      <HeaderContainer isPatient={this.props.isPatient}>
         <EmptySizedBox />
         <CenterTitle>{this.props.centerTitle}</CenterTitle>
         <EmptySizedBox />
@@ -54,7 +54,7 @@ class centerOnly extends Component {
 class ActionOnly extends Component {
   render() {
     return (
-      <HeaderContainer>
+      <HeaderContainer isPatient={this.props.isPatient}>
         <EmptySizedBox />
         <EmptySizedBox />
         <LeadingIcon>{this.props.leadingIcon}</LeadingIcon>
@@ -67,7 +67,7 @@ class ActionOnly extends Component {
 class LeftRight extends Component {
   render() {
     return (
-      <HeaderContainer>
+      <HeaderContainer isPatient={this.props.isPatient}>
         <LeadingIcon>{this.props.leadingIcon}</LeadingIcon>
         <CenterTitle>{this.props.centerTitle}</CenterTitle>
         <LeadingIcon onPress={this.props.leadingAction}>
@@ -82,7 +82,7 @@ class LeftRight extends Component {
 class LeftCenter extends Component {
   render() {
     return (
-      <HeaderContainer>
+      <HeaderContainer isPatient={this.props.isPatient}>
         <LeadingIcon onPress={this.props.leadingAction}>
           {this.props.leadingIcon}
         </LeadingIcon>
@@ -97,7 +97,7 @@ class LeftCenter extends Component {
 class LeadingOnly extends Component {
   render() {
     return (
-      <HeaderContainer>
+      <HeaderContainer isPatient={this.props.isPatient}>
         <LeadingIcon onPress={this.props.leadingAction}>
           {this.props.leadingIcon}
         </LeadingIcon>
@@ -119,12 +119,17 @@ export default HeaderBar = {
 };
 
 const HeaderContainer = styled.View`
-  background-color: ${props => props.theme.colors.patientColor};
+  background-color: ${props => props.theme.colors.gray8};
   flex-direction: row;
   align-items: center;
-  height: ${StatusBarHeight + 30}px;
+  height: ${StatusBarHeight + 20}px;
   justify-content: space-between;
   padding-horizontal: 16px;
+  elevation: 3;
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.1;
+  shadow-radius: 3px;
 `;
 const LeadingIcon = styled.TouchableOpacity`
   height: 24px;
@@ -137,9 +142,8 @@ const EmptySizedBox = styled.View`
 `;
 
 const CenterTitle = styled.Text`
-  font-size: 20px;
-  line-height: 22px;
-  letter-spacing: -0.44px;
+  font-size: 17px;
+  color: ${props => props.theme.colors.gray1};
 `;
 const ActionIcon = styled.TouchableOpacity`
   height: 24px;
