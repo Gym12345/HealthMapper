@@ -51,6 +51,7 @@ const ButtonText = styled.Text`
   color: ${props =>
     props.active ? props.theme.colors.patientColor : props.theme.colors.gray3};
   font-size: 20px;
+  margin-left: 3px;
 `;
 
 export default ClassSelector;

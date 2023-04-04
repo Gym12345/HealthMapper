@@ -114,7 +114,10 @@ const LoginScreen = props => {
   );
 };
 
-const Container = styled.SafeAreaView``;
+const Container = styled.SafeAreaView`
+  background-color: ${props => props.theme.colors.white};
+  flex: 1;
+`;
 const TitleContainer = styled.View`
   align-items: center;
   margin-top: ${height / 10}px;

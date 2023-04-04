@@ -20,7 +20,9 @@ const SignupScreen = props => {
   );
 };
 
-const Container = styled.SafeAreaView``;
+const Container = styled.SafeAreaView`
+  background-color: ${props => props.theme.colors.white};
+`;
 const IsText = styled.Text``;
 
 export default SignupScreen;
