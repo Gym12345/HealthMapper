@@ -3,10 +3,9 @@ import {Alert, Dimensions} from 'react-native';
 
 import styled from 'styled-components';
 
-import InputForm from '../../components/Auth/InputForm';
+import LoginInputForm from '../../components/Auth/LoginInputForm';
 import DivisionLine from '../../components/Auth/DivisionLine';
 import ClassSelector from '../../components/Auth/ClassSelector';
-import Icons from '../../aseets/Icons';
 
 const {width, height} = Dimensions.get('window');
 
@@ -15,13 +14,13 @@ const LoginScreen = props => {
   const [userId, setUserId] = useState('');
   const [userPw, setUserPw] = useState('');
   const [userClass, setUserClass] = useState('');
-  const [isActive, setActive] = useState(true);
+  const [isLoginActive, setLoginActive] = useState(true);
 
-  const handleLogin = useCallback(async () => {
+  const loginHandler = useCallback(async () => {
     try {
       // 안드로이드 api test시에는 ip주소 입력.
       const response = await fetch(
-        'http://172.30.1.7:8090/Health/Health1/LoginController',
+        'http://172.30.1.50:8090/Health/Health1/LoginController',
         {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -41,7 +40,7 @@ const LoginScreen = props => {
         props.navigation.navigate('test', {userId}); //로그인 성공시 testScreen 이동. (추후 redux사용할거기에 파라미터도 삭제해야함. 나중에) )
       } else {
         console.error('로그인 실패:', resData);
-        setActive(false); //로그인 실패시 alertText활성
+        setLoginActive(false); //로그인 실패시 alertText활성
       }
     } catch (error) {
       console.error(error);
@@ -55,28 +54,31 @@ const LoginScreen = props => {
         <TitleText>Health Mapper</TitleText>
       </TitleContainer>
       <AuthContainer>
-        <ClassSelector setSelectedValue={setUserClass} />
-        <InputForm
+        <ClassSelector
+          isSelectedValue={userClass}
+          setSelectedValue={setUserClass}
+        />
+        <LoginInputForm
           id="id"
           autoCapitalize="none"
           isPasswordForm={false}
           placeholder="아이디를 입력해주세요."
           onChangeText={text => {
             setUserId(text);
-            setActive(true); //alertText해제
+            setLoginActive(true); //alertText해제
           }}
         />
-        <InputForm
+        <LoginInputForm
           id="password"
           autoCapitalize="none"
           isPasswordForm={true}
           placeholder="비밀번호를 입력해주세요."
           onChangeText={text => {
             setUserPw(text);
-            setActive(true); //alertText해제
+            setLoginActive(true); //alertText해제
           }}
         />
-        {isActive ? null : (
+        {isLoginActive ? null : (
           <ErrorText>
             올바른 아이디와 패스워드 및 용도를 선택해주세요.
           </ErrorText>
@@ -84,7 +86,7 @@ const LoginScreen = props => {
         <LoginButtonWrapper
           activeOapcity={0.5}
           isLogin={true}
-          onPress={handleLogin}>
+          onPress={loginHandler}>
           <LoginButtonText isLogin={true}>로그인</LoginButtonText>
         </LoginButtonWrapper>
 
@@ -121,6 +123,7 @@ const Container = styled.SafeAreaView`
 const TitleContainer = styled.View`
   align-items: center;
   margin-top: ${height / 10}px;
+  margin-bottom: ${height / 30}px;
 `;
 const TitleText = styled.Text`
   font-size: 35px;
@@ -142,7 +145,7 @@ const LoginButtonWrapper = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   padding: 15px;
-  border-radius: 20px;
+  border-radius: 15px;
   margin-top: ${props => (props.isLogin ? height / 15 : height / 30)}px;
 `;
 const LoginButtonText = styled.Text`

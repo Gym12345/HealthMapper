@@ -1,10 +1,7 @@
 import React, {useState, useCallback} from 'react';
-import {Dimensions} from 'react-native';
 
 import styled from 'styled-components';
 import Icons from '../../aseets/Icons';
-
-const {height} = Dimensions.get('window');
 
 const ClassSelector = props => {
   const [isPatientSelect, setPatientSelect] = useState(false);
@@ -37,7 +34,6 @@ const ClassSelector = props => {
 };
 
 const FormWrapper = styled.View`
-  margin-top: ${height / 30}px;
   align-items: center;
   justify-content: space-around;
   flex-direction: row;

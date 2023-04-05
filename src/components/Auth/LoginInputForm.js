@@ -6,7 +6,7 @@ import Icons from '../../aseets/Icons';
 
 const {width, height} = Dimensions.get('window');
 
-const InputForm = props => {
+const LoginInputForm = props => {
   const [isHide, setHide] = useState(true);
   return (
     <FormWrapper>
@@ -53,4 +53,4 @@ const ButtonWrapper = styled.TouchableOpacity`
   margin-right: 10px;
 `;
 
-export default InputForm;
+export default LoginInputForm;
