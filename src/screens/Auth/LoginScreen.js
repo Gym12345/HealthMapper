@@ -20,7 +20,7 @@ const LoginScreen = props => {
     try {
       // 안드로이드 api test시에는 ip주소 입력.
       const response = await fetch(
-        'http://172.30.1.50:8090/Health/Health1/LoginController',
+        'http://172.30.1.3:8090/Health/Health1/LoginController',
         {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},

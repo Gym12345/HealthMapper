@@ -10,14 +10,22 @@ const ClassSelector = props => {
   const handlePatientSelect = useCallback(() => {
     setPatientSelect(!isPatientSelect);
     setHospitalSelect(false);
-    props.setSelectedValue('normalUser');
-  }, [isPatientSelect, isHospitalSelect]);
+    if (props.isSelectedValue === 'normalUser') {
+      props.setSelectedValue('');
+    } else {
+      props.setSelectedValue('normalUser');
+    }
+  }, [isPatientSelect, isHospitalSelect, props.isSelectedValue]);
 
   const handleHospitalSelect = useCallback(() => {
     setHospitalSelect(!isHospitalSelect);
     setPatientSelect(false);
-    props.setSelectedValue('hospitalOwner');
-  }, [isPatientSelect, isHospitalSelect]);
+    if (props.isSelectedValue === 'hospitalOwner') {
+      props.setSelectedValue('');
+    } else {
+      props.setSelectedValue('hospitalOwner');
+    }
+  }, [isPatientSelect, isHospitalSelect, props.isSelectedValue]);
 
   return (
     <FormWrapper>
