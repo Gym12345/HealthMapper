@@ -43,18 +43,18 @@ const ClassSelector = props => {
 
 const FormWrapper = styled.View`
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   flex-direction: row;
 `;
 const ButtonWrapper = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
-  margin-right: 10px;
+  margin-horizontal: 10px;
 `;
 const ButtonText = styled.Text`
   color: ${props =>
     props.active ? props.theme.colors.patientColor : props.theme.colors.gray3};
-  font-size: 20px;
+  font-size: 18px;
   margin-left: 3px;
 `;
 

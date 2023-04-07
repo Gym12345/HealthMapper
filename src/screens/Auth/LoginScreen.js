@@ -20,7 +20,7 @@ const LoginScreen = props => {
     try {
       // 안드로이드 api test시에는 ip주소 입력.
       const response = await fetch(
-        'http://172.30.1.3:8090/Health/Health1/LoginController',
+        'http://172.30.1.53:8090/Health/Health1/LoginController',
         {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -37,7 +37,8 @@ const LoginScreen = props => {
 
       if (resData.success) {
         console.log('로그인 성공:', resData);
-        props.navigation.navigate('test', {userId}); //로그인 성공시 testScreen 이동. (추후 redux사용할거기에 파라미터도 삭제해야함. 나중에) )
+        //props.navigation.navigate('test', {userId}); //로그인 성공시 testScreen 이동. (추후 redux사용할거기에 파라미터도 삭제해야함. 나중에) )
+        props.navigation.navigate('main', {userId}); //bottomTabNavigator진입.
       } else {
         console.error('로그인 실패:', resData);
         setLoginActive(false); //로그인 실패시 alertText활성
@@ -106,7 +107,9 @@ const LoginScreen = props => {
         <LoginButtonWrapper
           isLogin={false}
           activeOapcity={0.5}
-          onPress={() => {}}>
+          onPress={() => {
+            props.navigation.navigate('main');
+          }}>
           <LoginButtonText isLogin={false}>
             로그인 없이 서비스 사용하기
           </LoginButtonText>

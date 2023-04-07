@@ -26,10 +26,10 @@ const SignupScreen = props => {
       (userClass !== '') &
       (isTotalAgree === true)
     ) {
-      Alert.alert('로그인성공');
+      Alert.alert('회원가입 성공');
       setSignupActive(true);
     } else {
-      Alert.alert('로그인 실패');
+      Alert.alert('회원가입 실패');
       setSignupActive(false);
       console.log(userClass);
     }

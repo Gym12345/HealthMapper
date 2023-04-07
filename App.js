@@ -28,7 +28,7 @@ import {ThemeProvider} from 'styled-components';
 import {mainTheme} from './src/constants/Palette';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
-import {AuthNavigator} from './src/navigation/Navigator';
+import {Navigator} from './src/navigation/Navigator';
 import {Provider} from 'react-redux';
 import {configureStore} from '@reduxjs/toolkit';
 
@@ -44,7 +44,7 @@ function App() {
     <ThemeProvider theme={mainTheme}>
       <SafeAreaProvider>
         <NavigationContainer>
-          <AuthNavigator />
+          <Navigator />
         </NavigationContainer>
       </SafeAreaProvider>
     </ThemeProvider>

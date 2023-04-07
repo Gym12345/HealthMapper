@@ -16,6 +16,11 @@ const TermsScreen = props => {
         leadingIcon={<Icons.arrowBack />}
         centerTitle={props.route.params.value}
       />
+      {props.route.params.value === '개인정보취급방침' ? (
+        <SubText>개인정보취급방침 이용약관에 대해....</SubText>
+      ) : (
+        <SubText>위치기반서비스 이용약관에 대해....</SubText>
+      )}
     </Container>
   );
 };
@@ -23,5 +28,6 @@ const TermsScreen = props => {
 const Container = styled.SafeAreaView`
   background-color: ${props => props.theme.colors.white};
 `;
+const SubText = styled.Text``;
 
 export default TermsScreen;

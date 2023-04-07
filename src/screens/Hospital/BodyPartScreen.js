@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Icons from '../../aseets/Icons';
 import HeaderBar from '../../components/Global/HeaderBar';
 
-const HomeScreen = props => {
+const BodyPartScreen = props => {
   return (
     <Container>
       <HeaderBar.leftCenter
@@ -13,19 +13,16 @@ const HomeScreen = props => {
           props.navigation.goBack();
         }}
         leadingIcon={<Icons.arrowBack />}
-        centerTitle="Home(Test)Screen"
+        centerTitle="신체부위"
       />
-      <TestText>
-        현재 입력한 계정의 ID의 이름은 {props.route.params.userId}입니다.
-      </TestText>
+      <TestText>신체부위 선택 스크린.</TestText>
     </Container>
   );
 };
 
-const Container = styled.SafeAreaView``;
-const TestText = styled.Text`
-  color: ${props => props.theme.colors.patientColor};
-  font-size: 40px;
+const Container = styled.SafeAreaView`
+  background-color: ${props => props.theme.colors.white};
 `;
+const TestText = styled.Text``;
 
-export default HomeScreen;
+export default BodyPartScreen;
