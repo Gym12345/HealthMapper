@@ -4,7 +4,7 @@ import React from 'react';
 import {Text} from 'react-native';
 
 import styled from 'styled-components';
-import HeaderBar from '../../components/Global/HeaderBar';
+import HeaderBar from '../../../components/Global/HeaderBar';
 
 const TermsScreen = props => {
   return (

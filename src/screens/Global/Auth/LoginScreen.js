@@ -1,26 +1,26 @@
-import React, {useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {Alert, Dimensions} from 'react-native';
 
 import styled from 'styled-components';
 
-import LoginInputForm from '../../components/Auth/LoginInputForm';
-import DivisionLine from '../../components/Auth/DivisionLine';
-import ClassSelector from '../../components/Auth/ClassSelector';
+import LoginInputForm from '../../../components/Auth/LoginInputForm';
+import DivisionLine from '../../../components/Auth/DivisionLine';
+import ClassSelector from '../../../components/Auth/ClassSelector';
 
-const {width, height} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 //추후 redux에서 사용
 const LoginScreen = props => {
-  const [userId, setUserId] = useState('');
-  const [userPw, setUserPw] = useState('');
-  const [userClass, setUserClass] = useState('');
+  const [userId, setUserId] = useState(null);
+  const [userPw, setUserPw] = useState(null);
+  const [userClass, setUserClass] = useState(null);
   const [isLoginActive, setLoginActive] = useState(true);
 
   const loginHandler = useCallback(async () => {
     try {
       // 안드로이드 api test시에는 ip주소 입력.
       const response = await fetch(
-        'http://172.30.1.53:8090/Health/Health1/LoginController',
+        'http://172.30.1.55:8090/Health/Health1/LoginController',
         {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -37,8 +37,7 @@ const LoginScreen = props => {
 
       if (resData.success) {
         console.log('로그인 성공:', resData);
-        //props.navigation.navigate('test', {userId}); //로그인 성공시 testScreen 이동. (추후 redux사용할거기에 파라미터도 삭제해야함. 나중에) )
-        props.navigation.navigate('main', {userId}); //bottomTabNavigator진입.
+        props.navigation.navigate('main', {userId, userClass}); //bottomTabNavigator진입.
       } else {
         console.error('로그인 실패:', resData);
         setLoginActive(false); //로그인 실패시 alertText활성
@@ -108,7 +107,7 @@ const LoginScreen = props => {
           isLogin={false}
           activeOapcity={0.5}
           onPress={() => {
-            props.navigation.navigate('main');
+            props.navigation.navigate('main', {userId: null, userClass: null});
           }}>
           <LoginButtonText isLogin={false}>
             로그인 없이 서비스 사용하기

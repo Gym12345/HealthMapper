@@ -1,11 +1,9 @@
 import React from 'react';
 
+import HeaderBar from '../../../components/Global/HeaderBar';
 import styled from 'styled-components';
 
-import Icons from '../../aseets/Icons';
-import HeaderBar from '../../components/Global/HeaderBar';
-
-const BodyPartScreen = props => {
+const UserInfoScreen = props => {
   return (
     <Container>
       <HeaderBar.leftCenter
@@ -13,9 +11,9 @@ const BodyPartScreen = props => {
           props.navigation.goBack();
         }}
         leadingIcon={<Icons.arrowBack />}
-        centerTitle="신체부위"
+        centerTitle="사용자 정보"
       />
-      <TestText>신체부위 선택 스크린.</TestText>
+      <Title>마이 스크린!</Title>
     </Container>
   );
 };
@@ -23,6 +21,6 @@ const BodyPartScreen = props => {
 const Container = styled.SafeAreaView`
   background-color: ${props => props.theme.colors.white};
 `;
-const TestText = styled.Text``;
+const Title = styled.Text``;
 
-export default BodyPartScreen;
+export default UserInfoScreen;

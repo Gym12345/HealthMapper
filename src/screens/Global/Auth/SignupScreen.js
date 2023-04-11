@@ -2,11 +2,11 @@ import React, {useState, useCallback} from 'react';
 import {Dimensions, Alert} from 'react-native';
 
 import styled from 'styled-components';
-import HeaderBar from '../../components/Global/HeaderBar';
-import Icons from '../../aseets/Icons';
-import SignupInputForm from '../../components/Auth/SignupInputForm';
-import ClassSelector from '../../components/Auth/ClassSelector';
-import AgreeTermsButtons from '../../components/Auth/AgreeTermsButtons';
+import HeaderBar from '../../../components/Global/HeaderBar';
+import Icons from '../../../aseets/Icons';
+import SignupInputForm from '../../../components/Auth/SignupInputForm';
+import ClassSelector from '../../../components/Auth/ClassSelector';
+import AgreeTermsButtons from '../../../components/Auth/AgreeTermsButtons';
 
 const {height} = Dimensions.get('window');
 

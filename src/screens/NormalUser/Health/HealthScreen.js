@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HeaderBar from '../../components/Global/HeaderBar';
+import HeaderBar from '../../../components/Global/HeaderBar';
 import styled from 'styled-components';
 
 const HealthScreen = props => {

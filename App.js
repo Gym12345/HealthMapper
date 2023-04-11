@@ -29,13 +29,16 @@ import {mainTheme} from './src/constants/Palette';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {Navigator} from './src/navigation/Navigator';
-import {Provider} from 'react-redux';
-import {configureStore} from '@reduxjs/toolkit';
 
 /* 
+import {configureStore} from '@reduxjs/toolkit';
+import {Provider} from 'react-redux';
+import authReducer from './src/store/slices/authSlice';
+
 const store = configureStore({
-  rootReducer: auth,
-  middleware: getDefaultMiddleware => getDefaultMiddleware(),
+  reducer: {
+    auth: authReducer,
+  },
 });
 */
 

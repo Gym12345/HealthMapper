@@ -1,9 +1,9 @@
 import React from 'react';
 
-import HeaderBar from '../../components/Global/HeaderBar';
+import HeaderBar from '../../../components/Global/HeaderBar';
 import styled from 'styled-components';
 
-const HomeScreen = props => {
+const HospitalRegistScreen = props => {
   return (
     <Container>
       <HeaderBar.leftCenter
@@ -11,20 +11,9 @@ const HomeScreen = props => {
           props.navigation.goBack();
         }}
         leadingIcon={<Icons.arrowBack />}
-        centerTitle="홈 스크린"
+        centerTitle="병원 등록하기"
       />
-      <ButtonWrapper
-        onPress={() => {
-          props.navigation.navigate('bodyPart');
-        }}>
-        <Title>진료과를 선택할래요?</Title>
-      </ButtonWrapper>
-      <ButtonWrapper
-        onPress={() => {
-          props.navigation.navigate('medicalDepartment');
-        }}>
-        <Title>신체부위를 선택할래요?</Title>
-      </ButtonWrapper>
+      <Title>병원 등록 스크린</Title>
     </Container>
   );
 };
@@ -45,4 +34,4 @@ const Title = styled.Text`
   font-size: 20px;
 `;
 
-export default HomeScreen;
+export default HospitalRegistScreen;
