@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Alert} from 'react-native';
+import {useSelector} from 'react-redux';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -98,17 +99,27 @@ const HospitalRegistNavigator = props => {
 };
 
 const MainNavigator = props => {
-  //추후 redux에서 전달 받은 userClass로 바꿔야할듯..?
-  console.log(
-    '로그인 스크린에서 받은 userId : ' + props.route.params.userId,
-    '로그인 스크린에서 받은 userClass : ' + props.route.params.userClass,
-  );
+  // authSlice에서 가져온 userClass
+  const userClass = useSelector(state => state.auth.userClass);
+  console.log(userClass);
+
+  // userClass가 null인경우(비로그인) 사용자에게 로그인 안내 알림창. _건강기록, 내정보와 같은 탭을 눌렀을 때 필요함.
+  const ShowLoginScreen = useCallback(() => {
+    Alert.alert('안내', '로그인이 필요한 서비스입니다.', [
+      {
+        text: '로그인 하러가기',
+        onPress: () => props.navigation.navigate('auth'),
+      },
+      {
+        text: '취소',
+        style: 'cancel',
+        onPress: () => props.navigation.navigate('hospitalHome'),
+      },
+    ]);
+  }, [ShowLoginScreen]);
 
   //비로그인 혹은 로그인한 userClass가 일반사용자(환자)인 경우
-  if (
-    props.route.params.userClass === 'normalUser' ||
-    props.route.params.userClass === 'null'
-  ) {
+  if (userClass === 'normalUser' || userClass === null) {
     return (
       <Tab.Navigator
         initialRouteName="병원 추천받기"
@@ -132,14 +143,7 @@ const MainNavigator = props => {
         />
         <Tab.Screen
           name="건강기록"
-          //(비로그인 로그인화면 안내) --> 지금은 바로 안내되는 문제 & 로그인 스크린 진입 시 바텀탭 보이는 문제 있음
-          //추후 redux관리로 바꾸면 사용자에게 "로그인을 해야합니다. 하시러 가겠어요?" 라는 Alert창 보여주기
-          /*component={
-            props.route.params.userClass === null
-              ? LoginScreen
-              : HealthNavigator
-          }*/
-          component={HealthNavigator}
+          component={userClass === null ? ShowLoginScreen : HealthNavigator}
           options={{
             tabBarIcon: ({focused, color}) => {
               return focused ? (
@@ -152,14 +156,7 @@ const MainNavigator = props => {
         />
         <Tab.Screen
           name="내 정보"
-          //(비로그인 로그인화면 안내) --> 지금은 바로 안내되는 문제 & 로그인 스크린 진입 시 바텀탭 보이는 문제 있음
-          //추후 redux관리로 바꾸면 사용자에게 "로그인을 해야합니다. 하시러 가겠어요?" 라는 Alert창 보여주기
-          /*component={
-            props.route.params.userClass === null
-              ? LoginScreen
-              : UserInfoNavigator
-          }*/
-          component={UserInfoNavigator}
+          component={userClass === null ? ShowLoginScreen : UserInfoNavigator}
           options={{
             tabBarIcon: ({focused, color}) => {
               return focused ? (
@@ -174,7 +171,7 @@ const MainNavigator = props => {
     );
   }
   //로그인한 userClass가 병원소유자인 경우
-  else if (props.route.params.userClass === 'hospitalOwner') {
+  else if (userClass === 'hospitalOwner') {
     return (
       <Tab.Navigator
         initialRouteName="병원 등록하기"

@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {Alert, Dimensions} from 'react-native';
+import {useDispatch} from 'react-redux';
 
+import {login} from '../../../store/slices/authSlice';
 import styled from 'styled-components';
 
 import LoginInputForm from '../../../components/Auth/LoginInputForm';
@@ -9,44 +11,29 @@ import ClassSelector from '../../../components/Auth/ClassSelector';
 
 const {height} = Dimensions.get('window');
 
-//추후 redux에서 사용
 const LoginScreen = props => {
-  const [userId, setUserId] = useState(null);
-  const [userPw, setUserPw] = useState(null);
-  const [userClass, setUserClass] = useState(null);
-  const [isLoginActive, setLoginActive] = useState(true);
+  const [userId, setUserId] = useState('');
+  const [userPw, setUserPw] = useState('');
+  const [userClass, setUserClass] = useState('');
+  const [error, setError] = useState(null);
+
+  const dispatch = useDispatch();
 
   const loginHandler = useCallback(async () => {
+    setError(null);
     try {
-      // 안드로이드 api test시에는 ip주소 입력.
-      const response = await fetch(
-        'http://172.30.1.55:8090/Health/Health1/LoginController',
-        {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            userId,
-            userPw,
-            userClass,
-          }),
-        },
-      );
-
-      const resData = await response.json();
-      console.log(resData); //서버에서 응답받은 data
-
-      if (resData.success) {
-        console.log('로그인 성공:', resData);
-        props.navigation.navigate('main', {userId, userClass}); //bottomTabNavigator진입.
-      } else {
-        console.error('로그인 실패:', resData);
-        setLoginActive(false); //로그인 실패시 alertText활성
-      }
+      await dispatch(login({userId, userPw, userClass})).unwrap(); //login api dispatch_로그인 경로1
+      props.navigation.navigate('main'); // bottomTabNavigator 진입
     } catch (error) {
-      console.error(error);
-      Alert.alert(error);
+      setError(error.message);
     }
-  }, [userId, userPw, userClass]);
+  }, [dispatch, userId, userPw, userClass]);
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('오류가 발생했습니다.', error, [{text: '확인'}]);
+    }
+  }, [error]);
 
   return (
     <Container>
@@ -65,7 +52,6 @@ const LoginScreen = props => {
           placeholder="아이디를 입력해주세요."
           onChangeText={text => {
             setUserId(text);
-            setLoginActive(true); //alertText해제
           }}
         />
         <LoginInputForm
@@ -75,14 +61,8 @@ const LoginScreen = props => {
           placeholder="비밀번호를 입력해주세요."
           onChangeText={text => {
             setUserPw(text);
-            setLoginActive(true); //alertText해제
           }}
         />
-        {isLoginActive ? null : (
-          <ErrorText>
-            올바른 아이디와 패스워드 및 용도를 선택해주세요.
-          </ErrorText>
-        )}
         <LoginButtonWrapper
           activeOapcity={0.5}
           isLogin={true}
@@ -135,11 +115,6 @@ const TitleText = styled.Text`
 const AuthContainer = styled.View`
   padding-horizontal: 30px;
   margin-top: ${height / 40}px;
-`;
-const ErrorText = styled.Text`
-  margin-top: 5px;
-  color: ${props => props.theme.colors.alertColor};
-  font-size: 12px;
 `;
 const LoginButtonWrapper = styled.TouchableOpacity`
   background-color: ${props =>

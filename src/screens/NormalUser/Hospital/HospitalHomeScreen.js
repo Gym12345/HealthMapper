@@ -11,13 +11,13 @@ const HomeScreen = props => {
         onPress={() => {
           props.navigation.navigate('bodyPart');
         }}>
-        <Title>진료과를 선택할래요?</Title>
+        <Title>신체부위를 선택할래요?</Title>
       </ButtonWrapper>
       <ButtonWrapper
         onPress={() => {
           props.navigation.navigate('medicalDepartment');
         }}>
-        <Title>신체부위를 선택할래요?</Title>
+        <Title>진료과를 선택할래요?</Title>
       </ButtonWrapper>
     </Container>
   );
