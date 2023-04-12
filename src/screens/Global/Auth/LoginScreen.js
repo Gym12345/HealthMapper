@@ -2,7 +2,7 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {Alert, Dimensions} from 'react-native';
 import {useDispatch} from 'react-redux';
 
-import {login} from '../../../store/slices/authSlice';
+import {login, guestLogin} from '../../../store/slices/authSlice';
 import styled from 'styled-components';
 
 import LoginInputForm from '../../../components/Auth/LoginInputForm';
@@ -18,6 +18,17 @@ const LoginScreen = props => {
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
+
+  //게스트 로그인 핸들러 현재 동기적으로 동작중.
+  const guestLoginHandler = useCallback(async () => {
+    setError(null);
+    try {
+      await dispatch(guestLogin()); //login api dispatch_로그인 경로1
+      props.navigation.navigate('main'); // bottomTabNavigator 진입
+    } catch (error) {
+      setError(error.message);
+    }
+  }, [dispatch]);
 
   const loginHandler = useCallback(async () => {
     setError(null);
@@ -86,11 +97,9 @@ const LoginScreen = props => {
         <LoginButtonWrapper
           isLogin={false}
           activeOapcity={0.5}
-          onPress={() => {
-            props.navigation.navigate('main', {userId: null, userClass: null});
-          }}>
+          onPress={guestLoginHandler}>
           <LoginButtonText isLogin={false}>
-            로그인 없이 서비스 사용하기
+            로그인 없이 이용하기
           </LoginButtonText>
         </LoginButtonWrapper>
       </BottomContainer>
@@ -118,7 +127,7 @@ const AuthContainer = styled.View`
 `;
 const LoginButtonWrapper = styled.TouchableOpacity`
   background-color: ${props =>
-    props.isLogin ? props.theme.colors.patientColor : props.theme.colors.gray6};
+    props.isLogin ? props.theme.colors.patientColor : props.theme.colors.gray7};
   justify-content: center;
   align-items: center;
   padding: 15px;
@@ -129,7 +138,7 @@ const LoginButtonText = styled.Text`
   font-weight: bold;
   font-size: 20px;
   color: ${props =>
-    props.isLogin ? props.theme.colors.gray6 : props.theme.colors.patientColor};
+    props.isLogin ? props.theme.colors.gray8 : props.theme.colors.patientColor};
 `;
 const TextButtonContainer = styled.View`
   flex-direction: row;

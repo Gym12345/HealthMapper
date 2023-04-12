@@ -43,9 +43,16 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    //로그아웃 기능
     logout(state) {
       state.userId = null;
       state.userClass = null;
+      state.isLoggedIn = false;
+    },
+    //게스트 로그인 기능
+    guestLogin(state) {
+      state.userId = 'guest';
+      state.userClass = 'guest';
       state.isLoggedIn = false;
     },
   },
@@ -72,6 +79,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const {logout} = authSlice.actions;
+export const {logout, guestLogin} = authSlice.actions;
 
 export default authSlice.reducer;

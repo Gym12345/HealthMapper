@@ -118,8 +118,8 @@ const MainNavigator = props => {
     ]);
   }, [ShowLoginScreen]);
 
-  //비로그인 혹은 로그인한 userClass가 일반사용자(환자)인 경우
-  if (userClass === 'normalUser' || userClass === null) {
+  //게스트로그인 혹은 로그인한 userClass가 일반사용자(환자)인 경우
+  if (userClass === 'normalUser' || userClass === 'guest') {
     return (
       <Tab.Navigator
         initialRouteName="병원 추천받기"
@@ -143,7 +143,7 @@ const MainNavigator = props => {
         />
         <Tab.Screen
           name="건강기록"
-          component={userClass === null ? ShowLoginScreen : HealthNavigator}
+          component={userClass === 'guest' ? ShowLoginScreen : HealthNavigator}
           options={{
             tabBarIcon: ({focused, color}) => {
               return focused ? (
@@ -156,7 +156,9 @@ const MainNavigator = props => {
         />
         <Tab.Screen
           name="내 정보"
-          component={userClass === null ? ShowLoginScreen : UserInfoNavigator}
+          component={
+            userClass === 'guest' ? ShowLoginScreen : UserInfoNavigator
+          }
           options={{
             tabBarIcon: ({focused, color}) => {
               return focused ? (
