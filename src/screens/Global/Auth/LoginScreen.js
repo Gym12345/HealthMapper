@@ -19,7 +19,7 @@ const LoginScreen = props => {
 
   const dispatch = useDispatch();
 
-  //게스트 로그인 핸들러 현재 동기적으로 동작중.
+  //게스트 로그인 핸들러
   const guestLoginHandler = useCallback(async () => {
     setError(null);
     try {
@@ -30,6 +30,7 @@ const LoginScreen = props => {
     }
   }, [dispatch]);
 
+  //일반사용자, 병원소유자 로그인 핸들러
   const loginHandler = useCallback(async () => {
     setError(null);
     try {

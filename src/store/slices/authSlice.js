@@ -5,7 +5,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async ({userId, userPw, userClass}) => {
     const response = await fetch(
-      'http://172.30.1.54:8090/Health/Health1/LoginController',
+      'http://172.30.1.75:8090/Health/Health1/LoginController',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -17,8 +17,9 @@ export const login = createAsyncThunk(
       },
     );
 
+    // 서버에서 응답받은 데이터
     const resData = await response.json();
-    console.log(resData); // 서버에서 응답받은 데이터
+    console.log(resData);
 
     if (resData.success) {
       //로그인 성공하면 login.fulfilled진입
@@ -49,7 +50,7 @@ export const authSlice = createSlice({
       state.userClass = null;
       state.isLoggedIn = false;
     },
-    //게스트 로그인 기능
+    //게스트 로그인 기능 _ 게스트는 로그아웃 기능을 이용 못하기에 isLoggedIn변수를 false로 설정 (게스트는 isLoggedIn 상태값 사용안함.)
     guestLogin(state) {
       state.userId = 'guest';
       state.userClass = 'guest';
