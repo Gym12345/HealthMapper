@@ -12,7 +12,6 @@ const LoginInputForm = props => {
     <FormWrapper>
       <InputContainer>
         <InputWrapper
-          value={props.value}
           autoCapitalize={props.autoCapitalize}
           placeholder={props.placeholder}
           // 비밀번호 폼이면 isHide에 따른 암호화 변경, 다른 폼이면 암호화 X.

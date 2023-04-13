@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {Dimensions, Alert} from 'react-native';
 
 import styled from 'styled-components';
@@ -26,14 +26,29 @@ const SignupScreen = props => {
       (userClass !== '') &
       (isTotalAgree === true)
     ) {
-      Alert.alert('회원가입 성공');
+      Alert.alert('안내', '회원가입이 완료되었습니다.', [
+        {
+          text: '확인',
+          onPress: () => props.navigation.navigate('login'),
+        },
+      ]);
       setSignupActive(true);
+      setUserId('');
+      setUserPw('');
+      setUserClass('');
+      setTotalAgree(false);
     } else {
-      Alert.alert('회원가입 실패');
+      Alert.alert('안내', '회원가입이 실패했습니다.', [
+        {
+          text: '확인',
+          style: 'cancel',
+        },
+      ]);
       setSignupActive(false);
       console.log(userClass);
     }
   };
+
   return (
     <Container>
       <HeaderBar.leftCenter
@@ -87,6 +102,7 @@ const SignupScreen = props => {
           }}
           isTotalActive={isTotalAgree}
           setTotalActive={setTotalAgree}
+          signUp={isSignupActive}
         />
         {!isTotalAgree & !isSignupActive ? (
           <ErrorText>전체 동의를 해주세요.</ErrorText>

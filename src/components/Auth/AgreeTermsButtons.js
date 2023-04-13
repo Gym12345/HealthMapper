@@ -18,7 +18,7 @@ const AgreeTermsButtons = props => {
   }, [isPrivacyActive, isLocationActive]);
   useEffect(() => {
     checkAgreement();
-  }, [checkAgreement]);
+  }, [checkAgreement, props.isTotalActive]);
 
   //전체동의 버튼 toggle함수
   const toggleTotalActive = useCallback(() => {
