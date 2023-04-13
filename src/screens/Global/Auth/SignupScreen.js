@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Dimensions, Alert} from 'react-native';
 
 import styled from 'styled-components';
@@ -33,10 +33,6 @@ const SignupScreen = props => {
         },
       ]);
       setSignupActive(true);
-      setUserId('');
-      setUserPw('');
-      setUserClass('');
-      setTotalAgree(false);
     } else {
       Alert.alert('안내', '회원가입이 실패했습니다.', [
         {
