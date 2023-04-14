@@ -7,7 +7,7 @@ import HeaderBar from '../../../components/Global/HeaderBar';
 import styled from 'styled-components';
 
 const HospitalHomeScreen = props => {
-  //뒤로가기 눌를 시 앱종료.
+  //뒤로가기 눌를 시 앱종료_안드로이드
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {

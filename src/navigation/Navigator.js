@@ -215,6 +215,7 @@ const MainNavigator = props => {
 export const Navigator = props => {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   return (
+    //state.auth.isLoggedIn을 통해 사용자 인증.
     <Stack.Navigator
       initialRouteName={isLoggedIn ? 'main' : 'auth'}
       screenOptions={{headerShown: false}}>

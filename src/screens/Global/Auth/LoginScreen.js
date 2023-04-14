@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {Alert, Dimensions} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import {login, guestLogin} from '../../../store/slices/authSlice';
 import styled from 'styled-components';
@@ -16,7 +16,6 @@ const LoginScreen = props => {
   const [userPw, setUserPw] = useState('');
   const [userClass, setUserClass] = useState('');
   const [error, setError] = useState(null);
-  const updateId = useSelector(state => state.auth.userId);
 
   const dispatch = useDispatch();
 
@@ -88,11 +87,7 @@ const LoginScreen = props => {
         </LoginButtonWrapper>
 
         <TextButtonContainer>
-          <TextButtonWrapper
-            activeOapcity={0.5}
-            onPress={() => {
-              console.log(updateId);
-            }}>
+          <TextButtonWrapper activeOapcity={0.5} onPress={() => {}}>
             <FindIdText>아이디 찾기</FindIdText>
           </TextButtonWrapper>
           <TextButtonWrapper
