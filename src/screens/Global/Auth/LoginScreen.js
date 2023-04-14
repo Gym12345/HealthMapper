@@ -32,6 +32,7 @@ const LoginScreen = props => {
 
   //일반사용자, 병원소유자 로그인 핸들러
   const loginHandler = useCallback(async () => {
+    setError(null);
     try {
       await dispatch(login({userId, userPw, userClass})).unwrap(); //login api dispatch_로그인 경로1
       props.navigation.navigate('main'); // bottomTabNavigator 진입

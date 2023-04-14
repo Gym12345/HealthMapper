@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Alert, BackHandler} from 'react-native';
 import {useSelector} from 'react-redux';
 
@@ -108,12 +108,7 @@ const MainNavigator = props => {
   const ShowLoginScreen = useCallback(() => {
     Alert.alert('안내', '로그인이 필요한 서비스입니다.', [
       {
-        text: '취소',
-        style: 'cancel',
-        onPress: () => props.navigation.navigate('hospitalHome'),
-      },
-      {
-        text: '로그인 하러가기',
+        text: '확인',
         onPress: () => props.navigation.navigate('auth'),
       },
     ]);
