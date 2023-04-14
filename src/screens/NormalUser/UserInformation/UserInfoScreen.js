@@ -17,7 +17,7 @@ const UserInfoScreen = props => {
         {
           text: '확인',
           onPress: () => {
-            props.navigation.navigate('login');
+            props.navigation.navigate('auth');
           },
         },
       ]);

@@ -1,12 +1,28 @@
-import React from 'react';
+import React, {useCallback} from 'react';
+import {BackHandler} from 'react-native';
+
+import {useFocusEffect} from '@react-navigation/native';
 
 import HeaderBar from '../../../components/Global/HeaderBar';
 import styled from 'styled-components';
 
 const HospitalRegistHomeScreen = props => {
+  //뒤로가기 눌를 시 앱종료.
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        BackHandler.exitApp();
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, []),
+  );
   return (
     <Container>
-      <HeaderBar.centerOnly centerTitle="홈 스크린" />
+      <HeaderBar.centerOnly centerTitle="병원 등록하기" />
       <ButtonWrapper
         onPress={() => {
           props.navigation.navigate('hospitalRegist');

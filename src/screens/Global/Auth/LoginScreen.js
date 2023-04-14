@@ -16,7 +16,7 @@ const LoginScreen = props => {
   const [userPw, setUserPw] = useState('');
   const [userClass, setUserClass] = useState('');
   const [error, setError] = useState(null);
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const updateId = useSelector(state => state.auth.userId);
 
   const dispatch = useDispatch();
 
@@ -91,13 +91,7 @@ const LoginScreen = props => {
           <TextButtonWrapper
             activeOapcity={0.5}
             onPress={() => {
-              setUserPw('');
-              console.log(
-                '아이디: ' + userId,
-                '비번: ' + userPw,
-                '권한: ' + userClass,
-                '로그인상태: ' + isLoggedIn,
-              );
+              console.log(updateId);
             }}>
             <FindIdText>아이디 찾기</FindIdText>
           </TextButtonWrapper>

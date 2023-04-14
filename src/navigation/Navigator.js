@@ -1,9 +1,10 @@
 import React, {useCallback} from 'react';
-import {Alert} from 'react-native';
+import {Alert, BackHandler} from 'react-native';
 import {useSelector} from 'react-redux';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {useFocusEffect} from '@react-navigation/native';
 import Icons from '../aseets/Icons';
 
 //AuthNavigator
@@ -67,7 +68,7 @@ const UserInfoNavigator = props => {
   );
 };
 
-//HospitalNavigator_NormalUser
+//HospitalNavigator_NormalUser & Guest
 const HospitalNavigator = props => {
   return (
     <Stack.Navigator
@@ -102,7 +103,6 @@ const MainNavigator = props => {
   // authSlice에서 가져온 userClass
   const userClass = useSelector(state => state.auth.userClass);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-  console.log(userClass);
 
   // 게스트 사용자에게 로그인 안내 알림창. _건강기록, 내정보와 같은 탭을 눌렀을 때 필요함.
   const ShowLoginScreen = useCallback(() => {
@@ -172,7 +172,7 @@ const MainNavigator = props => {
     );
   }
   //로그인한 userClass가 병원소유자인 경우
-  else if (userClass === 'hospitalOwner') {
+  else if (isLoggedIn & (userClass === 'hospitalOwner')) {
     return (
       <Tab.Navigator
         initialRouteName="병원 등록하기"
@@ -213,9 +213,10 @@ const MainNavigator = props => {
 };
 
 export const Navigator = props => {
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   return (
     <Stack.Navigator
-      initialRouteName="auth"
+      initialRouteName={isLoggedIn ? 'main' : 'auth'}
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="auth" component={AuthStackNavigator} />
       <Stack.Screen name="main" component={MainNavigator} />
