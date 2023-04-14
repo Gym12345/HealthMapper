@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const HomeScreen = props => {
   return (
     <Container>
-      <HeaderBar.centerOnly centerTitle="홈 스크린" />
+      <HeaderBar.centerOnly centerTitle="병원 추천받기" />
       <ButtonWrapper
         onPress={() => {
           props.navigation.navigate('bodyPart');

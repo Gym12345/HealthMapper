@@ -101,19 +101,20 @@ const HospitalRegistNavigator = props => {
 const MainNavigator = props => {
   // authSlice에서 가져온 userClass
   const userClass = useSelector(state => state.auth.userClass);
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   console.log(userClass);
 
-  // userClass가 null인경우(비로그인) 사용자에게 로그인 안내 알림창. _건강기록, 내정보와 같은 탭을 눌렀을 때 필요함.
+  // 게스트 사용자에게 로그인 안내 알림창. _건강기록, 내정보와 같은 탭을 눌렀을 때 필요함.
   const ShowLoginScreen = useCallback(() => {
     Alert.alert('안내', '로그인이 필요한 서비스입니다.', [
-      {
-        text: '로그인 하러가기',
-        onPress: () => props.navigation.navigate('auth'),
-      },
       {
         text: '취소',
         style: 'cancel',
         onPress: () => props.navigation.navigate('hospitalHome'),
+      },
+      {
+        text: '로그인 하러가기',
+        onPress: () => props.navigation.navigate('auth'),
       },
     ]);
   }, [ShowLoginScreen]);
@@ -143,7 +144,7 @@ const MainNavigator = props => {
         />
         <Tab.Screen
           name="건강기록"
-          component={userClass === 'guest' ? ShowLoginScreen : HealthNavigator}
+          component={isLoggedIn ? HealthNavigator : ShowLoginScreen}
           options={{
             tabBarIcon: ({focused, color}) => {
               return focused ? (
@@ -156,9 +157,7 @@ const MainNavigator = props => {
         />
         <Tab.Screen
           name="내 정보"
-          component={
-            userClass === 'guest' ? ShowLoginScreen : UserInfoNavigator
-          }
+          component={isLoggedIn ? UserInfoNavigator : ShowLoginScreen}
           options={{
             tabBarIcon: ({focused, color}) => {
               return focused ? (

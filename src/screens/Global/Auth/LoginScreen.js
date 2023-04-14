@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {Alert, Dimensions} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {login, guestLogin} from '../../../store/slices/authSlice';
 import styled from 'styled-components';
@@ -16,6 +16,7 @@ const LoginScreen = props => {
   const [userPw, setUserPw] = useState('');
   const [userClass, setUserClass] = useState('');
   const [error, setError] = useState(null);
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
   const dispatch = useDispatch();
 
@@ -32,10 +33,12 @@ const LoginScreen = props => {
 
   //일반사용자, 병원소유자 로그인 핸들러
   const loginHandler = useCallback(async () => {
-    setError(null);
     try {
       await dispatch(login({userId, userPw, userClass})).unwrap(); //login api dispatch_로그인 경로1
       props.navigation.navigate('main'); // bottomTabNavigator 진입
+      setUserClass('');
+      setUserId('');
+      setUserPw('');
     } catch (error) {
       setError(error.message);
     }
@@ -43,7 +46,7 @@ const LoginScreen = props => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('오류가 발생했습니다.', error, [{text: '확인'}]);
+      Alert.alert('로그인 실패', error, [{text: '확인'}]);
     }
   }, [error]);
 
@@ -59,6 +62,7 @@ const LoginScreen = props => {
         />
         <LoginInputForm
           id="id"
+          value={userId}
           autoCapitalize="none"
           isPasswordForm={false}
           placeholder="아이디를 입력해주세요."
@@ -68,6 +72,7 @@ const LoginScreen = props => {
         />
         <LoginInputForm
           id="password"
+          value={userPw}
           autoCapitalize="none"
           isPasswordForm={true}
           placeholder="비밀번호를 입력해주세요."
@@ -83,7 +88,17 @@ const LoginScreen = props => {
         </LoginButtonWrapper>
 
         <TextButtonContainer>
-          <TextButtonWrapper activeOapcity={0.5} onPress={() => {}}>
+          <TextButtonWrapper
+            activeOapcity={0.5}
+            onPress={() => {
+              setUserPw('');
+              console.log(
+                '아이디: ' + userId,
+                '비번: ' + userPw,
+                '권한: ' + userClass,
+                '로그인상태: ' + isLoggedIn,
+              );
+            }}>
             <FindIdText>아이디 찾기</FindIdText>
           </TextButtonWrapper>
           <TextButtonWrapper

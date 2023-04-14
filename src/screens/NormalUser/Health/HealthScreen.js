@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const HealthScreen = props => {
   return (
     <Container>
-      <HeaderBar.centerOnly centerTitle="건강기록스크린" />
+      <HeaderBar.centerOnly centerTitle="건강 기록" />
       <Title>This is HealthScreen!</Title>
     </Container>
   );

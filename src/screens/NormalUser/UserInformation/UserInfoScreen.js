@@ -16,7 +16,9 @@ const UserInfoScreen = props => {
       Alert.alert('안내', '로그아웃이 완료되었습니다.', [
         {
           text: '확인',
-          onPress: () => props.navigation.navigate('login'),
+          onPress: () => {
+            props.navigation.navigate('login');
+          },
         },
       ]);
     } catch (error) {

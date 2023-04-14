@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 import styled from 'styled-components';
 import Icons from '../../aseets/Icons';
@@ -26,6 +26,13 @@ const ClassSelector = props => {
       props.setSelectedValue('hospitalOwner');
     }
   }, [isPatientSelect, isHospitalSelect, props.isSelectedValue]);
+
+  useEffect(() => {
+    if (props.isSelectedValue === '') {
+      setPatientSelect('');
+      setHospitalSelect('');
+    }
+  }, [props.isSelectedValue]);
 
   return (
     <FormWrapper>
