@@ -27,9 +27,8 @@ const SignupScreen = props => {
   //회원가입 핸들러
   const signupHandler = useCallback(async () => {
     setError(null);
+    // 클라이언트에서 1차 검증
     if (!isTotalAgree || !userClass || !userId || !userPw || !userName) {
-      // 클라이언트에서 1차 검증
-      console.log('전체동의 오류');
       setSignupActive(false);
       return Alert.alert('회원가입 실패', '경고문구를 확인해주시기 바랍니다', [
         {
@@ -51,7 +50,6 @@ const SignupScreen = props => {
   }, [dispatch, isTotalAgree, userId, userPw, userName, userClass]);
 
   useEffect(() => {
-    console.log('입력 폼 오류');
     if (error) {
       Alert.alert('회원가입 실패', error, [
         {
@@ -71,72 +69,74 @@ const SignupScreen = props => {
         leadingIcon={<Icons.arrowBack />}
         centerTitle="회원가입"
       />
-      <AuthWrapper>
-        <ClassSelectForm>
-          <FormTitle>권한</FormTitle>
-          <ClassSelector
-            isSelectedValue={userClass}
-            setSelectedValue={setUserClass}
+      <ScrollWrapper>
+        <AuthWrapper>
+          <ClassSelectForm>
+            <FormTitle>권한</FormTitle>
+            <ClassSelector
+              isSelectedValue={userClass}
+              setSelectedValue={setUserClass}
+            />
+          </ClassSelectForm>
+          {(userClass === '') & !isSignupActive ? (
+            <ErrorText>권한을 선택해주세요.</ErrorText>
+          ) : null}
+          <SignupInputForm
+            active={isSignupActive || userId}
+            formTitle="아이디"
+            autoCapitalize="none"
+            placeholder="아이디를 입력해주세요."
+            isPasswordForm={false}
+            onChangeText={text => {
+              setUserId(text);
+            }}
           />
-        </ClassSelectForm>
-        {(userClass === '') & !isSignupActive ? (
-          <ErrorText>권한을 선택해주세요.</ErrorText>
-        ) : null}
-        <SignupInputForm
-          active={isSignupActive || userId}
-          formTitle="아이디"
-          autoCapitalize="none"
-          placeholder="아이디를 입력해주세요."
-          isPasswordForm={false}
-          onChangeText={text => {
-            setUserId(text);
-          }}
-        />
-        {(userId === '') & !isSignupActive ? (
-          <ErrorText>올바른 아이디를 입력해주세요.</ErrorText>
-        ) : null}
-        <SignupInputForm
-          active={isSignupActive || userPw}
-          formTitle="패스워드"
-          autoCapitalize="none"
-          placeholder="비밀번호를 입력해주세요."
-          isPasswordForm={true}
-          onChangeText={text => {
-            setUserPw(text);
-          }}
-        />
-        {(userPw === '') & !isSignupActive ? (
-          <ErrorText>올바른 비밀번호를 입력해주세요.</ErrorText>
-        ) : null}
-        <SignupInputForm
-          active={isSignupActive || userName}
-          formTitle="닉네임"
-          autoCapitalize="none"
-          placeholder="닉네임을 입력해주세요."
-          isPasswordForm={false}
-          onChangeText={text => {
-            setUserName(text);
-          }}
-        />
-        {(userName === '') & !isSignupActive ? (
-          <ErrorText>올바른 닉네임을 입력해주세요.</ErrorText>
-        ) : null}
-        <AgreeTermsButtons
-          onPressTextButton={value => {
-            props.navigation.navigate('terms', {value});
-            console.log(value);
-          }}
-          isTotalActive={isTotalAgree}
-          setTotalActive={setTotalAgree}
-          signUp={isSignupActive}
-        />
-        {!isTotalAgree & !isSignupActive ? (
-          <ErrorText>전체 동의를 해주세요.</ErrorText>
-        ) : null}
-        <SignupButtonWrapper activeOapcity={0.5} onPress={signupHandler}>
-          <SignupButtonText>회원가입</SignupButtonText>
-        </SignupButtonWrapper>
-      </AuthWrapper>
+          {(userId === '') & !isSignupActive ? (
+            <ErrorText>올바른 아이디를 입력해주세요.</ErrorText>
+          ) : null}
+          <SignupInputForm
+            active={isSignupActive || userPw}
+            formTitle="패스워드"
+            autoCapitalize="none"
+            placeholder="비밀번호를 입력해주세요."
+            isPasswordForm={true}
+            onChangeText={text => {
+              setUserPw(text);
+            }}
+          />
+          {(userPw === '') & !isSignupActive ? (
+            <ErrorText>올바른 비밀번호를 입력해주세요.</ErrorText>
+          ) : null}
+          <SignupInputForm
+            active={isSignupActive || userName}
+            formTitle="닉네임"
+            autoCapitalize="none"
+            placeholder="닉네임을 입력해주세요."
+            isPasswordForm={false}
+            onChangeText={text => {
+              setUserName(text);
+            }}
+          />
+          {(userName === '') & !isSignupActive ? (
+            <ErrorText>올바른 닉네임을 입력해주세요.</ErrorText>
+          ) : null}
+          <AgreeTermsButtons
+            onPressTextButton={value => {
+              props.navigation.navigate('terms', {value});
+              console.log(value);
+            }}
+            isTotalActive={isTotalAgree}
+            setTotalActive={setTotalAgree}
+            signUp={isSignupActive}
+          />
+          {!isTotalAgree & !isSignupActive ? (
+            <ErrorText>전체 동의를 해주세요.</ErrorText>
+          ) : null}
+          <SignupButtonWrapper activeOapcity={0.5} onPress={signupHandler}>
+            <SignupButtonText>회원가입</SignupButtonText>
+          </SignupButtonWrapper>
+        </AuthWrapper>
+      </ScrollWrapper>
     </Container>
   );
 };
@@ -145,9 +145,11 @@ const Container = styled.SafeAreaView`
   background-color: ${props => props.theme.colors.white};
   flex: 1;
 `;
-const AuthWrapper = styled.View`
+const ScrollWrapper = styled.ScrollView``;
+const AuthWrapper = styled.KeyboardAvoidingView`
   padding-horizontal: 30px;
-  margin-top: ${height / 20}px;
+  margin-top: ${height / 40}px;
+  margin-bottom: ${height / 10}px;
 `;
 const ClassSelectForm = styled.View``;
 const FormTitle = styled.Text`
@@ -162,8 +164,8 @@ const SignupButtonWrapper = styled.TouchableOpacity`
   background-color: ${props => props.theme.colors.patientColor};
   justify-content: center;
   align-items: center;
-  padding: 15px;
-  border-radius: 15px;
+  padding: 13px;
+  border-radius: 30px;
   margin-top: ${height / 30}px;
 `;
 const SignupButtonText = styled.Text`

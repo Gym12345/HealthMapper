@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {Alert, Dimensions} from 'react-native';
+import {Alert, Dimensions, KeyboardAvoidingView} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -53,63 +53,65 @@ const LoginScreen = props => {
 
   return (
     <Container>
-      <TitleContainer>
-        <TitleText>Health Mapper</TitleText>
-      </TitleContainer>
-      <AuthContainer>
-        <ClassSelector
-          isSelectedValue={userClass}
-          setSelectedValue={setUserClass}
-        />
-        <LoginInputForm
-          id="id"
-          value={userId}
-          autoCapitalize="none"
-          isPasswordForm={false}
-          placeholder="아이디를 입력해주세요."
-          onChangeText={text => {
-            setUserId(text);
-          }}
-        />
-        <LoginInputForm
-          id="password"
-          value={userPw}
-          autoCapitalize="none"
-          isPasswordForm={true}
-          placeholder="비밀번호를 입력해주세요."
-          onChangeText={text => {
-            setUserPw(text);
-          }}
-        />
-        <LoginButtonWrapper
-          activeOapcity={0.5}
-          isLogin={true}
-          onPress={loginHandler}>
-          <LoginButtonText isLogin={true}>로그인</LoginButtonText>
-        </LoginButtonWrapper>
-
-        <TextButtonContainer>
-          <TextButtonWrapper activeOapcity={0.5} onPress={() => {}}>
-            <FindIdText>아이디 찾기</FindIdText>
-          </TextButtonWrapper>
-          <TextButtonWrapper
+      <ScrollWrapper>
+        <TitleContainer>
+          <TitleText>Health Mapper</TitleText>
+        </TitleContainer>
+        <AuthContainer>
+          <ClassSelector
+            isSelectedValue={userClass}
+            setSelectedValue={setUserClass}
+          />
+          <LoginInputForm
+            id="id"
+            value={userId}
+            autoCapitalize="none"
+            isPasswordForm={false}
+            placeholder="아이디를 입력해주세요."
+            onChangeText={text => {
+              setUserId(text);
+            }}
+          />
+          <LoginInputForm
+            id="password"
+            value={userPw}
+            autoCapitalize="none"
+            isPasswordForm={true}
+            placeholder="비밀번호를 입력해주세요."
+            onChangeText={text => {
+              setUserPw(text);
+            }}
+          />
+          <LoginButtonWrapper
             activeOapcity={0.5}
-            onPress={() => props.navigation.navigate('signup')}>
-            <SignUpText>회원가입</SignUpText>
-          </TextButtonWrapper>
-        </TextButtonContainer>
-      </AuthContainer>
-      <DivisionLine DivisionText="or" />
-      <BottomContainer>
-        <LoginButtonWrapper
-          isLogin={false}
-          activeOapcity={0.5}
-          onPress={guestLoginHandler}>
-          <LoginButtonText isLogin={false}>
-            로그인 없이 이용하기
-          </LoginButtonText>
-        </LoginButtonWrapper>
-      </BottomContainer>
+            isLogin={true}
+            onPress={loginHandler}>
+            <LoginButtonText isLogin={true}>로그인</LoginButtonText>
+          </LoginButtonWrapper>
+
+          <TextButtonContainer>
+            <TextButtonWrapper activeOapcity={0.5} onPress={() => {}}>
+              <FindIdText>아이디 찾기</FindIdText>
+            </TextButtonWrapper>
+            <TextButtonWrapper
+              activeOapcity={0.5}
+              onPress={() => props.navigation.navigate('signup')}>
+              <SignUpText>회원가입</SignUpText>
+            </TextButtonWrapper>
+          </TextButtonContainer>
+        </AuthContainer>
+        <DivisionLine DivisionText="or" />
+        <BottomContainer>
+          <LoginButtonWrapper
+            isLogin={false}
+            activeOapcity={0.5}
+            onPress={guestLoginHandler}>
+            <LoginButtonText isLogin={false}>
+              로그인 없이 이용하기
+            </LoginButtonText>
+          </LoginButtonWrapper>
+        </BottomContainer>
+      </ScrollWrapper>
     </Container>
   );
 };
@@ -128,22 +130,22 @@ const TitleText = styled.Text`
   font-weight: bold;
   color: ${props => props.theme.colors.patientColor};
 `;
-const AuthContainer = styled.View`
+const ScrollWrapper = styled.ScrollView``;
+const AuthContainer = styled.KeyboardAvoidingView`
   padding-horizontal: 30px;
-  margin-top: ${height / 40}px;
+  margin-top: ${height / 60}px;
 `;
 const LoginButtonWrapper = styled.TouchableOpacity`
   background-color: ${props =>
     props.isLogin ? props.theme.colors.patientColor : props.theme.colors.gray7};
   justify-content: center;
   align-items: center;
-  padding: 15px;
-  border-radius: 15px;
+  padding: 13px;
+  border-radius: 30px;
   margin-top: ${props => (props.isLogin ? height / 15 : height / 30)}px;
 `;
 const LoginButtonText = styled.Text`
   font-weight: bold;
-
   font-size: ${RFValue(20)}px;
   color: ${props =>
     props.isLogin ? props.theme.colors.gray8 : props.theme.colors.patientColor};
@@ -164,5 +166,6 @@ const FindIdText = styled.Text`
 `;
 const BottomContainer = styled.View`
   margin-horizontal: 30px;
+  margin-bottom: ${height / 10}px;
 `;
 export default LoginScreen;

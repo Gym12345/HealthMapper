@@ -33,7 +33,7 @@ const SignupInputForm = props => {
 };
 
 const FormWrapper = styled.View`
-  margin-top: ${height / 35}px;
+  margin-top: ${height / 40}px;
 `;
 const FormTitle = styled.Text`
   margin-vertical: 8px;

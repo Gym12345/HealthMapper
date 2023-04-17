@@ -4,7 +4,7 @@ import {Dimensions} from 'react-native';
 import styled from 'styled-components';
 import Icons from '../../aseets/Icons';
 
-const {width, height} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 const LoginInputForm = props => {
   const [isHide, setHide] = useState(true);
@@ -37,8 +37,8 @@ const FormWrapper = styled.View`
   border-radius: 10px;
   justify-content: space-between;
   align-items: center;
-  height: 40px;
-  margin-top: ${height / 35}px;
+  height: ${height / 15}px;
+  margin-top: ${height / 25}px;
 `;
 const InputContainer = styled.View`
   flex: 1;
