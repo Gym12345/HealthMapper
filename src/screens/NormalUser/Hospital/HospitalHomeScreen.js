@@ -4,6 +4,7 @@ import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import {useFocusEffect} from '@react-navigation/native';
 
+import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components';
 import Icons from '../../../aseets/Icons';
 import HeaderBar from '../../../components/Global/HeaderBar';
@@ -87,7 +88,7 @@ const WrapperTitle = styled.Text`
   margin-top: ${props => (props.firstWrapper ? height / 84 : height / 21)}px;
   margin-left: 10px;
   font-weight: bold;
-  font-size: 18px;
+  font-size: ${RFValue(18)}px;
   color: ${props => props.theme.colors.gray3};
 `;
 const HighlightText = styled.Text`

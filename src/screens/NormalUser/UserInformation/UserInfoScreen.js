@@ -28,7 +28,13 @@ const UserInfoScreen = props => {
 
   return (
     <Container>
-      <HeaderBar.centerOnly centerTitle="사용자 정보" />
+      <HeaderBar.leftCenter
+        leadingAction={() => {
+          props.navigation.goBack();
+        }}
+        leadingIcon={<Icons.arrowBack />}
+        centerTitle="사용자 정보"
+      />
       <Title>현재 입력하신 계정은 {userId} 입니다.</Title>
       <ButtonWrapper onPress={logoutHandler}>
         <LogoutButtonText>로그아웃</LogoutButtonText>

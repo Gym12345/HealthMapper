@@ -2,6 +2,7 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {Alert, Dimensions} from 'react-native';
 import {useDispatch} from 'react-redux';
 
+import {RFValue} from 'react-native-responsive-fontsize';
 import {login, guestLogin} from '../../../store/slices/authSlice';
 import styled from 'styled-components';
 
@@ -123,7 +124,7 @@ const TitleContainer = styled.View`
   margin-bottom: ${height / 30}px;
 `;
 const TitleText = styled.Text`
-  font-size: 35px;
+  font-size: ${RFValue(35)}px;
   font-weight: bold;
   color: ${props => props.theme.colors.patientColor};
 `;
@@ -142,7 +143,8 @@ const LoginButtonWrapper = styled.TouchableOpacity`
 `;
 const LoginButtonText = styled.Text`
   font-weight: bold;
-  font-size: 20px;
+
+  font-size: ${RFValue(20)}px;
   color: ${props =>
     props.isLogin ? props.theme.colors.gray8 : props.theme.colors.patientColor};
 `;
@@ -153,11 +155,11 @@ const TextButtonContainer = styled.View`
 `;
 const TextButtonWrapper = styled.TouchableOpacity``;
 const SignUpText = styled.Text`
-  font-size: 16px;
+  font-size: ${RFValue(16)}px;
   color: ${props => props.theme.colors.gray3};
 `;
 const FindIdText = styled.Text`
-  font-size: 16px;
+  font-size: ${RFValue(16)}px;
   color: ${props => props.theme.colors.gray3};
 `;
 const BottomContainer = styled.View`

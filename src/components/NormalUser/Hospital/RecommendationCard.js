@@ -2,12 +2,11 @@ import React from 'react';
 import {Dimensions} from 'react-native';
 
 import styled from 'styled-components';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const {height} = Dimensions.get('window');
 
 const RecommendationCard = props => {
-  console.log(height);
-  console.log(height / 31);
   return (
     <CardWrapper id={props.id} activeOpacity={0.5} onPress={props.onPress}>
       <TextContainer>
@@ -33,11 +32,11 @@ const TextContainer = styled.View``;
 const CardTitle = styled.Text`
   font-weight: bold;
   color: ${props => props.theme.colors.black};
-  font-size: 18px;
+  font-size: ${RFValue(18)}px;
 `;
 const DescriptionText = styled.Text`
   margin-top: ${height / 84}px;
-  font-size: 13px;
+  font-size: ${RFValue(13)}px;
   color: ${props => props.theme.colors.gray3};
 `;
 

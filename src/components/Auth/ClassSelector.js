@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 
+import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components';
 import Icons from '../../aseets/Icons';
 
@@ -61,7 +62,7 @@ const ButtonWrapper = styled.TouchableOpacity`
 const ButtonText = styled.Text`
   color: ${props =>
     props.active ? props.theme.colors.patientColor : props.theme.colors.gray3};
-  font-size: 18px;
+  font-size: ${RFValue(18)}px;
   margin-left: 3px;
 `;
 

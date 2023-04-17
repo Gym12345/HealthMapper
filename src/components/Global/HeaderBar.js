@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Platform, StatusBar} from 'react-native';
 
+import {RFValue} from 'react-native-responsive-fontsize';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import styled from 'styled-components';
 
@@ -142,7 +143,7 @@ const EmptySizedBox = styled.View`
 `;
 
 const CenterTitle = styled.Text`
-  font-size: 17px;
+  font-size: ${RFValue(17)}px;
   color: ${props => props.theme.colors.gray1};
 `;
 const ActionIcon = styled.TouchableOpacity`

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Dimensions, Alert} from 'react-native';
 
+import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components';
 import HeaderBar from '../../../components/Global/HeaderBar';
 import Icons from '../../../aseets/Icons';
@@ -125,6 +126,7 @@ const FormTitle = styled.Text`
   margin-vertical: 8px;
   font-weight: bold;
   color: ${props => props.theme.colors.black};
+  font-size: ${RFValue(15)}px;
 `;
 
 const SignupButtonWrapper = styled.TouchableOpacity`
@@ -137,11 +139,11 @@ const SignupButtonWrapper = styled.TouchableOpacity`
 `;
 const SignupButtonText = styled.Text`
   font-weight: bold;
-  font-size: 20px;
+  font-size: ${RFValue(20)}px;
   color: ${props => props.theme.colors.gray6};
 `;
 const ErrorText = styled.Text`
   color: ${props => props.theme.colors.alertColor};
-  font-size: 12px;
+  font-size: ${RFValue(12)}px;
 `;
 export default SignupScreen;

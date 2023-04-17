@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Dimensions} from 'react-native';
 
+import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components';
 import Icons from '../../aseets/Icons';
 
@@ -38,6 +39,7 @@ const FormTitle = styled.Text`
   margin-vertical: 8px;
   font-weight: bold;
   color: ${props => props.theme.colors.black};
+  font-size: ${RFValue(15)}px;
 `;
 const InputContainer = styled.View`
   align-items: center;

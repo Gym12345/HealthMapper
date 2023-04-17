@@ -6,7 +6,13 @@ import styled from 'styled-components';
 const HealthScreen = props => {
   return (
     <Container>
-      <HeaderBar.centerOnly centerTitle="건강 기록" />
+      <HeaderBar.leftCenter
+        leadingAction={() => {
+          props.navigation.goBack();
+        }}
+        leadingIcon={<Icons.arrowBack />}
+        centerTitle="건강기록"
+      />
       <Title>This is HealthScreen!</Title>
     </Container>
   );

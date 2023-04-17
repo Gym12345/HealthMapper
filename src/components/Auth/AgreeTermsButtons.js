@@ -1,5 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {Text} from 'react-native';
+
+import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import Icons from '../../aseets/Icons';
 
@@ -88,6 +90,7 @@ const FullAgreeText = styled.Text`
   font-weight: bold;
   color: ${props => props.theme.colors.black};
   margin-left: 10px;
+  font-size: ${RFValue(15)}px;
 `;
 const BottomWrapper = styled.View`
   background-color: ${props => props.theme.colors.gray7};
@@ -104,6 +107,7 @@ const SubAgreeText = styled.Text`
   color: ${props => props.theme.colors.gray2};
   text-decoration: underline;
   margin-right: 5px;
+  font-size: ${RFValue(12)}px;
 `;
 
 export default AgreeTermsButtons;

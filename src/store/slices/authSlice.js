@@ -5,7 +5,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async ({userId, userPw, userClass}) => {
     const response = await fetch(
-      'http://localhost:8090/Health/Health1/LoginController',
+      'http://172.30.1.40:8090/Health/Health1/LoginController',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -55,6 +55,10 @@ export const authSlice = createSlice({
       state.userId = 'guest';
       state.userClass = 'guest';
       state.isLoggedIn = false;
+      console.log(
+        '게스트아이디 : ' + state.userId,
+        '권한 : ' + state.userClass,
+      );
     },
   },
   //Reducers, Actions related login
