@@ -79,7 +79,7 @@ const SignupScreen = props => {
             />
           </ClassSelectForm>
           {(userClass === '') & !isSignupActive ? (
-            <ErrorText>권한을 선택해주세요.</ErrorText>
+            <ErrorText>권한을 선택해주세요</ErrorText>
           ) : null}
           <SignupInputForm
             active={isSignupActive || userId}
@@ -92,7 +92,7 @@ const SignupScreen = props => {
             }}
           />
           {(userId === '') & !isSignupActive ? (
-            <ErrorText>올바른 아이디를 입력해주세요.</ErrorText>
+            <ErrorText>올바른 아이디를 입력해주세요</ErrorText>
           ) : null}
           <SignupInputForm
             active={isSignupActive || userPw}
@@ -105,7 +105,7 @@ const SignupScreen = props => {
             }}
           />
           {(userPw === '') & !isSignupActive ? (
-            <ErrorText>올바른 비밀번호를 입력해주세요.</ErrorText>
+            <ErrorText>올바른 비밀번호를 입력해주세요</ErrorText>
           ) : null}
           <SignupInputForm
             active={isSignupActive || userName}
@@ -118,7 +118,7 @@ const SignupScreen = props => {
             }}
           />
           {(userName === '') & !isSignupActive ? (
-            <ErrorText>올바른 닉네임을 입력해주세요.</ErrorText>
+            <ErrorText>올바른 닉네임을 입력해주세요</ErrorText>
           ) : null}
           <AgreeTermsButtons
             onPressTextButton={value => {
@@ -130,7 +130,7 @@ const SignupScreen = props => {
             signUp={isSignupActive}
           />
           {!isTotalAgree & !isSignupActive ? (
-            <ErrorText>전체 동의를 해주세요.</ErrorText>
+            <ErrorText>전체 동의를 해주세요</ErrorText>
           ) : null}
           <SignupButtonWrapper activeOapcity={0.5} onPress={signupHandler}>
             <SignupButtonText>회원가입</SignupButtonText>

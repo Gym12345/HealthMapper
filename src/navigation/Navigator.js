@@ -106,7 +106,7 @@ const MainNavigator = props => {
 
   // 게스트 사용자에게 로그인 안내 알림창. _건강기록, 내정보와 같은 탭을 눌렀을 때 필요함.
   const ShowLoginScreen = useCallback(() => {
-    Alert.alert('안내', '로그인이 필요한 서비스입니다.', [
+    Alert.alert('안내', '로그인이 필요한 서비스입니다', [
       {
         text: '확인',
         onPress: () => props.navigation.navigate('auth'),
@@ -118,14 +118,14 @@ const MainNavigator = props => {
   if (userClass === 'normalUser' || userClass === 'guest') {
     return (
       <Tab.Navigator
-        initialRouteName="병원 추천받기"
+        initialRouteName="병원"
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: patientColor, //바텀탭 Icon focus색상
           tabBarInactiveTintColor: 'black', //바텀탭 Icon unFocus색상
         }}>
         <Tab.Screen
-          name="병원 추천받기"
+          name="병원"
           component={HospitalNavigator}
           options={{
             tabBarIcon: ({focused, color}) => {
@@ -170,14 +170,14 @@ const MainNavigator = props => {
   else if (isLoggedIn & (userClass === 'hospitalOwner')) {
     return (
       <Tab.Navigator
-        initialRouteName="병원 등록하기"
+        initialRouteName="병원등록"
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: hospitalOwnerColor, //바텀탭 Icon focus색상
           tabBarInactiveTintColor: 'black', //바텀탭 Icon unFocus색상
         }}>
         <Tab.Screen
-          name="병원 등록하기"
+          name="병원등록"
           component={HospitalRegistNavigator}
           options={{
             tabBarIcon: ({focused, color}) => {

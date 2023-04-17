@@ -210,6 +210,9 @@ class UserInfo extends Component {
   }
 }
 
+{
+  /* HospitalHomeScreen */
+}
 /* humanBody(사람 신체Icon) Icon _ hospitalHomeScreen */
 class HumanBody extends Component {
   render() {
@@ -358,6 +361,10 @@ class HealthMemo extends Component {
   }
 }
 
+{
+  /* MedicalDepartmentScreen */
+}
+
 export default Icons = {
   //Icon _ Global
   arrowBack: ArrowBack,
@@ -373,4 +380,8 @@ export default Icons = {
   humanBody: HumanBody,
   medicalDepartment: MedicalDepartment,
   healthMemo: HealthMemo,
+
+  //Icon _ bodyPartScreen
+
+  //Icon _ MedicalDepartmentScreen
 };

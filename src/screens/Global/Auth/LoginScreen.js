@@ -67,7 +67,7 @@ const LoginScreen = props => {
             value={userId}
             autoCapitalize="none"
             isPasswordForm={false}
-            placeholder="아이디를 입력해주세요."
+            placeholder="아이디를 입력해주세요"
             onChangeText={text => {
               setUserId(text);
             }}
@@ -77,7 +77,7 @@ const LoginScreen = props => {
             value={userPw}
             autoCapitalize="none"
             isPasswordForm={true}
-            placeholder="비밀번호를 입력해주세요."
+            placeholder="비밀번호를 입력해주세요"
             onChangeText={text => {
               setUserPw(text);
             }}

@@ -38,7 +38,7 @@ const FormWrapper = styled.View`
   justify-content: space-between;
   align-items: center;
   height: ${height / 15}px;
-  margin-top: ${height / 25}px;
+  margin-top: ${height / 35}px;
 `;
 const InputContainer = styled.View`
   flex: 1;
