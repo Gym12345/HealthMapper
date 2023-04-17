@@ -24,6 +24,7 @@ const AgreeTermsButtons = props => {
 
   //전체동의 버튼 toggle함수
   const toggleTotalActive = useCallback(() => {
+    console.log(props.isTotalActive);
     props.setTotalActive(!props.isTotalActive);
     setPrivacyActive(!props.isTotalActive);
     setLocationActive(!props.isTotalActive);

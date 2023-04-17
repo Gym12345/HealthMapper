@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import {logout} from '../../../store/slices/authSlice';
 
 const UserInfoScreen = props => {
-  const userId = useSelector(state => state.auth.userId);
+  const userName = useSelector(state => state.auth.userName);
   const dispatch = useDispatch();
 
   const logoutHandler = useCallback(async () => {
@@ -35,7 +35,7 @@ const UserInfoScreen = props => {
         leadingIcon={<Icons.arrowBack />}
         centerTitle="사용자 정보"
       />
-      <Title>현재 입력하신 계정은 {userId} 입니다.</Title>
+      <Title>현재 입력하신 계정은 {userName} 입니다.</Title>
       <ButtonWrapper onPress={logoutHandler}>
         <LogoutButtonText>로그아웃</LogoutButtonText>
       </ButtonWrapper>

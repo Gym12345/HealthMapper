@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {Dimensions, Alert} from 'react-native';
+import {useDispatch} from 'react-redux';
 
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components';
@@ -8,43 +9,58 @@ import Icons from '../../../aseets/Icons';
 import SignupInputForm from '../../../components/Auth/SignupInputForm';
 import ClassSelector from '../../../components/Auth/ClassSelector';
 import AgreeTermsButtons from '../../../components/Auth/AgreeTermsButtons';
+import {signUp} from '../../../store/slices/authSlice';
 
 const {height} = Dimensions.get('window');
 
 const SignupScreen = props => {
   const [userId, setUserId] = useState('');
   const [userPw, setUserPw] = useState('');
+  const [userName, setUserName] = useState('');
   const [userClass, setUserClass] = useState('');
+  const [error, setError] = useState(null);
   const [isTotalAgree, setTotalAgree] = useState(false);
   const [isSignupActive, setSignupActive] = useState(true);
 
-  //네트워크 연결할때 싹 수정.
-  const signupHandler = () => {
-    console.log(userId + ' ' + userPw + ' ' + userClass + ' ' + isTotalAgree);
-    if (
-      (userId !== '') &
-      (userPw !== '') &
-      (userClass !== '') &
-      (isTotalAgree === true)
-    ) {
-      Alert.alert('안내', '회원가입이 완료되었습니다.', [
+  const dispatch = useDispatch();
+
+  //회원가입 핸들러
+  const signupHandler = useCallback(async () => {
+    setError(null);
+    if (!isTotalAgree || !userClass || !userId || !userPw || !userName) {
+      // 클라이언트에서 1차 검증
+      console.log('전체동의 오류');
+      setSignupActive(false);
+      return Alert.alert('회원가입 실패', '경고문구를 확인해주시기 바랍니다', [
+        {
+          text: '확인',
+        },
+      ]);
+    }
+    try {
+      await dispatch(signUp({userId, userPw, userName, userClass})).unwrap();
+      return Alert.alert('회원가입 성공', '로그인 화면으로 이동합니다', [
         {
           text: '확인',
           onPress: () => props.navigation.navigate('login'),
         },
       ]);
-      setSignupActive(true);
-    } else {
-      Alert.alert('안내', '회원가입이 실패했습니다.', [
+    } catch (error) {
+      setError(error.message);
+    }
+  }, [dispatch, isTotalAgree, userId, userPw, userName, userClass]);
+
+  useEffect(() => {
+    console.log('입력 폼 오류');
+    if (error) {
+      Alert.alert('회원가입 실패', error, [
         {
           text: '확인',
-          style: 'cancel',
         },
       ]);
       setSignupActive(false);
-      console.log(userClass);
     }
-  };
+  }, [error]);
 
   return (
     <Container>
@@ -91,6 +107,19 @@ const SignupScreen = props => {
         />
         {(userPw === '') & !isSignupActive ? (
           <ErrorText>올바른 비밀번호를 입력해주세요.</ErrorText>
+        ) : null}
+        <SignupInputForm
+          active={isSignupActive || userName}
+          formTitle="닉네임"
+          autoCapitalize="none"
+          placeholder="닉네임을 입력해주세요."
+          isPasswordForm={false}
+          onChangeText={text => {
+            setUserName(text);
+          }}
+        />
+        {(userName === '') & !isSignupActive ? (
+          <ErrorText>올바른 닉네임을 입력해주세요.</ErrorText>
         ) : null}
         <AgreeTermsButtons
           onPressTextButton={value => {
