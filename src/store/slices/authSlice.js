@@ -5,7 +5,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async ({userId, userPw, userClass}) => {
     const response = await fetch(
-      'http://172.30.1.40:8090/Health/Health1/LoginController',
+      'http://localhost:8090/Health/Health1/LoginController',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -19,7 +19,6 @@ export const login = createAsyncThunk(
 
     // 서버에서 응답받은 데이터
     const resData = await response.json();
-    console.log(resData);
 
     if (resData.success) {
       //로그인 성공하면 login.fulfilled진입
@@ -33,9 +32,43 @@ export const login = createAsyncThunk(
   },
 );
 
+// 비동기처리 _ 회원가입
+export const signUp = createAsyncThunk(
+  'auth/signUp',
+  async ({userId, userPw, userName, userClass}) => {
+    const response = await fetch(
+      'http://localhost:8090/Health/Health1/SignUpController',
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          userId,
+          userPw,
+          userName,
+          userClass,
+        }),
+      },
+    );
+
+    // 서버에서 응답받은 데이터
+    const resData = await response.json();
+
+    if (resData.success) {
+      //회원가입 성공하면 signUp.fulfilled진입
+      console.log('회원가입 성공:', resData);
+      return {userId, userName, userClass};
+    } else {
+      //회원가입 실패하면 signUp.rejected진입
+      console.log('회원가입 실패:', resData);
+      throw new Error(resData.message);
+    }
+  },
+);
+
 const initialState = {
   userId: null,
   userClass: null,
+  userName: null,
   isLoggedIn: false,
   error: null,
 };
@@ -63,6 +96,7 @@ export const authSlice = createSlice({
   },
   //Reducers, Actions related login
   extraReducers: builder => {
+    //로그인
     builder
       //로그인 요청 _ 로그인 경로2
       .addCase(login.pending, state => {
@@ -79,6 +113,27 @@ export const authSlice = createSlice({
       //로그인 실패 _ 로그인 경로4
       .addCase(login.rejected, (state, action) => {
         state.isLoggedIn = false;
+        state.error = action.error.message;
+      });
+
+    //회원가입
+    builder
+      // 회원가입 요청
+      .addCase(signUp.pending, state => {
+        state.isSignedUp = false;
+        state.error = null;
+      })
+      // 회원가입 성공
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.userId = action.payload.userId;
+        state.userName = action.payload.userName;
+        state.userClass = action.payload.userClass;
+        state.isSignedUp = true;
+        state.error = null;
+      })
+      // 회원가입 실패
+      .addCase(signUp.rejected, (state, action) => {
+        state.isSignedUp = false;
         state.error = action.error.message;
       });
   },
