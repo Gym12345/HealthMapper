@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
+import {FlatList} from 'react-native';
 
 import styled from 'styled-components';
 
-import Icons from '../../../aseets/Icons';
+import Icons from '../../../aseets/Global/Icons';
 import HeaderBar from '../../../components/Global/HeaderBar';
 
+import MedicalDepartmentCard from '../../../components/NormalUser/Hospital/MedicalDepartmentCard';
+import medicalDepartmentData from '../../../data/medicalDepartmentData';
+
 const MedicalDepartmentScreen = props => {
+  //useState, useDispatch 써서 redux에서 선택된 진료과를 토대로 병원정보 받아오기
+
   return (
     <Container>
       <HeaderBar.leftCenter
@@ -15,7 +21,24 @@ const MedicalDepartmentScreen = props => {
         leadingIcon={<Icons.arrowBack />}
         centerTitle="진료과 선택"
       />
-      <TestText>진료과 선택 스크린.</TestText>
+      <CardContainer>
+        <FlatList
+          data={medicalDepartmentData}
+          keyExtractor={item => item.id}
+          numColumns={3}
+          renderItem={itemData => (
+            <MedicalDepartmentCard
+              medicalDepartment={itemData.item.data}
+              departmentIcon={itemData.item.icon}
+              onPressDepartment={() => {
+                props.navigation.navigate('hospitalList', {
+                  medicalDepartment: itemData.item.data,
+                });
+              }}
+            />
+          )}
+        />
+      </CardContainer>
     </Container>
   );
 };
@@ -23,6 +46,9 @@ const MedicalDepartmentScreen = props => {
 const Container = styled.SafeAreaView`
   background-color: ${props => props.theme.colors.white};
 `;
-const TestText = styled.Text``;
+const CardContainer = styled.View`
+  align-items: center;
+  padding: 10px;
+`;
 
 export default MedicalDepartmentScreen;
