@@ -3,7 +3,7 @@ import {Text} from 'react-native';
 
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-import Icons from '../../aseets/Icons';
+import Icons from '../../aseets/Auth/Icons';
 
 const AgreeTermsButtons = props => {
   const [isPrivacyActive, setPrivacyActive] = useState(false);

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components';
-import Icons from '../../aseets/Icons';
+import Icons from '../../aseets/Auth/Icons';
 
 const ClassSelector = props => {
   const [isPatientSelect, setPatientSelect] = useState(false);

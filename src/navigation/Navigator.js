@@ -4,8 +4,7 @@ import {useSelector} from 'react-redux';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useFocusEffect} from '@react-navigation/native';
-import Icons from '../aseets/Icons';
+import Icons from '../aseets/Global/Icons';
 
 //AuthNavigator
 import LoginScreen from '../screens/Global/Auth/LoginScreen';
@@ -16,6 +15,7 @@ import TermsScreen from '../screens/Global/Auth/TermsScreen';
 import HospitalHomeScreen from '../screens/NormalUser/Hospital/HospitalHomeScreen';
 import BodyPartScreen from '../screens/NormalUser/Hospital/BodyPartScreen';
 import MedicalDepartmentScreen from '../screens/NormalUser/Hospital/MedicalDepartmentScreen';
+import HospitalListScreen from '../screens/NormalUser/Hospital/HospitalListScreen';
 
 //HelathNavigator_NormalUser
 import HealthScreen from '../screens/NormalUser/Health/HealthScreen';
@@ -80,6 +80,7 @@ const HospitalNavigator = props => {
         name="medicalDepartment"
         component={MedicalDepartmentScreen}
       />
+      <Stack.Screen name="hospitalList" component={HospitalListScreen} />
     </Stack.Navigator>
   );
 };

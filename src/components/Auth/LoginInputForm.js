@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Dimensions} from 'react-native';
 
 import styled from 'styled-components';
-import Icons from '../../aseets/Icons';
+import Icons from '../../aseets/Auth/Icons';
 
 const {height} = Dimensions.get('window');
 
@@ -37,7 +37,7 @@ const FormWrapper = styled.View`
   border-radius: 10px;
   justify-content: space-between;
   align-items: center;
-  height: ${height / 15}px;
+  height: ${height / 16}px;
   margin-top: ${height / 35}px;
 `;
 const InputContainer = styled.View`

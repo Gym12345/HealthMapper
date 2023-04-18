@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import Icons from '../../../aseets/Icons';
+import Icons from '../../../aseets/Hospital/Icons';
 import HeaderBar from '../../../components/Global/HeaderBar';
 
 const BodyPartScreen = props => {

@@ -3,7 +3,7 @@ import {Dimensions} from 'react-native';
 
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components';
-import Icons from '../../aseets/Icons';
+import Icons from '../../aseets/Auth/Icons';
 
 const {height} = Dimensions.get('window');
 
