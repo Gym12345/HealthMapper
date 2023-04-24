@@ -23,13 +23,23 @@ const SignupScreen = props => {
   const [isTotalAgree, setTotalAgree] = useState(false);
   const [isSignupActive, setSignupActive] = useState(true);
 
+  //비밀번호 로직
+  const PassWordRegex =
+    '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*\\(\\)_\\-\\+=\\[\\]\\{\\}~\\?:;`\\|/]).{8,30}$';
+
   const dispatch = useDispatch();
 
   //회원가입 핸들러
   const signupHandler = useCallback(async () => {
     setError(null);
     // 클라이언트에서 1차 검증
-    if (!isTotalAgree || !userClass || !userId || !userPw || !userName) {
+    if (
+      !isTotalAgree ||
+      !userClass ||
+      userId.length < 6 ||
+      !userPw.match(PassWordRegex) ||
+      !userName
+    ) {
       setSignupActive(false);
       return Alert.alert('회원가입 실패', '경고문구를 확인해주시기 바랍니다', [
         {
@@ -83,7 +93,8 @@ const SignupScreen = props => {
             <ErrorText>권한을 선택해주세요</ErrorText>
           ) : null}
           <SignupInputForm
-            active={isSignupActive || userId}
+            active={isSignupActive || userId.length >= 6}
+            value={userId}
             formTitle="아이디"
             autoCapitalize="none"
             placeholder="아이디를 입력해주세요."
@@ -92,11 +103,12 @@ const SignupScreen = props => {
               setUserId(text);
             }}
           />
-          {(userId === '') & !isSignupActive ? (
-            <ErrorText>올바른 아이디를 입력해주세요</ErrorText>
+          {userId.length < 6 && !isSignupActive ? (
+            <ErrorText>아이디는 6자리 이상이어야 합니다</ErrorText>
           ) : null}
           <SignupInputForm
-            active={isSignupActive || userPw}
+            active={isSignupActive || userPw.match(PassWordRegex)}
+            value={userPw}
             formTitle="패스워드"
             autoCapitalize="none"
             placeholder="비밀번호를 입력해주세요."
@@ -105,8 +117,10 @@ const SignupScreen = props => {
               setUserPw(text);
             }}
           />
-          {(userPw === '') & !isSignupActive ? (
-            <ErrorText>올바른 비밀번호를 입력해주세요</ErrorText>
+          {!userPw.match(PassWordRegex) && !isSignupActive ? (
+            <ErrorText>
+              대문자, 소문자, 숫자, 특수문자를 포함한 8자리 이상이어야 합니다
+            </ErrorText>
           ) : null}
           <SignupInputForm
             active={isSignupActive || userName}
