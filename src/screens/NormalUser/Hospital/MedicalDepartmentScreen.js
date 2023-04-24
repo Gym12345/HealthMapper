@@ -32,7 +32,7 @@ const MedicalDepartmentScreen = props => {
               departmentIcon={itemData.item.icon}
               onPressDepartment={() => {
                 props.navigation.navigate('hospitalList', {
-                  medicalDepartment: itemData.item.data,
+                  selectedPart: itemData.item.data,
                 });
               }}
             />
