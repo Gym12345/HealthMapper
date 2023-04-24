@@ -12,11 +12,9 @@ const HospitalListScreen = props => {
           props.navigation.goBack();
         }}
         leadingIcon={<Icons.arrowBack />}
-        centerTitle="진료과 선택"
+        centerTitle="병원 리스트"
       />
-      <Title>
-        선택하신 진료과는 {props.route.params.medicalDepartment}입니다.
-      </Title>
+      <Title>선택하신 것은 {props.route.params.selectedPart}입니다.</Title>
     </Container>
   );
 };
