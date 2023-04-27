@@ -2,7 +2,6 @@ import React from 'react';
 import {Dimensions} from 'react-native';
 
 import styled from 'styled-components';
-import Icons from '../../../aseets/Hospital/Icons';
 
 const {width} = Dimensions.get('window');
 

@@ -1,8 +1,10 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {FlatList} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {FlatList, Alert} from 'react-native';
+
+import {useDispatch} from 'react-redux';
+import {getHospitalList_medicalDepartment} from '../../../store/slices/hospitalSlice';
 
 import styled from 'styled-components';
-
 import Icons from '../../../aseets/Global/Icons';
 import HeaderBar from '../../../components/Global/HeaderBar';
 
@@ -10,7 +12,30 @@ import MedicalDepartmentCard from '../../../components/NormalUser/Hospital/Medic
 import medicalDepartmentData from '../../../data/medicalDepartmentData';
 
 const MedicalDepartmentScreen = props => {
-  //useState, useDispatch 써서 redux에서 선택된 진료과를 토대로 병원정보 받아오기
+  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  //병원 리스트 조회 핸들러 (사용자가 선택한 진료과를 진료과 핸들러로 dispatch)
+  const getHospitalListHandler = useCallback(
+    async selectedDepartment => {
+      try {
+        await dispatch(
+          getHospitalList_medicalDepartment(selectedDepartment),
+        ).unwrap();
+        props.navigation.navigate('hospitalList');
+      } catch (error) {
+        //예외처리
+        setError(error.message);
+      }
+    },
+    [dispatch],
+  );
+
+  //예외처리 알림문
+  useEffect(() => {
+    if (error) {
+      Alert.alert('병원 불러오기 실패', error, [{text: '확인'}]);
+    }
+  }, [error]);
 
   return (
     <Container>
@@ -30,11 +55,9 @@ const MedicalDepartmentScreen = props => {
             <MedicalDepartmentCard
               medicalDepartment={itemData.item.data}
               departmentIcon={itemData.item.icon}
-              onPressDepartment={() => {
-                props.navigation.navigate('hospitalList', {
-                  selectedPart: itemData.item.data,
-                });
-              }}
+              onPressDepartment={() =>
+                getHospitalListHandler(itemData.item.data)
+              }
             />
           )}
         />

@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {Button, FlatList, Text} from 'react-native';
+
+import {useSelector} from 'react-redux';
+import {getHospitalList_BodyPart} from '../../../store/slices/hospitalSlice';
 
 import styled from 'styled-components';
 import HeaderBar from '../../../components/Global/HeaderBar';
 import Icons from '../../../aseets/Global/Icons';
 
 const HospitalListScreen = props => {
+  const healthArr = useSelector(state => state.hospital.healthArr);
   return (
     <Container>
       <HeaderBar.leftCenter
@@ -14,7 +19,11 @@ const HospitalListScreen = props => {
         leadingIcon={<Icons.arrowBack />}
         centerTitle="병원 리스트"
       />
-      <Title>선택하신 것은 {props.route.params.selectedPart}입니다.</Title>
+      <FlatList
+        data={healthArr}
+        keyExtractor={item => item.id}
+        renderItem={itemData => <Text>{itemData.item.name}</Text>}
+      />
     </Container>
   );
 };

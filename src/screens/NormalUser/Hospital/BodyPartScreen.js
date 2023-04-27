@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
-import {Dimensions, View, Text} from 'react-native';
-import Modal from 'react-native-modal';
+import React, {useState, useEffect, useCallback} from 'react';
+import {Dimensions, Alert} from 'react-native';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+
+import {useDispatch} from 'react-redux';
+import {getHospitalList_bodyPart} from '../../../store/slices/hospitalSlice';
 
 import styled from 'styled-components';
 
@@ -16,7 +18,31 @@ const {height} = Dimensions.get('window');
 const BodyPartScreen = props => {
   //바텀탭 높이 _ 스크롤뷰
   const bottomTabHeight = useBottomTabBarHeight();
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(false);
+
+  //병원 리스트 조회 핸들러 (사용자가 선택한 신체부위를 신체부위 핸들러로 dispatch)
+  const getHospitalListHandler = useCallback(
+    async selectedPart => {
+      setError(null);
+      try {
+        await dispatch(getHospitalList_bodyPart(selectedPart)).unwrap();
+        props.navigation.navigate('hospitalList');
+      } catch (error) {
+        //예외처리
+        setError(error.message);
+      }
+    },
+    [dispatch],
+  );
+
+  //예외처리 알림문
+  useEffect(() => {
+    if (error) {
+      Alert.alert('병원 불러오기 실패', error, [{text: '확인'}]);
+    }
+  }, [error]);
 
   return (
     <Container>
@@ -34,12 +60,10 @@ const BodyPartScreen = props => {
       <ScrolleWrapper>
         <Wrapper bottomTabHeight={bottomTabHeight}>
           <BodyPart
-            onBodyPartSelect={selectedValue => {
-              selectedValue === '머리'
+            onBodyPartSelect={selectedPart => {
+              selectedPart === '머리'
                 ? setShowModal(true)
-                : props.navigation.navigate('hospitalList', {
-                    selectedPart: selectedValue,
-                  });
+                : getHospitalListHandler(selectedPart);
             }}
           />
         </Wrapper>
@@ -48,11 +72,9 @@ const BodyPartScreen = props => {
         isVisible={showModal}
         onModalCancel={() => setShowModal(false)}
         onBackdropPress={() => setShowModal(false)}
-        onBodyPartSelect={selectedValue => {
+        onBodyPartSelect={selectedPart => {
           setShowModal(false);
-          props.navigation.navigate('hospitalList', {
-            selectedPart: selectedValue,
-          });
+          getHospitalListHandler(selectedPart);
         }}
       />
     </Container>
@@ -77,9 +99,6 @@ const ScrolleWrapper = styled.ScrollView`
 `;
 const Wrapper = styled.View`
   margin-bottom: ${props => props.bottomTabHeight + 70}px;
-`;
-const ModalContainer = styled.View`
-  background-color: ${props => props.theme.colors.white};
 `;
 
 export default BodyPartScreen;

@@ -29,6 +29,7 @@ const HospitalHomeScreen = props => {
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     }, []),
   );
+
   return (
     <Container>
       <HeaderBar.centerOnly centerTitle="Health Mapper" />
