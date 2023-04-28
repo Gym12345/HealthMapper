@@ -1,5 +1,6 @@
 import React from 'react';
 import {Dimensions} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 import styled from 'styled-components';
 
@@ -30,6 +31,7 @@ const Wrapper = styled.TouchableOpacity`
 `;
 const MedicalText = styled.Text`
   margin-top: 5px;
+  font-size: ${RFValue(13)}px;
   color: ${props => props.theme.colors.black};
 `;
 

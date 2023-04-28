@@ -24,6 +24,7 @@ const CardWrapper = styled.TouchableOpacity`
   padding: ${height / 42}px;
   margin-top: ${height / 31}px;
   background-color: ${props => props.theme.colors.gray8};
+  border-color: ${props => props.theme.colors.gray7};
   border-radius: 20px;
   box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
   elevation: 10;

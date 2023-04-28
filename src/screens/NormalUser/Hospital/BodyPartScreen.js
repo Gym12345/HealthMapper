@@ -2,6 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {Dimensions, Alert} from 'react-native';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
+import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch} from 'react-redux';
 import {getHospitalList_bodyPart} from '../../../store/slices/hospitalSlice';
 
@@ -86,7 +87,7 @@ const Container = styled.SafeAreaView`
 `;
 const Title = styled.Text`
   align-self: center;
-  font-size: 15px;
+  font-size: ${RFValue(15)}px;
   margin-top: ${height / 20}px;
   color: ${props => props.theme.colors.black};
 `;
@@ -95,7 +96,7 @@ const HighlightText = styled.Text`
   font-weight: bold;
 `;
 const ScrolleWrapper = styled.ScrollView`
-  margin-top: ${height / 20}px;
+  margin-top: ${height / 40}px;
 `;
 const Wrapper = styled.View`
   margin-bottom: ${props => props.bottomTabHeight + 70}px;
