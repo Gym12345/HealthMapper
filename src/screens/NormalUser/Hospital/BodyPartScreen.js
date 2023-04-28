@@ -12,7 +12,7 @@ import Icons from '../../../aseets/Global/Icons';
 import HeaderBar from '../../../components/Global/HeaderBar';
 
 import BodyPart from '../../../components/NormalUser/Hospital/BodyPart';
-import HeadPartModal from '../../../components/NormalUser/Hospital/HeadPartModal';
+import BodyPartModal from '../../../components/NormalUser/Hospital/BodyPartModal';
 
 const {height} = Dimensions.get('window');
 
@@ -21,6 +21,7 @@ const BodyPartScreen = props => {
   const bottomTabHeight = useBottomTabBarHeight();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  const [selectedBodyPart, setSelectedBodyPart] = useState('');
   const [error, setError] = useState(false);
 
   //병원 리스트 조회 핸들러 (사용자가 선택한 신체부위를 신체부위 핸들러로 dispatch)
@@ -62,14 +63,21 @@ const BodyPartScreen = props => {
         <Wrapper bottomTabHeight={bottomTabHeight}>
           <BodyPart
             onBodyPartSelect={selectedPart => {
-              selectedPart === '머리'
-                ? setShowModal(true)
-                : getHospitalListHandler(selectedPart);
+              setSelectedBodyPart(selectedPart);
+              if (
+                selectedPart === '머리관련부위' ||
+                selectedPart === '체간관련부위'
+              ) {
+                setShowModal(true);
+              } else {
+                getHospitalListHandler(selectedPart);
+              }
             }}
           />
         </Wrapper>
       </ScrolleWrapper>
-      <HeadPartModal
+      <BodyPartModal
+        value={selectedBodyPart}
         isVisible={showModal}
         onModalCancel={() => setShowModal(false)}
         onBackdropPress={() => setShowModal(false)}

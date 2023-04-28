@@ -1,7 +1,8 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {Alert, Dimensions, KeyboardAvoidingView} from 'react-native';
+import {Alert, Dimensions, Platform} from 'react-native';
 import {useDispatch} from 'react-redux';
 
+import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {login, guestLogin} from '../../../store/slices/authSlice';
 import styled from 'styled-components';
@@ -50,6 +51,15 @@ const LoginScreen = props => {
       Alert.alert('로그인 실패', error, [{text: '확인'}]);
     }
   }, [error]);
+
+  /* 
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+    } else if (Platform.OS == 'ios') {
+    }
+    requestLocationPermission();
+  }, []);
+  */
 
   return (
     <Container>

@@ -11,13 +11,12 @@ const BodyPart = props => {
         {/*머리 부분*/}
         <BodyPartWrapper>
           <ButtonWrapper
-            value="머리"
-            onPress={() => props.onBodyPartSelect('머리')}>
+            value="머리관련부위"
+            onPress={() => props.onBodyPartSelect('머리관련부위')}>
             <Icons.head />
           </ButtonWrapper>
         </BodyPartWrapper>
       </HeadWrapper>
-
       <SecondFloorWrapper>
         {/*왼쪽 어꺠 부분*/}
         <BodyPartWrapper>
@@ -27,11 +26,11 @@ const BodyPart = props => {
             <Icons.leftShoulder />
           </ButtonWrapper>
         </BodyPartWrapper>
-        {/*가슴 부분*/}
+        {/*가슴 부분 (체간으로 묶어서 모달 전달)*/}
         <BodyPartWrapper>
           <ButtonWrapper
-            value="가슴"
-            onPress={() => props.onBodyPartSelect('가슴')}>
+            value="체간관련부위"
+            onPress={() => props.onBodyPartSelect('체간관련부위')}>
             <Icons.chest />
           </ButtonWrapper>
         </BodyPartWrapper>
@@ -44,7 +43,6 @@ const BodyPart = props => {
           </ButtonWrapper>
         </BodyPartWrapper>
       </SecondFloorWrapper>
-
       <ThirdFloorWrapper>
         {/*왼쪽 팔 부분*/}
         <BodyPartWrapper style={{marginRight: 25}}>
@@ -54,11 +52,11 @@ const BodyPart = props => {
             <Icons.leftArm />
           </ButtonWrapper>
         </BodyPartWrapper>
-        {/*복부 부분*/}
+        {/*복부 부분 (체간으로 묶어서 모달 전달)*/}
         <BodyPartWrapper>
           <ButtonWrapper
-            value="복부"
-            onPress={() => props.onBodyPartSelect('복부')}>
+            value="체간관련부위"
+            onPress={() => props.onBodyPartSelect('체간관련부위')}>
             <Icons.stomach />
           </ButtonWrapper>
         </BodyPartWrapper>
@@ -71,7 +69,6 @@ const BodyPart = props => {
           </ButtonWrapper>
         </BodyPartWrapper>
       </ThirdFloorWrapper>
-
       <FourthFloorWrapper>
         {/*왼쪽 손 부분*/}
         <BodyPartWrapper style={{marginRight: 5}}>
@@ -106,7 +103,6 @@ const BodyPart = props => {
           </ButtonWrapper>
         </BodyPartWrapper>
       </FourthFloorWrapper>
-
       <BottomFloorWrapper>
         {/*왼쪽 발 부분*/}
         <BodyPartWrapper>

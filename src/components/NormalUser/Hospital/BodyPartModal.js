@@ -4,11 +4,9 @@ import {Text, Dimensions, FlatList} from 'react-native';
 import Modal from 'react-native-modal';
 import styled from 'styled-components';
 
-import headPartData from '../../../data/headPartData';
+import BodyPartData from '../../../data/BodyPartData';
 
-const {width} = Dimensions.get('window');
-
-const HeadPartModal = props => {
+const BodyPartModal = props => {
   return (
     <Modal
       isVisible={props.isVisible}
@@ -17,7 +15,11 @@ const HeadPartModal = props => {
       <ModalContainer>
         <ModalTitle>다양한 신체부위들이 있어요!</ModalTitle>
         <FlatList
-          data={headPartData}
+          data={
+            props.value === '머리관련부위'
+              ? BodyPartData.head_neckPartData
+              : BodyPartData.trunkPartData
+          }
           keyExtractor={item => item.id}
           numColumns={3}
           renderItem={itemData => (
@@ -74,4 +76,4 @@ const CancelText = styled.Text`
   font-size: 16px;
   font-weight: bold;
 `;
-export default HeadPartModal;
+export default BodyPartModal;

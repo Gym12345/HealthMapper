@@ -48,8 +48,8 @@ const medicalDepartmentData = [
   },
   {
     id: 10,
-    data: '흉부외과',
-    icon: <Icons.thoracicSurgery />,
+    data: '외과',
+    icon: <Icons.surgery />,
   },
   {
     id: 11,
