@@ -37,7 +37,7 @@ export const signUp = createAsyncThunk(
   'auth/signUp',
   async ({userId, userPw, userName, userClass}) => {
     const response = await fetch(
-      'http://172.30.1.55:8090/Health/Health1/SignUpController',
+      'http://localhost:8090/Health/Health1/SignUpController',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
