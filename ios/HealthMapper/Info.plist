@@ -22,6 +22,12 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>앱이 사용자의 위치를 사용하려고 합니다.</string>
+	<key>GMSApiKey</key>
+	<string>AIzaSyBlnr7M-Kqn7jeiQbxRA53-0noy39s2_p8</string>
+
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
