@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {FlatList, Alert} from 'react-native';
+import {FlatList, Alert, Linking} from 'react-native';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 import {useDispatch} from 'react-redux';
 import {getHospitalList_medicalDepartment} from '../../../store/slices/hospitalSlice';
@@ -14,12 +15,52 @@ import medicalDepartmentData from '../../../data/medicalDepartmentData';
 const MedicalDepartmentScreen = props => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
+
+  //병원 리스트 조회 전 위치 권한 확인 함수
+  const checkLocationPermission = async () => {
+    try {
+      let result = await check(
+        Platform.select({
+          ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+          android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+        }),
+      );
+      if (result === RESULTS.DENIED) {
+        result = await request(
+          Platform.select({
+            ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+            android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+          }),
+        );
+      }
+      console.log('Result:', result);
+      return result === RESULTS.GRANTED;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
   //병원 리스트 조회 핸들러 (사용자가 선택한 진료과를 진료과 핸들러로 dispatch)
   const getHospitalListHandler = useCallback(
-    async selectedDepartment => {
+    async selectedPart => {
+      setError(null);
       try {
+        const hasLocationPermission = await checkLocationPermission(); // 위치 권한 확인
+        if (!hasLocationPermission) {
+          Alert.alert('위치 권한을 허용해주어야 합니다.', undefined, [
+            {text: '취소', style: 'cancel'},
+            {
+              text: '설정으로 이동',
+              onPress: () => {
+                Linking.openSettings();
+              },
+            },
+          ]);
+          return;
+        }
         await dispatch(
-          getHospitalList_medicalDepartment(selectedDepartment),
+          getHospitalList_medicalDepartment(selectedPart),
         ).unwrap();
         props.navigation.navigate('hospitalList');
       } catch (error) {

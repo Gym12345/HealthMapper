@@ -1,9 +1,10 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {Alert, Dimensions, Platform} from 'react-native';
-import {useDispatch} from 'react-redux';
 
-import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+import {useDispatch} from 'react-redux';
+import * as Permissions from 'react-native-permissions';
 import {RFValue} from 'react-native-responsive-fontsize';
+
 import {login, guestLogin} from '../../../store/slices/authSlice';
 import styled from 'styled-components';
 
@@ -20,6 +21,28 @@ const LoginScreen = props => {
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
+
+  //위치 권한 동의 핸들러 (앱 최초 실행시 알림창 show)
+  const requestLocationPermission = async () => {
+    try {
+      const reslut = await Permissions.request(
+        Platform.OS === 'ios'
+          ? Permissions.PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+          : Permissions.PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+      );
+      if (reslut === 'granted') {
+        console.log(reslut);
+      } else {
+        console.log(reslut);
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  useEffect(() => {
+    requestLocationPermission();
+  }, []);
 
   //게스트 로그인 핸들러
   const guestLoginHandler = useCallback(async () => {
@@ -51,15 +74,6 @@ const LoginScreen = props => {
       Alert.alert('로그인 실패', error, [{text: '확인'}]);
     }
   }, [error]);
-
-  /* 
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-    } else if (Platform.OS == 'ios') {
-    }
-    requestLocationPermission();
-  }, []);
-  */
 
   return (
     <Container>

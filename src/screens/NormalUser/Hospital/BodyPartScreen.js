@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {Dimensions, Alert} from 'react-native';
+import {Dimensions, Linking, Alert} from 'react-native';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch} from 'react-redux';
@@ -24,11 +25,49 @@ const BodyPartScreen = props => {
   const [selectedBodyPart, setSelectedBodyPart] = useState('');
   const [error, setError] = useState(false);
 
+  //병원 리스트 조회 전 위치 권한 확인 함수
+  const checkLocationPermission = async () => {
+    try {
+      let result = await check(
+        Platform.select({
+          ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+          android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+        }),
+      );
+      if (result === RESULTS.DENIED) {
+        result = await request(
+          Platform.select({
+            ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+            android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+          }),
+        );
+      }
+      console.log('Result:', result);
+      return result === RESULTS.GRANTED;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
   //병원 리스트 조회 핸들러 (사용자가 선택한 신체부위를 신체부위 핸들러로 dispatch)
   const getHospitalListHandler = useCallback(
     async selectedPart => {
       setError(null);
       try {
+        const hasLocationPermission = await checkLocationPermission(); // 위치 권한 확인
+        if (!hasLocationPermission) {
+          Alert.alert('위치 권한을 허용해주어야 합니다.', undefined, [
+            {text: '취소', style: 'cancel'},
+            {
+              text: '설정으로 이동',
+              onPress: () => {
+                Linking.openSettings();
+              },
+            },
+          ]);
+          return;
+        }
         await dispatch(getHospitalList_bodyPart(selectedPart)).unwrap();
         props.navigation.navigate('hospitalList');
       } catch (error) {
