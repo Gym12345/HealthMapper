@@ -1,7 +1,6 @@
 import React, {useState, useCallback} from 'react';
-import {Text, Button, Alert, Dimensions} from 'react-native';
+import {Alert, Dimensions} from 'react-native';
 
-import {useSelector} from 'react-redux';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {RFValue} from 'react-native-responsive-fontsize';
 
@@ -13,22 +12,11 @@ import Icons from '../../../aseets/Global/Icons';
 const {height} = Dimensions.get('window');
 
 const ReviewRegistScreen = props => {
-  const userClass = useSelector(state => state.auth.userClass);
   //바텀탭 높이 _ 스크롤뷰
   const bottomTabHeight = useBottomTabBarHeight();
   const selectedHospital = props.route.params.selectedHospital;
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState(null);
-
-  // 게스트 사용자에게 로그인 안내 알림창. 후기는 로그인 시에만 가능한 기능.
-  const showLoginScreen = useCallback(() => {
-    Alert.alert('안내', '로그인이 필요한 서비스입니다', [
-      {
-        text: '확인',
-        onPress: () => props.navigation.navigate('auth'),
-      },
-    ]);
-  }, [showLoginScreen]);
 
   return (
     <Container>
@@ -39,47 +27,43 @@ const ReviewRegistScreen = props => {
         leadingIcon={<Icons.cancel />}
         centerTitle={selectedHospital.name}
       />
-      {userClass === 'guest' ? (
-        showLoginScreen()
-      ) : (
-        <ScrollWrapper>
-          <RatingContainer>
-            <HospitalName>
-              <HighlightText>{selectedHospital.name}</HighlightText>의
-            </HospitalName>
-            <RatingTitle>진료는 어떠셨나요?</RatingTitle>
-            <StarRating
-              starSize={40}
-              enableHalfStar={false}
-              rating={rating}
-              onChange={setRating}
-              color="#885FFF"
-            />
-          </RatingContainer>
-          {!rating ? null : (
-            <ReviewContainer bottomTabHeight={bottomTabHeight}>
-              <ReviewWrapper>
-                <ReviewInput
-                  multiline={true}
-                  placeholder="진료받은 병원의 후기를 남겨보세요(선택사항)"
-                  value={comment}
-                  onChangeText={text => {
-                    setComment(text);
-                  }}
-                />
-              </ReviewWrapper>
-              <ReviewRegistButton
-                onPress={() => {
-                  props.navigation.navigate('hospitalDetail', {
-                    selectedHospital: selectedHospital,
-                  });
-                }}>
-                <ButtonText>완료</ButtonText>
-              </ReviewRegistButton>
-            </ReviewContainer>
-          )}
-        </ScrollWrapper>
-      )}
+      <ScrollWrapper>
+        <RatingContainer>
+          <HospitalName>
+            <HighlightText>{selectedHospital.name}</HighlightText>의
+          </HospitalName>
+          <RatingTitle>진료는 어떠셨나요?</RatingTitle>
+          <StarRating
+            starSize={40}
+            enableHalfStar={false}
+            rating={rating}
+            onChange={setRating}
+            color="#885FFF"
+          />
+        </RatingContainer>
+        {!rating ? null : (
+          <ReviewContainer bottomTabHeight={bottomTabHeight}>
+            <ReviewWrapper>
+              <ReviewInput
+                multiline={true}
+                placeholder="진료받은 병원의 후기를 남겨보세요(선택사항)"
+                value={comment}
+                onChangeText={text => {
+                  setComment(text);
+                }}
+              />
+            </ReviewWrapper>
+            <ReviewRegistButton
+              onPress={() => {
+                props.navigation.navigate('hospitalDetail', {
+                  selectedHospital: selectedHospital,
+                });
+              }}>
+              <ButtonText>완료</ButtonText>
+            </ReviewRegistButton>
+          </ReviewContainer>
+        )}
+      </ScrollWrapper>
     </Container>
   );
 };

@@ -69,7 +69,7 @@ const BodyPartScreen = props => {
             '앱을 사용하기 위해서는 위치 정보를 사용해야 합니다. 설정에서 위치 정보를 켜주세요.',
           );
         },
-        {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
       );
     });
   };

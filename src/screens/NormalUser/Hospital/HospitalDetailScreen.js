@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
-import {Image, Dimensions, Linking} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {Image, Dimensions, Alert, Linking} from 'react-native';
 
+import {useSelector} from 'react-redux';
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components';
 import HeaderBar from '../../../components/Global/HeaderBar';
@@ -10,7 +11,18 @@ const {width, height} = Dimensions.get('window');
 
 const HospitalDetailScreen = props => {
   const selectedHospital = props.route.params.selectedHospital;
+  const userClass = useSelector(state => state.auth.userClass);
   const [reviewCount, setReviewCount] = useState(0);
+
+  // 게스트 사용자에게 로그인 안내 알림창. 후기는 로그인 시에만 가능한 기능.
+  const showLoginScreen = useCallback(() => {
+    Alert.alert('안내', '로그인이 필요한 서비스입니다', [
+      {
+        text: '확인',
+        onPress: () => props.navigation.navigate('auth'),
+      },
+    ]);
+  }, [showLoginScreen]);
   return (
     <Container>
       <HeaderBar.leftCenter
@@ -44,9 +56,13 @@ const HospitalDetailScreen = props => {
         <ReviewButton
           activceOpacity={0.5}
           onPress={() => {
-            props.navigation.navigate('reviewRegist', {
-              selectedHospital: selectedHospital,
-            });
+            {
+              userClass === 'guest'
+                ? showLoginScreen()
+                : props.navigation.navigate('reviewRegist', {
+                    selectedHospital: selectedHospital,
+                  });
+            }
           }}>
           <ReviewButtonText>리뷰 쓰기 </ReviewButtonText>
         </ReviewButton>
