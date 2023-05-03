@@ -1,39 +1,18 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import Geolocation from '@react-native-community/geolocation';
-
-// 현재 위치의 위도와 경도 가져오기
-const getCurrentPosition = () => {
-  return new Promise((resolve, reject) => {
-    Geolocation.getCurrentPosition(
-      position => resolve(position),
-      error => {
-        console.log(error);
-        reject(
-          '앱을 사용하기 위해서는 위치 정보를 사용해야 합니다. 설정에서 위치 정보를 켜주세요.',
-        );
-      },
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
-    );
-  });
-};
 
 // 신체부위 선택을 통해 병원리스트를 가져오는 비동기 함수
 export const getHospitalList_bodyPart = createAsyncThunk(
   'hospital/getHospitalList_bodyPart',
-  async selectedValue => {
-    //현재 위치 저장
-    const position = await getCurrentPosition();
-    console.log(position);
-
+  async ({part, userLatitude, userLongitude}) => {
     const response = await fetch(
       `http://localhost:8090/Health/Health1/BodyPartsController`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          part: selectedValue,
-          userLatitude: position.coords.latitude, //현재 위치 위도
-          userLongitude: position.coords.longitude, //현재 위치 경도
+          part, //사용자가 선택한 신체부위
+          userLatitude, //현재 위치 위도
+          userLongitude, //현재 위치 경도
         }),
       },
     );
@@ -52,19 +31,17 @@ export const getHospitalList_bodyPart = createAsyncThunk(
 // 진료과 선택을 통해 병원리스트를 가져오는 비동기 함수
 export const getHospitalList_medicalDepartment = createAsyncThunk(
   'hospital/getHospitalList_medicalDepartment',
-  async selectedValue => {
-    //현재 위치 저장
-    const position = await getCurrentPosition();
-    console.log(position);
+  async ({department, userLatitude, userLongitude}) => {
+    console.log(department, userLatitude, userLongitude);
     const response = await fetch(
       `http://localhost:8090/Health/Health1/MedicalDepartmentController`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          department: selectedValue,
-          userLatitude: position.coords.latitude, //현재 위치 위도
-          userLongitude: position.coords.longitude, //현재 위치 경도
+          department, //사용자가 선택한 진료과
+          userLatitude, //현재 위치 위도
+          userLongitude, //현재 위치 경도
         }),
       },
     );
@@ -81,15 +58,23 @@ export const getHospitalList_medicalDepartment = createAsyncThunk(
 
 const initialState = {
   error: null,
-  healthArr: null,
+  healthArr: null, //서버를 통해 전달받은 병원정보
   distance: null,
+  userLatitude: null, //사용자 현재 위도 위치
+  userLongitude: null, //사용자 현재 경도 위치
 };
 
 // getHospitalList_BodyPart와 getHospitalList_MedicalDepartment 같은 상태를 정의하기에 하나의 buulder로
 export const hospitalSlice = createSlice({
   name: 'hospital',
   initialState,
-  reducers: {},
+  //현재 사용자 위치 state저장 action
+  reducers: {
+    setUserPosition: (state, action) => {
+      state.userLatitude = action.payload.userLatitude;
+      state.userLongitude = action.payload.userLongitude;
+    },
+  },
   extraReducers: builder => {
     builder
       //신체부위선택에 따른 병원리스트 조회 요청
@@ -121,5 +106,5 @@ export const hospitalSlice = createSlice({
   },
 });
 
-export const {} = hospitalSlice.actions;
+export const {setUserPosition} = hospitalSlice.actions;
 export default hospitalSlice.reducer;

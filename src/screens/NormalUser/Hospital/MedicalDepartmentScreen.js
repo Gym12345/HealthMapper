@@ -1,9 +1,13 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {FlatList, Alert, Linking} from 'react-native';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import Geolocation from '@react-native-community/geolocation';
 
 import {useDispatch} from 'react-redux';
-import {getHospitalList_medicalDepartment} from '../../../store/slices/hospitalSlice';
+import {
+  getHospitalList_medicalDepartment,
+  setUserPosition,
+} from '../../../store/slices/hospitalSlice';
 
 import styled from 'styled-components';
 import Icons from '../../../aseets/Global/Icons';
@@ -41,9 +45,28 @@ const MedicalDepartmentScreen = props => {
     }
   };
 
+  // 현재 위치의 위도와 경도 가져오기
+  const getCurrentPosition = () => {
+    return new Promise((resolve, reject) => {
+      Geolocation.getCurrentPosition(
+        position => {
+          console.log(position);
+          resolve(position);
+        },
+        error => {
+          console.log(error);
+          reject(
+            '앱을 사용하기 위해서는 위치 정보를 사용해야 합니다. 설정에서 위치 정보를 켜주세요.',
+          );
+        },
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+      );
+    });
+  };
+
   //병원 리스트 조회 핸들러 (사용자가 선택한 진료과를 진료과 핸들러로 dispatch)
   const getHospitalListHandler = useCallback(
-    async selectedPart => {
+    async selectedDepart => {
       setError(null);
       try {
         const hasLocationPermission = await checkLocationPermission(); // 위치 권한 확인
@@ -59,8 +82,21 @@ const MedicalDepartmentScreen = props => {
           ]);
           return;
         }
+        const position = await getCurrentPosition();
         await dispatch(
-          getHospitalList_medicalDepartment(selectedPart),
+          //사용자 위치 GET
+          setUserPosition({
+            userLatitude: position.coords.latitude,
+            userLongitude: position.coords.longitude,
+          }),
+        );
+        //사용자의 진료과 선택, 위치를 기반으로 병원리스트 조회
+        await dispatch(
+          getHospitalList_medicalDepartment({
+            department: selectedDepart,
+            userLatitude: position.coords.latitude,
+            userLongitude: position.coords.longitude,
+          }),
         ).unwrap();
         props.navigation.navigate('hospitalList');
       } catch (error) {

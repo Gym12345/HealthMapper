@@ -1,11 +1,16 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {Dimensions, Linking, Alert} from 'react-native';
+
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
+import Geolocation from '@react-native-community/geolocation';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch} from 'react-redux';
-import {getHospitalList_bodyPart} from '../../../store/slices/hospitalSlice';
+import {
+  getHospitalList_bodyPart,
+  setUserPosition,
+} from '../../../store/slices/hospitalSlice';
 
 import styled from 'styled-components';
 
@@ -50,6 +55,25 @@ const BodyPartScreen = props => {
     }
   };
 
+  // 현재 위치의 위도와 경도 가져오기
+  const getCurrentPosition = () => {
+    return new Promise((resolve, reject) => {
+      Geolocation.getCurrentPosition(
+        position => {
+          console.log(position);
+          resolve(position);
+        },
+        error => {
+          console.log(error);
+          reject(
+            '앱을 사용하기 위해서는 위치 정보를 사용해야 합니다. 설정에서 위치 정보를 켜주세요.',
+          );
+        },
+        {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
+      );
+    });
+  };
+
   //병원 리스트 조회 핸들러 (사용자가 선택한 신체부위를 신체부위 핸들러로 dispatch)
   const getHospitalListHandler = useCallback(
     async selectedPart => {
@@ -68,7 +92,22 @@ const BodyPartScreen = props => {
           ]);
           return;
         }
-        await dispatch(getHospitalList_bodyPart(selectedPart)).unwrap();
+        const position = await getCurrentPosition();
+        //사용자 위치 GET
+        await dispatch(
+          setUserPosition({
+            userLatitude: position.coords.latitude,
+            userLongitude: position.coords.longitude,
+          }),
+        );
+        //사용자의 신체부위 선택, 위치를 기반으로 병원리스트 조회
+        await dispatch(
+          getHospitalList_bodyPart({
+            part: selectedPart,
+            userLatitude: position.coords.latitude,
+            userLongitude: position.coords.longitude,
+          }),
+        ).unwrap();
         props.navigation.navigate('hospitalList');
       } catch (error) {
         //예외처리

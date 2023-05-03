@@ -35,33 +35,17 @@ const HospitalListScreen = props => {
   const bottomTabHeight = useBottomTabBarHeight();
   //병원 정보 (병원 리스트 및 그에 따른 정보_ 현재위치로부터의 거리, 병원위도, 병원경도 포함)
   const healthArr = useSelector(state => state.hospital.healthArr);
+  const userLatitude = useSelector(state => state.hospital.userLatitude);
+  const userLongitude = useSelector(state => state.hospital.userLongitude);
 
   const [currentPosition, setCurrentPosition] = useState(null);
 
-  // 현재 위치 가져오는 함수
-  const getCurrentPosition = () => {
-    return new Promise((resolve, reject) => {
-      Geolocation.getCurrentPosition(
-        position => {
-          resolve(position);
-        },
-        error => {
-          reject(error);
-        },
-        //enableHighAccuracy 속성 false시 덜 정확하지만 빠른 위치 제공 / ture시 정확하지만 느린 위치 제공
-        {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
-      );
-    });
-  };
-
   //useEffect를 사용해 병원 리스트 스크린 진입 시 사용자 위치 가져오기(비동기)
   useEffect(() => {
-    getCurrentPosition()
-      .then(position => {
-        const {latitude, longitude} = position.coords;
-        setCurrentPosition({latitude, longitude});
-      })
-      .catch(error => console.log(error));
+    setCurrentPosition({
+      latitude: userLatitude,
+      longitude: userLongitude,
+    });
   }, []);
 
   return (
