@@ -16,6 +16,8 @@ import HospitalHomeScreen from '../screens/NormalUser/Hospital/HospitalHomeScree
 import BodyPartScreen from '../screens/NormalUser/Hospital/BodyPartScreen';
 import MedicalDepartmentScreen from '../screens/NormalUser/Hospital/MedicalDepartmentScreen';
 import HospitalListScreen from '../screens/NormalUser/Hospital/HospitalListScreen';
+import HospitalDetailScreen from '../screens/NormalUser/Hospital/HospitalDetailScreen';
+import ReviewRegistScreen from '../screens/NormalUser/Hospital/ReviewRegistScreen';
 
 //HelathNavigator_NormalUser
 import HealthScreen from '../screens/NormalUser/Health/HealthScreen';
@@ -81,6 +83,12 @@ const HospitalNavigator = props => {
         component={MedicalDepartmentScreen}
       />
       <Stack.Screen name="hospitalList" component={HospitalListScreen} />
+      <Stack.Screen name="hospitalDetail" component={HospitalDetailScreen} />
+      <Stack.Screen
+        name="reviewRegist"
+        component={ReviewRegistScreen}
+        options={{tabBarVisible: false}}
+      />
     </Stack.Navigator>
   );
 };
