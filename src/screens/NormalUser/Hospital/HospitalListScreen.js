@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Dimensions} from 'react-native';
 
-import Geolocation from '@react-native-community/geolocation';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {useSelector} from 'react-redux';

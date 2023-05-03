@@ -1,8 +1,10 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Alert, Dimensions} from 'react-native';
 
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {useDispatch, useSelector} from 'react-redux';
+import {reviewRegist} from '../../../store/slices/reviewSlice';
 
 import StarRating from 'react-native-star-rating-widget';
 import styled from 'styled-components';
@@ -12,11 +14,53 @@ import Icons from '../../../aseets/Global/Icons';
 const {height} = Dimensions.get('window');
 
 const ReviewRegistScreen = props => {
+  const dispatch = useDispatch();
   //바텀탭 높이 _ 스크롤뷰
   const bottomTabHeight = useBottomTabBarHeight();
   const selectedHospital = props.route.params.selectedHospital;
+  const userId = useSelector(state => state.auth.userId);
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState(null);
+  const [comment, setComment] = useState('');
+  const [buttonActive, setButtonActive] = useState(false);
+
+  //comment가 입력되면 버튼 활성화
+  useEffect(() => {
+    if (comment.length > 0) {
+      setButtonActive(true);
+    } else {
+      setButtonActive(false);
+    }
+  }, [comment]);
+
+  //리뷰 등록 핸들러
+  const reviewRegistHandler = async () => {
+    try {
+      await dispatch(
+        reviewRegist({
+          hName: selectedHospital.name,
+          userId,
+          hrComment: comment,
+          hrRate: rating,
+        }),
+      ).unwrap();
+      Alert.alert('리뷰 등록에 성공했습니다', null, [
+        {
+          text: '확인',
+          onPress: () =>
+            props.navigation.navigate('hospitalDetail', {
+              selectedHospital: selectedHospital,
+            }),
+        },
+      ]);
+    } catch (error) {
+      console.log(error.message);
+      Alert.alert(error.message, null, [
+        {
+          text: '확인',
+        },
+      ]);
+    }
+  };
 
   return (
     <Container>
@@ -46,7 +90,8 @@ const ReviewRegistScreen = props => {
             <ReviewWrapper>
               <ReviewInput
                 multiline={true}
-                placeholder="진료받은 병원의 후기를 남겨보세요(선택사항)"
+                placeholder="진료받은 병원의 후기를 남겨보세요(필수사항)"
+                placeholderTextColor="#A09FAB"
                 value={comment}
                 onChangeText={text => {
                   setComment(text);
@@ -54,12 +99,10 @@ const ReviewRegistScreen = props => {
               />
             </ReviewWrapper>
             <ReviewRegistButton
-              onPress={() => {
-                props.navigation.navigate('hospitalDetail', {
-                  selectedHospital: selectedHospital,
-                });
-              }}>
-              <ButtonText>완료</ButtonText>
+              active={buttonActive}
+              disabled={!buttonActive}
+              onPress={reviewRegistHandler}>
+              <ButtonText active={buttonActive}>완료</ButtonText>
             </ReviewRegistButton>
           </ReviewContainer>
         )}
@@ -106,16 +149,18 @@ const ReviewInput = styled.TextInput`
   font-size: ${RFValue(13)}px;
 `;
 const ReviewRegistButton = styled.TouchableOpacity`
-  margin-top: ${height / 10}px;
+  margin-top: ${height / 15}px;
   padding: 10px;
   border-radius: 10px;
-  background-color: ${props => props.theme.colors.patientColor};
+  background-color: ${props =>
+    props.active ? props.theme.colors.patientColor : props.theme.colors.gray6};
   align-items: center;
 `;
 const ButtonText = styled.Text`
   font-weight: bold;
   font-size: ${RFValue(18)}px;
   margin-vertical: 5px;
-  color: ${props => props.theme.colors.white};
+  color: ${props =>
+    props.active ? props.theme.colors.white : props.theme.colors.gray4};
 `;
 export default ReviewRegistScreen;
