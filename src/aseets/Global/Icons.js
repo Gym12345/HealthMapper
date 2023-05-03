@@ -21,6 +21,23 @@ class ArrowBack extends Component {
   }
 }
 
+/* Cancel(스크린 취소_뒤로가기) Icon */
+class Cancel extends Component {
+  render() {
+    return (
+      <Svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={24}
+        height={24}
+        stroke="#000000"
+        strokeWidth={5}
+        viewBox="0 0 64 64">
+        <Path d="m8.06 8.06 47.35 47.88M55.94 8.06 8.59 55.94" />
+      </Svg>
+    );
+  }
+}
+
 /* Hospital(바텀탭바 병원추천받기Icon) Icon */
 class Hospital extends Component {
   render() {
@@ -98,6 +115,7 @@ class UserInfo extends Component {
 export default Icons = {
   //Icon _ Global
   arrowBack: ArrowBack,
+  cancel: Cancel,
   hospital: Hospital,
   health: Health,
   userInfo: UserInfo,
