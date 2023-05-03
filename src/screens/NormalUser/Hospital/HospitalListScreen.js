@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Dimensions, Linking} from 'react-native';
+import {FlatList, Image, Dimensions} from 'react-native';
 
 import Geolocation from '@react-native-community/geolocation';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
@@ -13,6 +13,22 @@ import Icons from '../../../aseets/Global/Icons';
 import HospitalCard from '../../../components/NormalUser/Hospital/HospitalCard';
 
 const {height, width} = Dimensions.get('window');
+
+//추후 병원DB의 위도, 경도로 대체
+const testData = [
+  {
+    id: 1,
+    name: '병원 1',
+    latitude: 37.46142658,
+    longitude: 127.12667541,
+  },
+  {
+    id: 2,
+    name: '병원 2',
+    latitude: 37.46142777,
+    longitude: 127.1299999,
+  },
+];
 
 const HospitalListScreen = props => {
   //바텀탭 높이
@@ -32,10 +48,12 @@ const HospitalListScreen = props => {
         error => {
           reject(error);
         },
-        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+        //enableHighAccuracy 속성 false시 덜 정확하지만 빠른 위치 제공 / ture시 정확하지만 느린 위치 제공
+        {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
       );
     });
   };
+
   //useEffect를 사용해 병원 리스트 스크린 진입 시 사용자 위치 가져오기(비동기)
   useEffect(() => {
     getCurrentPosition()
@@ -56,21 +74,43 @@ const HospitalListScreen = props => {
         centerTitle="병원 리스트"
       />
       {/*지도에 현재 위치 표시*/}
+
       {currentPosition && (
         <HospitalMap
           provider={PROVIDER_GOOGLE}
           region={{
+            //현재 내위치를 기준으로 지도 렌더링
             latitude: currentPosition.latitude,
             longitude: currentPosition.longitude,
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }}>
-          <Marker
+          <Marker //현재 내위치
             coordinate={{
               latitude: currentPosition.latitude,
               longitude: currentPosition.longitude,
             }}
           />
+          {testData.map(
+            (
+              data, //추후 병원 위도,경도 얻어오면 배열로 렌더링
+            ) => (
+              <Marker
+                key={data.id}
+                coordinate={{
+                  latitude: data.latitude,
+                  longitude: data.longitude,
+                }}
+                title={data.name}
+                description="This is a hospital"
+                onPress={() => console.log(data.latitude)}>
+                <Image
+                  source={require('../../../aseets/Hospital/hospitalMarker.png')}
+                  style={{width: 30, height: 30}}
+                />
+              </Marker>
+            ),
+          )}
         </HospitalMap>
       )}
 
@@ -81,11 +121,13 @@ const HospitalListScreen = props => {
           renderItem={itemData => (
             <HospitalCard
               hospitalName={itemData.item.name}
+              hospitalBodyPart={itemData.item.part}
               hospitalDepartment={itemData.item.department}
               hospitalAddress={itemData.item.address}
-              hospitalBodyPart={itemData.item.part}
               onSelectHospital={() => {
-                props.navigation.navigate('hospitalDetail');
+                props.navigation.navigate('hospitalDetail', {
+                  selectedHospital: itemData.item,
+                });
               }}
             />
           )}
