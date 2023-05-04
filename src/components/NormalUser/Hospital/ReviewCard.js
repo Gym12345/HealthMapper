@@ -50,7 +50,7 @@ const CommentWrapper = styled.View`
 `;
 const ReviewComment = styled.Text`
   font-size: ${RFValue(14)}px;
-  color: ${props => props.theme.colors.black};
+  color: ${props => props.theme.colors.gray3};
 `;
 
 export default ReviewCard;

@@ -57,6 +57,7 @@ export const getHospitalList_medicalDepartment = createAsyncThunk(
 );
 
 const initialState = {
+  isLoading: false,
   error: null,
   healthArr: null, //서버를 통해 전달받은 병원정보
   distance: null,
@@ -80,28 +81,34 @@ export const hospitalSlice = createSlice({
       //신체부위선택에 따른 병원리스트 조회 요청
       .addCase(getHospitalList_bodyPart.pending, state => {
         state.error = null;
+        state.isLoading = true;
       })
       //신체부위선택에 따른 병원리스트 조회 성공
       .addCase(getHospitalList_bodyPart.fulfilled, (state, action) => {
         state.error = null;
+        state.isLoading = false;
         state.healthArr = action.payload.healthArr;
       })
       //신체부위선택에 따른 병원리스트 조회 거절
       .addCase(getHospitalList_bodyPart.rejected, (state, action) => {
         state.error = action.error;
+        state.isLoading = false;
       })
       //진료과선택에 따른 병원리스트 조회 요청
       .addCase(getHospitalList_medicalDepartment.pending, state => {
         state.error = null;
+        state.isLoading = true;
       })
       //진료과선택에 따른 병원리스트 조회 성공
       .addCase(getHospitalList_medicalDepartment.fulfilled, (state, action) => {
         state.error = null;
+        state.isLoading = false;
         state.healthArr = action.payload.healthArr;
       })
       //진료과선택에 따른 병원리스트 조회 거절
       .addCase(getHospitalList_medicalDepartment.rejected, (state, action) => {
         state.error = action.error;
+        state.isLoading = false;
       });
   },
 });
