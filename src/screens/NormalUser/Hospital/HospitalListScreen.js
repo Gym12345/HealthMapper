@@ -74,19 +74,19 @@ const HospitalListScreen = props => {
               longitude: currentPosition.longitude,
             }}
           />
-          {testData.map(
+          {healthArr.map(
             (
               data, //추후 병원 위도,경도 얻어오면 배열로 렌더링
             ) => (
               <Marker
                 key={data.id}
                 coordinate={{
-                  latitude: data.latitude,
-                  longitude: data.longitude,
+                  latitude: data.hLatitude,
+                  longitude: data.hLongitude,
                 }}
                 title={data.name}
-                description="This is a hospital"
-                onPress={() => console.log(data.latitude)}>
+                description={data.department}
+                onPress={() => console.log(data)}>
                 <Image
                   source={require('../../../aseets/Hospital/hospitalMarker.png')}
                   style={{width: 30, height: 30}}
