@@ -4,7 +4,7 @@ export const reviewRegist = createAsyncThunk(
   'review/regist',
   async ({hName, userId, hrComment, hrRate}) => {
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/HospitalReviewInsertController`,
+      `http://localhost:8090/Health/Health1/HospitalReviewInsertControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -28,10 +28,37 @@ export const reviewRegist = createAsyncThunk(
   },
 );
 
+export const getReview = createAsyncThunk(
+  'review/getReview',
+  async selectedHospitalName => {
+    const response = await fetch(
+      `http://localhost:8090/Health/Health1/HospitalReviewListControllerForJson`,
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          hName: selectedHospitalName,
+        }),
+      },
+    );
+
+    const resData = await response.json();
+    console.log(resData);
+    if (response.ok) {
+      console.log('리뷰호출 성공');
+      return resData;
+    } else {
+      console.log('리뷰호출 실패');
+      throw new Error(error);
+    }
+  },
+);
+
 initialState = {
   error: null,
   isReviewRegistered: false,
-  reviewArr: null, //리뷰관련 정보 state
+  isReviesGetted: false,
+  reviewArr: [], //리뷰관련 정보 state
 };
 
 export const reviewSlice = createSlice({
@@ -42,6 +69,7 @@ export const reviewSlice = createSlice({
     builder
       .addCase(reviewRegist.pending, state => {
         state.error = null;
+        state.isReviewRegistered = false;
       })
       .addCase(reviewRegist.fulfilled, state => {
         state.error = null;
@@ -50,6 +78,18 @@ export const reviewSlice = createSlice({
       .addCase(reviewRegist.rejected, (state, action) => {
         state.error = action.error.message;
         state.isReviewRegistered = false;
+      })
+      .addCase(getReview.pending, state => {
+        state.error = null;
+      })
+      .addCase(getReview.fulfilled, (state, action) => {
+        state.error = null;
+        state.isReviesGetted = true;
+        state.reviewArr = action.payload.reviewArr;
+      })
+      .addCase(getReview.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isReviesGetted = false;
       }),
 });
 

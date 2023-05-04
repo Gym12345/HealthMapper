@@ -33,7 +33,7 @@ const ReviewRegistScreen = props => {
   }, [comment]);
 
   //리뷰 등록 핸들러
-  const reviewRegistHandler = async () => {
+  const submitReviewHandler = async () => {
     try {
       await dispatch(
         reviewRegist({
@@ -101,7 +101,7 @@ const ReviewRegistScreen = props => {
             <ReviewRegistButton
               active={buttonActive}
               disabled={!buttonActive}
-              onPress={reviewRegistHandler}>
+              onPress={submitReviewHandler}>
               <ButtonText active={buttonActive}>완료</ButtonText>
             </ReviewRegistButton>
           </ReviewContainer>

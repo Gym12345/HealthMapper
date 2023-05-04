@@ -5,7 +5,7 @@ export const getHospitalList_bodyPart = createAsyncThunk(
   'hospital/getHospitalList_bodyPart',
   async ({part, userLatitude, userLongitude}) => {
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/BodyPartsController`,
+      `http://localhost:8090/Health/Health1/BodyPartsControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -34,7 +34,7 @@ export const getHospitalList_medicalDepartment = createAsyncThunk(
   async ({department, userLatitude, userLongitude}) => {
     console.log(department, userLatitude, userLongitude);
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/MedicalDepartmentController`,
+      `http://localhost:8090/Health/Health1/MedicalDepartmentControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
