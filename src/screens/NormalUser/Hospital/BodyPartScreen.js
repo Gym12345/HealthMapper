@@ -33,7 +33,7 @@ const BodyPartScreen = props => {
   //바텀탭 높이 _ 스크롤뷰
   const bottomTabHeight = useBottomTabBarHeight();
   const dispatch = useDispatch();
-  const isLoading = useSelector(state => state.hospital.isLoading);
+  const isGetHospitalLoading = useSelector(state => state.hospital.isLoading);
   const [showModal, setShowModal] = useState(false);
   const [selectedBodyPart, setSelectedBodyPart] = useState('');
   const [error, setError] = useState(false);
@@ -139,7 +139,7 @@ const BodyPartScreen = props => {
 
   return (
     <Container>
-      {isLoading || isLocationGetting ? (
+      {isGetHospitalLoading || isLocationGetting ? (
         <LoadingView>
           <ActivityIndicator size="large" color={spinnerColor} />
           <LoadingText>

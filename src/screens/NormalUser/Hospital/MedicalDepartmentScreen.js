@@ -23,7 +23,7 @@ const MedicalDepartmentScreen = props => {
   const [error, setError] = useState(null);
   const [isLocationGetting, setIsLocationGetting] = useState(false);
   const dispatch = useDispatch();
-  const isLoading = useSelector(state => state.hospital.isLoading);
+  const isGetHospitalLoading = useSelector(state => state.hospital.isLoading);
 
   //병원 리스트 조회 전 위치 권한 확인 함수
   const checkLocationPermission = async () => {
@@ -125,7 +125,7 @@ const MedicalDepartmentScreen = props => {
 
   return (
     <Container>
-      {isLoading || isLocationGetting ? (
+      {isGetHospitalLoading || isLocationGetting ? (
         <LoadingView>
           <ActivityIndicator size="large" color={spinnerColor} />
           <LoadingText>
