@@ -81,7 +81,9 @@ const HospitalRegistScreen = props => {
       isHospitalName &&
       isHospitalAddress &&
       isHospitalDomain &&
-      isHospitalDescription
+      isHospitalDescription &&
+      selectedMedicalParts.length > 0 &&
+      selectedBodyParts.length > 0
     ) {
       setIsButtonActive(true);
     } else {
@@ -92,6 +94,8 @@ const HospitalRegistScreen = props => {
     isHospitalAddress,
     isHospitalDomain,
     isHospitalDescription,
+    selectedMedicalParts,
+    selectedBodyParts,
   ]);
 
   //뒤로가기 눌를 시 앱종료_안드로이드
@@ -126,7 +130,7 @@ const HospitalRegistScreen = props => {
               setIsHospitalDescription={setIsHospitalDescription}
             />
             {/* 병원 진료과 카드 */}
-            <FormTitle>진료과</FormTitle>
+            <FormTitle>진료과{'   '}(필수선택)</FormTitle>
             <CardContainer>
               <FlatList
                 scrollEnabled={false}
@@ -148,7 +152,7 @@ const HospitalRegistScreen = props => {
               />
             </CardContainer>
             {/* 병원 신체부위 카드 */}
-            <FormTitle>신체부위</FormTitle>
+            <FormTitle>신체부위{'   '}(필수선택)</FormTitle>
             <CardContainer>
               <FlatList
                 scrollEnabled={false}
