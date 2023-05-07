@@ -1,7 +1,10 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {BackHandler, Dimensions, FlatList, Platform} from 'react-native';
+import {BackHandler, Dimensions, FlatList} from 'react-native';
 
 import {useFocusEffect} from '@react-navigation/native';
+
+import Geocoder from 'react-native-geocoding';
+import Config from 'react-native-config';
 
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -25,6 +28,8 @@ const HospitalRegistScreen = props => {
   const [isHospitalDescription, setIsHospitalDescription] = useState(null);
   const [selectedMedicalParts, setselectedMedicalParts] = useState([]); //선택된 진료과
   const [selectedBodyParts, setselectedBodyParts] = useState([]); //선택된 신체부위
+  const [isHospitalLatitude, setIsHospitalLatitude] = useState();
+  const [isHospitalLongitude, setIsHospitalLongitude] = useState();
   const [isButtonActive, setIsButtonActive] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -76,8 +81,26 @@ const HospitalRegistScreen = props => {
       isHospitalDescription,
       selectedMedicalPartsData,
       selectedBodyPartsData,
+      isHospitalLatitude,
+      isHospitalLongitude,
     );
   };
+
+  //병원 도로명 주소 선택되면 위도, 경도 얻어오는 함수
+  useEffect(() => {
+    if (isHospitalAddress) {
+      Geocoder.init(Config.GOOGLE_MAPS_API_KEY);
+
+      Geocoder.from(isHospitalAddress)
+        .then(json => {
+          const {lat, lng} = json.results[0].geometry.location;
+          console.log(lat, lng);
+          setIsHospitalLatitude(lat);
+          setIsHospitalLongitude(lng);
+        })
+        .catch(error => console.warn(error));
+    }
+  }, [isHospitalAddress]);
 
   //병원 등록 요청 버튼 액티브 활성화
   useEffect(() => {

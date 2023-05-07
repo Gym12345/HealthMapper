@@ -13,22 +13,6 @@ import HospitalCard from '../../../components/NormalUser/Hospital/HospitalCard';
 
 const {height, width} = Dimensions.get('window');
 
-//추후 병원DB의 위도, 경도로 대체
-const testData = [
-  {
-    id: 1,
-    name: '병원 1',
-    latitude: 37.46142658,
-    longitude: 127.12667541,
-  },
-  {
-    id: 2,
-    name: '병원 2',
-    latitude: 37.46142777,
-    longitude: 127.1299999,
-  },
-];
-
 const HospitalListScreen = props => {
   //바텀탭 높이
   const bottomTabHeight = useBottomTabBarHeight();
