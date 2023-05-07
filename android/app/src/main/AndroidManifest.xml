@@ -16,7 +16,7 @@
       android:theme="@style/AppTheme">
       <meta-data
 	      android:name="com.google.android.maps.v2.API_KEY"
-	      android:value="AIzaSyC_W1U38Pf6sDJFQizkL78yRFKAg7XYOzM"/>
+	      android:value="${googleMapApiKey}"/>
 
       <!-- You will also only need to add this uses-libray tag -->
       <uses-library android:name="org.apache.http.legacy" android:required="false"/>
