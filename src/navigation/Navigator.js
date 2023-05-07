@@ -26,7 +26,6 @@ import HealthScreen from '../screens/NormalUser/Health/HealthScreen';
 import UserInfoScreen from '../screens/NormalUser/UserInformation/UserInfoScreen';
 
 //UserInfoNavigator_HospitalOwner
-import HospitalRegistHomeScreen from '../screens/HospitalOwner/HospitalRegist/HospitalRegistHomeScreen';
 import HospitalRegistScreen from '../screens/HospitalOwner/HospitalRegist/HospitalRegistScreen';
 
 const patientColor = 'rgb(136,95,255)';
@@ -97,12 +96,8 @@ const HospitalNavigator = props => {
 const HospitalRegistNavigator = props => {
   return (
     <Stack.Navigator
-      initialRouteName="hospitalRegistHome"
+      initialRouteName="hospitalRegist"
       screenOptions={{headerShown: false}}>
-      <Stack.Screen
-        name="hospitalRegistHome"
-        component={HospitalRegistHomeScreen}
-      />
       <Stack.Screen name="hospitalRegist" component={HospitalRegistScreen} />
     </Stack.Navigator>
   );

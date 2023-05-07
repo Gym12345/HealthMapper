@@ -14,8 +14,7 @@ import RecommendationCard from '../../../components/NormalUser/Hospital/Recommen
 const {height} = Dimensions.get('window');
 
 const HospitalHomeScreen = props => {
-  //바텀탭 높이 _ 스크롤뷰
-  const bottomTabHeight = useBottomTabBarHeight();
+  const bottomTabHeight = useBottomTabBarHeight(); //바텀탭 높이 _ 스크롤뷰
   //뒤로가기 눌를 시 앱종료_안드로이드
   useFocusEffect(
     useCallback(() => {

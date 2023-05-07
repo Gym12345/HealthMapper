@@ -54,9 +54,101 @@ const TrunkPartData = [
   },
 ];
 
+//전체 신체부위 (병원등록할때 쓰이는 data)
+const TotalBodyPartData = [
+  {
+    id: 1,
+    data: '눈',
+    icon: <Icons.eye />,
+    totalValue: '신체부위',
+  },
+  {
+    id: 2,
+    data: '코',
+    icon: <Icons.nose />,
+    totalValue: '신체부위',
+  },
+  {
+    id: 3,
+    data: '입',
+    icon: <Icons.mouth />,
+    totalValue: '신체부위',
+  },
+  {
+    id: 4,
+    data: '귀',
+    icon: <Icons.ear />,
+    totalValue: '신체부위',
+  },
+
+  {
+    id: 5,
+    data: '목',
+    icon: <Icons.neck />,
+    totalValue: '신체부위',
+  },
+  {
+    id: 6,
+    data: '머리',
+    icon: <Icons.head_modal />,
+    totalValue: '신체부위',
+  },
+  {
+    id: 7,
+    data: '가슴',
+    icon: <Icons.chest_modal />,
+    totalValue: '신체부위',
+  },
+  {
+    id: 8,
+    data: '배',
+    icon: <Icons.stomach_modal />,
+    totalValue: '신체부위',
+  },
+  {
+    id: 9,
+    data: '등',
+    icon: <Icons.humanBack />,
+    totalValue: '신체부위',
+  },
+  {
+    id: 10,
+    data: '어깨',
+    icon: <Icons.humanBack />,
+    totalValue: '신체부위',
+  },
+  {
+    id: 11,
+    data: '팔',
+    icon: <Icons.humanBack />,
+    totalValue: '신체부위',
+  },
+  {
+    id: 12,
+    data: '손',
+    icon: <Icons.humanBack />,
+    totalValue: '신체부위',
+  },
+
+  {
+    id: 13,
+    data: '다리',
+    icon: <Icons.humanBack />,
+    totalValue: '신체부위',
+  },
+
+  {
+    id: 14,
+    data: '발',
+    icon: <Icons.humanBack />,
+    totalValue: '신체부위',
+  },
+];
+
 const BodyPartData = {
   trunkPartData: TrunkPartData,
   head_neckPartData: Head_NeckPartData,
+  totalBodyPartData: TotalBodyPartData,
 };
 
 export default BodyPartData;
