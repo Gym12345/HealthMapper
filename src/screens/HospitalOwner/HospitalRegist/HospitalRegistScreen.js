@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {BackHandler, Dimensions, FlatList} from 'react-native';
+import {BackHandler, Dimensions, FlatList, Platform} from 'react-native';
 
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -8,21 +8,25 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import HeaderBar from '../../../components/Global/HeaderBar';
 import styled from 'styled-components';
 
+import HospitalAddressModal from '../../../components/HospiltalOwner/HospitalAddressModal';
 import HospitalInputForm from '../../../components/HospiltalOwner/HospitalInputForm';
 import PartCard from '../../../components/HospiltalOwner/PartCard';
 import medicalDepartmentData from '../../../data/medicalDepartmentData';
 import BodyPartData from '../../../data/BodyPartData';
 
 const {height} = Dimensions.get('window');
+
+// 병원등록 요청을 위해 병원 이름, URL주소, 설명, 주소, 관련 진료과, 관련 신체부위 기입 화면
 const HospitalRegistScreen = props => {
   const bottomTabHeight = useBottomTabBarHeight(); //바텀탭 높이 _ 스크롤뷰
   const [isHospitalName, setIsHospitalName] = useState(null);
   const [isHospitalAddress, setIsHospitalAddress] = useState(null);
   const [isHospitalDomain, setIsHospitalDomain] = useState(null);
   const [isHospitalDescription, setIsHospitalDescription] = useState(null);
-  const [selectedMedicalParts, setselectedMedicalParts] = useState([]);
-  const [selectedBodyParts, setselectedBodyParts] = useState([]);
+  const [selectedMedicalParts, setselectedMedicalParts] = useState([]); //선택된 진료과
+  const [selectedBodyParts, setselectedBodyParts] = useState([]); //선택된 신체부위
   const [isButtonActive, setIsButtonActive] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   //진료과, 신체부위 card들에 따른 각 parts배열 update
   const updateSelectedCard = (
@@ -115,17 +119,20 @@ const HospitalRegistScreen = props => {
     <Container>
       <HeaderBar.centerOnly centerTitle="병원 등록하기" />
       <RegistWrapper>
-        <Title>병원 등록신청</Title>
+        <Title>병원 등록접수</Title>
         <ScrollWrapper>
           <Wrapper bottomTabHeight={bottomTabHeight}>
             <FormTitle>병원 정보{'   '}(필수입력)</FormTitle>
             <HospitalInputForm
-              isHospitalName={isHospitalName}
+              // 도로 주소명 찾기 눌렀을 때 주소모달 open
+              onPressFindAddress={() => {
+                setShowModal(true);
+              }}
               isHospitalAddress={isHospitalAddress}
+              isHospitalName={isHospitalName}
               isHospitalDomain={isHospitalDomain}
               isHospitalDescription={isHospitalDescription}
               setIsHospitalName={setIsHospitalName}
-              setIsHospitalAddress={setIsHospitalAddress}
               setIsHospitalDomain={setIsHospitalDomain}
               setIsHospitalDescription={setIsHospitalDescription}
             />
@@ -183,6 +190,17 @@ const HospitalRegistScreen = props => {
           </Wrapper>
         </ScrollWrapper>
       </RegistWrapper>
+      {/* 우편번호, 도로명 찾기 modal */}
+      <HospitalAddressModal
+        isVisible={showModal}
+        onBackdropPress={() => setShowModal(false)}
+        //주소명 클릭 시 등록할 병원의 주소 state변수에 저장.
+        onSelectedAddress={data => {
+          console.log(JSON.stringify(data));
+          setShowModal(false);
+          setIsHospitalAddress(data.address);
+        }}
+      />
     </Container>
   );
 };
