@@ -30,7 +30,7 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>서비스 동작을 위해 위치 정보가 필요합니다</string>
 	<key>GMSApiKey</key>
-	<string>AIzaSyBlnr7M-Kqn7jeiQbxRA53-0noy39s2_p8</string>
+	<string>$(GOOGLE_MAPS_API_KEY)</string>
 
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

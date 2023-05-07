@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 
+#import "RNCConfig.h"
 #import <React/RCTBundleURLProvider.h>
 #import <GoogleMaps/GoogleMaps.h>
 
@@ -7,7 +8,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [GMSServices provideAPIKey:@"AIzaSyBlnr7M-Kqn7jeiQbxRA53-0noy39s2_p8"];
+  [GMSServices provideAPIKey: @"$(GOOGLE_MAPS_API_KEY)"]; 
 
   self.moduleName = @"HealthMapper";
   // You can add your custom initial props in the dictionary below.
