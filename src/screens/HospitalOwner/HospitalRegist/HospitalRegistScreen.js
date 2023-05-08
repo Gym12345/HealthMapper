@@ -182,6 +182,14 @@ const HospitalRegistScreen = props => {
           reqLongitude: String(isHospitalLongitude), //서버에서 문자열로 처리하기에 문자열로 전달
         }),
       ).unwrap();
+      Alert.alert('안내', '관리자에게 병원 등록이 요청되었습니다.', [
+        {
+          text: '확인',
+          onPress: () => {
+            props.navigation.navigate('내 병원 정보');
+          },
+        },
+      ]);
     } catch (error) {
       console.log(error);
     }
