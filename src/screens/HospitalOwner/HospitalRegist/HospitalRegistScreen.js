@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {BackHandler, Dimensions, FlatList, Button} from 'react-native';
+import {BackHandler, Dimensions, FlatList, Alert} from 'react-native';
 
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {useFocusEffect} from '@react-navigation/native';
@@ -120,14 +120,44 @@ const HospitalRegistScreen = props => {
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        BackHandler.exitApp();
+        if (
+          isHospitalName ||
+          isHospitalAddress ||
+          isHospitalDomain ||
+          isHospitalDescription ||
+          selectedMedicalParts.length > 0 ||
+          selectedBodyParts.length > 0
+        ) {
+          Alert.alert(
+            null,
+            '작성한 내용은 저장되지 않습니다.\n정말로 취소하시겠습니까?',
+            [
+              {text: '아니오', style: 'cancel'},
+              {
+                text: '예',
+                onPress: () => {
+                  BackHandler.exitApp();
+                },
+              },
+            ],
+          );
+        } else {
+          BackHandler.exitApp();
+        }
         return true;
       };
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, []),
+    }, [
+      isHospitalName,
+      isHospitalAddress,
+      isHospitalDomain,
+      isHospitalDescription,
+      selectedMedicalParts,
+      selectedBodyParts,
+    ]),
   );
 
   const submitHospitalHandler = useCallback(async () => {
