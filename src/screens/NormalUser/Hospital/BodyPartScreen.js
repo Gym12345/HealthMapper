@@ -5,6 +5,7 @@ import {
   Alert,
   View,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
@@ -78,7 +79,7 @@ const BodyPartScreen = props => {
             '앱을 사용하기 위해서는 위치 정보를 사용해야 합니다. 설정에서 위치 정보를 켜주세요.',
           );
         },
-        {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
       );
     });
   };
@@ -117,8 +118,8 @@ const BodyPartScreen = props => {
         await dispatch(
           getHospitalList_bodyPart({
             part: selectedPart,
-            userLatitude: position.coords.latitude,
-            userLongitude: position.coords.longitude,
+            userLatitude: String(position.coords.latitude), //서버에서 문자열로 처리하기에 문자열로 전달
+            userLongitude: String(position.coords.longitude), //서버에서 문자열로 처리하기에 문자열로 전달
           }),
         ).unwrap();
         props.navigation.navigate('hospitalList');
