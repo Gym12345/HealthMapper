@@ -1,6 +1,5 @@
 import React from 'react';
-import {Dimensions, Platform} from 'react-native';
-
+import {Dimensions, Platform, Button} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, KeyboardAvoidingView} from 'react-native';
+import {Dimensions} from 'react-native';
 
 import styled from 'styled-components';
 

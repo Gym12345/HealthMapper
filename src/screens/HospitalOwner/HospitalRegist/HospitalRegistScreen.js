@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import HospitalAddressModal from '../../../components/HospiltalOwner/HospitalAddressModal';
 import HospitalInputForm from '../../../components/HospiltalOwner/HospitalInputForm';
 import PartCard from '../../../components/HospiltalOwner/PartCard';
+import HospitalImagePicker from '../../../components/HospiltalOwner/HospitalImagePicker';
 import medicalDepartmentData from '../../../data/medicalDepartmentData';
 import BodyPartData from '../../../data/BodyPartData';
 
@@ -26,6 +27,7 @@ const HospitalRegistScreen = props => {
   const [isHospitalAddress, setIsHospitalAddress] = useState(null);
   const [isHospitalDomain, setIsHospitalDomain] = useState(null);
   const [isHospitalDescription, setIsHospitalDescription] = useState(null);
+  const [isHospitalImage, setIsHospitalImage] = useState('testHospital.png'); //추후 정상적인 사진 경로로 대체
   const [selectedMedicalParts, setselectedMedicalParts] = useState([]); //선택된 진료과
   const [selectedBodyParts, setselectedBodyParts] = useState([]); //선택된 신체부위
   const [isHospitalLatitude, setIsHospitalLatitude] = useState();
@@ -83,6 +85,7 @@ const HospitalRegistScreen = props => {
       selectedBodyPartsData,
       isHospitalLatitude,
       isHospitalLongitude,
+      isHospitalImage,
     );
   };
 
@@ -108,6 +111,7 @@ const HospitalRegistScreen = props => {
       isHospitalName &&
       isHospitalAddress &&
       isHospitalDomain &&
+      isHospitalImage &&
       isHospitalDescription &&
       selectedMedicalParts.length > 0 &&
       selectedBodyParts.length > 0
@@ -120,6 +124,7 @@ const HospitalRegistScreen = props => {
     isHospitalName,
     isHospitalAddress,
     isHospitalDomain,
+    isHospitalImage,
     isHospitalDescription,
     selectedMedicalParts,
     selectedBodyParts,
@@ -159,6 +164,8 @@ const HospitalRegistScreen = props => {
               setIsHospitalDomain={setIsHospitalDomain}
               setIsHospitalDescription={setIsHospitalDescription}
             />
+            {/* Image Picker */}
+            <HospitalImagePicker />
             {/* 병원 진료과 카드 */}
             <FormTitle>진료과{'   '}(필수선택)</FormTitle>
             <CardContainer>
