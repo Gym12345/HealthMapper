@@ -1,15 +1,18 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {BackHandler, Dimensions, FlatList} from 'react-native';
+import {BackHandler, Dimensions, FlatList, Button} from 'react-native';
 
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {useFocusEffect} from '@react-navigation/native';
 
 import Geocoder from 'react-native-geocoding';
 import Config from 'react-native-config';
 
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {RFValue} from 'react-native-responsive-fontsize';
 import HeaderBar from '../../../components/Global/HeaderBar';
 import styled from 'styled-components';
+
+import {useDispatch} from 'react-redux';
+import {submitHospitalInfo} from '../../../store/slices/hospitalSlice';
 
 import HospitalAddressModal from '../../../components/HospiltalOwner/HospitalAddressModal';
 import HospitalInputForm from '../../../components/HospiltalOwner/HospitalInputForm';
@@ -23,6 +26,7 @@ const {height} = Dimensions.get('window');
 // 병원등록 요청을 위해 병원 이름, URL주소, 설명, 주소, 관련 진료과, 관련 신체부위 기입 화면
 const HospitalRegistScreen = props => {
   const bottomTabHeight = useBottomTabBarHeight(); //바텀탭 높이 _ 스크롤뷰
+  const dispatch = useDispatch();
   const [isHospitalName, setIsHospitalName] = useState(null);
   const [isHospitalAddress, setIsHospitalAddress] = useState(null);
   const [isHospitalDomain, setIsHospitalDomain] = useState(null);
@@ -69,24 +73,6 @@ const HospitalRegistScreen = props => {
         selectedCardData,
       );
     }
-  };
-
-  const submitHospitalHandler = () => {
-    const selectedBodyPartsData = selectedBodyParts.map(item => item.data); //선택된 신체부위 param
-    const selectedMedicalPartsData = selectedMedicalParts.map(
-      item => item.data,
-    ); //선택된 진료과 param
-    console.log(
-      isHospitalName,
-      isHospitalAddress,
-      isHospitalDomain,
-      isHospitalDescription,
-      selectedMedicalPartsData,
-      selectedBodyPartsData,
-      isHospitalLatitude,
-      isHospitalLongitude,
-      isHospitalImage,
-    );
   };
 
   //병원 도로명 주소 선택되면 위도, 경도 얻어오는 함수
@@ -143,6 +129,42 @@ const HospitalRegistScreen = props => {
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     }, []),
   );
+
+  const submitHospitalHandler = useCallback(async () => {
+    const selectedBodyPartsData = selectedBodyParts.map(item => item.data); //선택된 신체부위 param
+    const selectedMedicalPartsData = selectedMedicalParts.map(
+      item => item.data,
+    ); //선택된 진료과 param
+    try {
+      await dispatch(
+        submitHospitalInfo({
+          reqName: isHospitalName,
+          reqAddress: isHospitalAddress,
+          reqDomain: isHospitalDomain,
+          reqDescription: isHospitalDescription,
+          reqImg: isHospitalImage,
+          reqPart: selectedBodyPartsData,
+          reqDepartment: selectedMedicalPartsData,
+          reqLatitude: String(isHospitalLatitude), //서버에서 문자열로 처리하기에 문자열로 전달
+          reqLongitude: String(isHospitalLongitude), //서버에서 문자열로 처리하기에 문자열로 전달
+        }),
+      ).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [
+    dispatch,
+    isHospitalName,
+    isHospitalAddress,
+    isHospitalDomain,
+    isHospitalDescription,
+    isHospitalImage,
+    selectedBodyParts,
+    selectedMedicalParts,
+    isHospitalLatitude,
+    isHospitalLongitude,
+  ]);
+
   return (
     <Container>
       <HeaderBar.centerOnly centerTitle="병원 등록하기" />
