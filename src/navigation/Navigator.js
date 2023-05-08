@@ -208,14 +208,14 @@ const MainNavigator = props => {
           }}
         />
         <Tab.Screen
-          name="병원 정보"
+          name="내 병원 정보"
           component={HospitalInfoNavigator}
           options={{
             tabBarIcon: ({focused, color}) => {
               return focused ? (
-                <Icons.userInfo color={color} />
+                <Icons.hospitlaInfo color={color} />
               ) : (
-                <Icons.userInfo color={color} />
+                <Icons.hospitlaInfo color={color} />
               );
             },
           }}
