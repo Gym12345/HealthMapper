@@ -25,8 +25,11 @@ import HealthScreen from '../screens/NormalUser/Health/HealthScreen';
 //UserInfoNavigator_NormalUser
 import UserInfoScreen from '../screens/NormalUser/UserInformation/UserInfoScreen';
 
-//UserInfoNavigator_HospitalOwner
+//HospitalRegeistNavigator_HospitalOwner
 import HospitalRegistScreen from '../screens/HospitalOwner/HospitalRegist/HospitalRegistScreen';
+
+//HospitalInfoNavigator_HospitalOwner
+import HospitalInfoScreen from '../screens/HospitalOwner/HospitalInformation/HospitalInfoScreen';
 
 const patientColor = 'rgb(136,95,255)';
 const hospitalOwnerColor = 'rgb(66,153,174 )';
@@ -92,13 +95,24 @@ const HospitalNavigator = props => {
   );
 };
 
-//UserInfoNavigator_HospitalOwner
+//HospitalRegistNavigator_HospitalOwner
 const HospitalRegistNavigator = props => {
   return (
     <Stack.Navigator
       initialRouteName="hospitalRegist"
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="hospitalRegist" component={HospitalRegistScreen} />
+    </Stack.Navigator>
+  );
+};
+
+//HospitalInfoNavigator_HospitalOnwer
+const HospitalInfoNavigator = props => {
+  return (
+    <Stack.Navigator
+      initialRouteName="hospitalInfo"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="hospitalInfo" component={HospitalInfoScreen} />
     </Stack.Navigator>
   );
 };
@@ -174,7 +188,7 @@ const MainNavigator = props => {
   else if (isLoggedIn & (userClass === 'hospitalOwner')) {
     return (
       <Tab.Navigator
-        initialRouteName="병원등록"
+        initialRouteName="병원 등록"
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: hospitalOwnerColor, //바텀탭 Icon focus색상
@@ -194,8 +208,8 @@ const MainNavigator = props => {
           }}
         />
         <Tab.Screen
-          name="내 정보"
-          component={UserInfoNavigator}
+          name="병원 정보"
+          component={HospitalInfoNavigator}
           options={{
             tabBarIcon: ({focused, color}) => {
               return focused ? (
