@@ -18,6 +18,10 @@ const HospitalListScreen = props => {
   const bottomTabHeight = useBottomTabBarHeight();
   //병원 정보 (병원 리스트 및 그에 따른 정보_ 현재위치로부터의 거리, 병원위도, 병원경도 포함)
   const healthArr = useSelector(state => state.hospital.healthArr);
+  // 거리별 오름차순으로 정렬한 새로운 병원 배열 생성
+  const sortedHealthArr = [...healthArr].sort(
+    (a, b) => a.distance - b.distance,
+  );
   const userLatitude = useSelector(state => state.hospital.userLatitude);
   const userLongitude = useSelector(state => state.hospital.userLongitude);
 
@@ -44,7 +48,7 @@ const HospitalListScreen = props => {
 
       {currentPosition && (
         <HospitalMap
-          provider={PROVIDER_GOOGLE}
+          //provider={PROVIDER_GOOGLE}
           region={{
             //현재 내위치를 기준으로 지도 렌더링
             latitude: currentPosition.latitude,
@@ -83,7 +87,7 @@ const HospitalListScreen = props => {
 
       <HospitalListWrapper bottomTabHeight={bottomTabHeight}>
         <FlatList
-          data={healthArr}
+          data={sortedHealthArr}
           keyExtractor={item => item.id}
           renderItem={itemData => (
             <HospitalCard
@@ -91,6 +95,7 @@ const HospitalListScreen = props => {
               hospitalBodyPart={itemData.item.part}
               hospitalDepartment={itemData.item.department}
               hospitalAddress={itemData.item.address}
+              distance={itemData.item.distance}
               onSelectHospital={() => {
                 props.navigation.navigate('hospitalDetail', {
                   selectedHospital: itemData.item,

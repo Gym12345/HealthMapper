@@ -7,6 +7,7 @@ const HospitalCard = props => {
   return (
     <Wrapper activeOpacity={0.5} onPress={props.onSelectHospital}>
       <HospitalTitle>{props.hospitalName}</HospitalTitle>
+      <Distance>{props.distance}km</Distance>
       <HospitalAddress>{props.hospitalAddress}</HospitalAddress>
       <HospitalDepartment>
         진료과목 - {props.hospitalDepartment}
@@ -34,6 +35,10 @@ const HospitalTitle = styled.Text`
   font-weight: bold;
   font-size: ${RFValue(15)}px;
   color: ${props => props.theme.colors.patientColor};
+`;
+const Distance = styled.Text`
+  font-size: ${RFValue(12)}px;
+  color: ${props => props.theme.colors.gray3};
 `;
 const HospitalAddress = styled.Text`
   margin-top: 5px;
