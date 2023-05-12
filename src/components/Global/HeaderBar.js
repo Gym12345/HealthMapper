@@ -17,9 +17,10 @@ class LeftRightCenter extends Component {
         </LeadingIcon>
 
         <CenterTitle>{this.props.centerTitle}</CenterTitle>
-        <LeadingIcon onPress={this.props.leadingRightAction}>
-          {this.props.leadingRightIcon}
-        </LeadingIcon>
+
+        <TextWrapper onPress={this.props.leadingRightAction}>
+          <ButtonText>{this.props.buttonTitle}</ButtonText>
+        </TextWrapper>
       </HeaderContainer>
     );
   }
@@ -135,6 +136,10 @@ const HeaderContainer = styled.View`
 const LeadingIcon = styled.TouchableOpacity`
   height: 24px;
   width: 24px;
+`;
+const TextWrapper = styled.TouchableOpacity``;
+const ButtonText = styled.Text`
+  font-size: 15px;
 `;
 
 const EmptySizedBox = styled.View`
