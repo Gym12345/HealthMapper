@@ -54,7 +54,7 @@ const HospitalHomeScreen = props => {
             }}
             cardTitle="신체부위 질문"
             description={`안내 질문을 통해서 \n다양한 병원 찾기 `}
-            icon={<Icons.medicalDepartment />}
+            icon={<Icons.bodyPartGuide />}
           />
 
           {/* 건강 기록이동 Wrapper */}

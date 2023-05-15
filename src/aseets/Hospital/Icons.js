@@ -119,6 +119,27 @@ class MedicalDepartment extends Component {
   }
 }
 
+/* BodyPartGuide(신체부위 질문Icon) Icon _ hospitalHomeScreen */
+class BodyPartGuide extends Component {
+  render() {
+    return (
+      <Svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={80}
+        height={80}
+        fill="none"
+        viewBox="0 0 24 24">
+        <Path
+          fill="#885fff"
+          fillRule="evenodd"
+          d="M9.293 1.293A1 1 0 0 1 10 1h8a3 3 0 0 1 3 3v3a1 1 0 1 1-2 0V4a1 1 0 0 0-1-1h-7v5a1 1 0 0 1-1 1H5v11a1 1 0 0 0 1 1h5a1 1 0 1 1 0 2H6a3 3 0 0 1-3-3V8a1 1 0 0 1 .293-.707l6-6ZM6.414 7H9V4.414L6.414 7ZM18.25 20.75a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0Zm-3.115-7.786C15.4 12.46 16.083 12 17 12c1.283 0 2 .835 2 1.5s-.717 1.5-2 1.5a1 1 0 0 0-1 1v1a1 1 0 1 0 2 0v-.113c1.632-.373 3-1.64 3-3.387 0-2.096-1.97-3.5-4-3.5-1.543 0-2.975.774-3.636 2.036a1 1 0 1 0 1.771.928Z"
+          clipRule="evenodd"
+        />
+      </Svg>
+    );
+  }
+}
+
 /* HealthMemo(건강 기록Icon) Icon _ hospitalHomeScreen */
 class HealthMemo extends Component {
   render() {
@@ -1260,6 +1281,7 @@ export default Icons = {
   humanBody: HumanBody,
   medicalDepartment: MedicalDepartment,
   healthMemo: HealthMemo,
+  bodyPartGuide: BodyPartGuide,
 
   //Icon _ BodyPartScreen
   head: Head,
