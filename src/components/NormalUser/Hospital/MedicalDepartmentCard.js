@@ -30,6 +30,7 @@ const Wrapper = styled.TouchableOpacity`
   width: ${width / 3 - 20}px;
 `;
 const MedicalText = styled.Text`
+  text-align: center;
   margin-top: 5px;
   font-size: ${RFValue(13)}px;
   color: ${props => props.theme.colors.black};
