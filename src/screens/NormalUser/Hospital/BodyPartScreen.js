@@ -24,21 +24,21 @@ const BodyPartScreen = props => {
   //신체부위 선택 핸들러 (사용자가 선택한 신체부위와 관련된 진료과 or 안내질문 다음 화면에서 show)
   const selectBodyPartHandler = selectedPart => {
     setSelectedBodyPart(selectedPart);
-    if (selectedPart === '머리관련부위' || selectedPart === '체간관련부위') {
-      setShowModal(true);
-    } else {
-      //HospitalHome화면에서 진료과 버튼 클릭인 경우, 신체부위 선택하면 그에 관련된 진료과 화면으로 navigate
-      if (screenValue === 'medicalDepartment') {
+    //HospitalHome화면에서 진료과 버튼 클릭인 경우, 신체부위 선택하면 그에 관련된 진료과 화면으로 navigate
+    if (screenValue === 'medicalDepartment') {
+      if (selectedPart === '머리관련부위' || selectedPart === '체간관련부위') {
+        setShowModal(true);
+      } else {
         props.navigation.navigate('medicalDepartment', {
           selectedPart: selectedPart,
         });
       }
-      //HospitalHome화면에서 신체부위 질문 버튼 클릭인 경우, 신체부위 선택하면 그에 관련된 신체부위 질문 화면으로 navigate
-      else if (screenValue === 'bodyPartGuide') {
-        props.navigation.navigate('bodyPartGuide', {
-          selectedPart: selectedPart,
-        });
-      }
+    }
+    //HospitalHome화면에서 신체부위 질문 버튼 클릭인 경우, 신체부위 선택하면 그에 관련된 신체부위 질문 화면으로 navigate
+    else if (screenValue === 'bodyPartGuide') {
+      props.navigation.navigate('bodyPartGuide', {
+        selectedPart: selectedPart,
+      });
     }
   };
   return (

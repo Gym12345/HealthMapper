@@ -6,6 +6,7 @@ import {
   View,
   ActivityIndicator,
   Platform,
+  Dimensions,
 } from 'react-native';
 
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
@@ -16,19 +17,23 @@ import {
   setUserPosition,
 } from '../../../store/slices/hospitalSlice';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import styled from 'styled-components';
 import Icons from '../../../aseets/Global/Icons';
 import HeaderBar from '../../../components/Global/HeaderBar';
 
-import MedicalDepartmentCard from '../../../components/NormalUser/Hospital/MedicalDepartmentCard';
-import medicalDepartmentData from '../../../data/medicalDepartmentData';
+import GuideCard from '../../../components/NormalUser/Hospital/GuideCard';
+import GuideQuestionData from '../../../data/guideQuestionData';
 
 const spinnerColor = '#885fff';
 
 const BodyPartGuideScreen = props => {
+  const selectedPart = props.route.params.selectedPart; //BodyPartScreen에서 사용자가 선택한 신체부위
+  const bottomTabHeight = useBottomTabBarHeight(); //바텀탭 높이 _ 스크롤뷰
   const [error, setError] = useState(null);
   const [isLocationGetting, setIsLocationGetting] = useState(false);
+  const [isGuideData, setIsGuideData] = useState();
   const dispatch = useDispatch();
   const isGetHospitalLoading = useSelector(state => state.hospital.isLoading);
 
@@ -75,6 +80,26 @@ const BodyPartGuideScreen = props => {
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
       );
     });
+  };
+
+  // 신체부위 선택에 따른 가이드질문 get 함수
+  const getGuideData = selectedPart => {
+    switch (selectedPart) {
+      case '머리관련부위':
+        return GuideQuestionData.head_NeckGuideData;
+      case '체간관련부위':
+        return GuideQuestionData.trunkGuideData;
+      case '어깨':
+        return GuideQuestionData.shoulderGuideData;
+      case '팔':
+      case '손':
+        return GuideQuestionData.arm_HandGuideData;
+      case '다리':
+      case '발':
+        return GuideQuestionData.leg_FootGuideData;
+      default:
+        return;
+    }
   };
 
   //병원 리스트 조회 핸들러 (사용자가 선택한 진료과를 진료과 핸들러로 dispatch)
@@ -130,6 +155,12 @@ const BodyPartGuideScreen = props => {
     }
   }, [error]);
 
+  //화면에 신체부위 전달받아서 FlatList의 data에 신체부위와 관련된 진료과 data전달해주는 함수
+  useEffect(() => {
+    const guideData = getGuideData(selectedPart);
+    setIsGuideData(guideData);
+  }, [selectedPart, GuideQuestionData]);
+
   return (
     <Container>
       {isGetHospitalLoading || isLocationGetting ? (
@@ -146,18 +177,18 @@ const BodyPartGuideScreen = props => {
               props.navigation.goBack();
             }}
             leadingIcon={<Icons.arrowBack />}
-            centerTitle="가이드 질문"
+            centerTitle={`${selectedPart} 가이드질문`}
           />
-          <CardContainer>
+          <CardContainer bottomTabHeight={bottomTabHeight}>
             <FlatList
-              data={medicalDepartmentData}
+              data={isGuideData}
               keyExtractor={item => item.id}
-              numColumns={3}
+              numColumns={1}
               renderItem={itemData => (
-                <MedicalDepartmentCard
+                <GuideCard
                   medicalDepartment={itemData.item.data}
-                  departmentIcon={itemData.item.icon}
-                  onPressDepartment={() =>
+                  guide={itemData.item.guide}
+                  onSelectGuide={() =>
                     getHospitalListHandler(itemData.item.data)
                   }
                 />
@@ -188,6 +219,7 @@ const LoadingText = styled.Text`
 const CardContainer = styled.View`
   align-items: center;
   padding: 10px;
+  margin-bottom: ${props => props.bottomTabHeight + 30}px;
 `;
 
 export default BodyPartGuideScreen;
