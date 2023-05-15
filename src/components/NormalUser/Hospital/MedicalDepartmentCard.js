@@ -4,7 +4,7 @@ import {RFValue} from 'react-native-responsive-fontsize';
 
 import styled from 'styled-components';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const MedicalDepartmentCard = props => {
   return (
@@ -17,7 +17,7 @@ const MedicalDepartmentCard = props => {
 
 const Wrapper = styled.TouchableOpacity`
   background-color: ${props => props.theme.colors.gray8};
-  margin-vertical: 10px;
+  margin-bottom: 20px;
   margin-horizontal: 7px;
   align-items: center;
   justify-content: center;
