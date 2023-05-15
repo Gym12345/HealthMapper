@@ -38,10 +38,13 @@ const HospitalHomeScreen = props => {
           <WrapperTitle firstWrapper>
             <HighlightText hosptial>병원을 추천</HighlightText>해드려요!
           </WrapperTitle>
+          {/* bodyPartScreen에서 screenValue파라미터값을 통해 진료과, 안내질문 스크린으로 navigate*/}
           <RecommendationCard
             id="medicalDepartment"
             onPress={() => {
-              props.navigation.navigate('medicalDepartment');
+              props.navigation.navigate('bodyPart', {
+                screenValue: 'medicalDepartment',
+              });
             }}
             cardTitle="진료과"
             description={`신체부위와 관련된 진료과를 선택해서 \n다양한 병원 찾기`}
@@ -50,7 +53,9 @@ const HospitalHomeScreen = props => {
           <RecommendationCard
             id="bodyPartGuide"
             onPress={() => {
-              props.navigation.navigate('bodyPartGuide');
+              props.navigation.navigate('bodyPart', {
+                screenValue: 'bodyPartGuide',
+              });
             }}
             cardTitle="신체부위 질문"
             description={`안내 질문을 통해서 \n다양한 병원 찾기 `}
