@@ -1,42 +1,49 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {
-  FlatList,
-  Alert,
+  Dimensions,
   Linking,
+  Alert,
   View,
   ActivityIndicator,
   Platform,
 } from 'react-native';
 
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+
 import Geolocation from '@react-native-community/geolocation';
+import {RFValue} from 'react-native-responsive-fontsize';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  getHospitalList_medicalDepartment,
+  getHospitalList_bodyPart,
   setUserPosition,
 } from '../../../store/slices/hospitalSlice';
-import {RFValue} from 'react-native-responsive-fontsize';
 
 import styled from 'styled-components';
+
 import Icons from '../../../aseets/Global/Icons';
 import HeaderBar from '../../../components/Global/HeaderBar';
 
-import MedicalDepartmentCard from '../../../components/NormalUser/Hospital/MedicalDepartmentCard';
-import medicalDepartmentData from '../../../data/medicalDepartmentData';
+import BodyPart from '../../../components/NormalUser/Hospital/BodyPart';
+import BodyPartModal from '../../../components/NormalUser/Hospital/BodyPartModal';
 
 const spinnerColor = '#885fff';
+const {height} = Dimensions.get('window');
 
 const MedicalDepartmentScreen = props => {
-  const [error, setError] = useState(null);
-  const [isLocationGetting, setIsLocationGetting] = useState(false);
+  //바텀탭 높이 _ 스크롤뷰
+  const bottomTabHeight = useBottomTabBarHeight();
   const dispatch = useDispatch();
   const isGetHospitalLoading = useSelector(state => state.hospital.isLoading);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedBodyPart, setSelectedBodyPart] = useState('');
+  const [error, setError] = useState(false);
+  const [isLocationGetting, setIsLocationGetting] = useState(false);
 
   //병원 리스트 조회 전 위치 권한 확인 함수
   const checkLocationPermission = async () => {
-    let result;
     try {
-      result = await check(
+      let result = await check(
         Platform.select({
           ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
           android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
@@ -77,9 +84,9 @@ const MedicalDepartmentScreen = props => {
     });
   };
 
-  //병원 리스트 조회 핸들러 (사용자가 선택한 진료과를 진료과 핸들러로 dispatch)
+  //병원 리스트 조회 핸들러 (사용자가 선택한 신체부위를 신체부위 핸들러로 dispatch)
   const getHospitalListHandler = useCallback(
-    async selectedDepart => {
+    async selectedPart => {
       setError(null);
       try {
         const hasLocationPermission = await checkLocationPermission(); // 위치 권한 확인
@@ -99,17 +106,18 @@ const MedicalDepartmentScreen = props => {
         setIsLocationGetting(true);
         const position = await getUserPosition();
         setIsLocationGetting(false);
+
+        //사용자 위치 GET
         await dispatch(
-          //사용자 위치 GET
           setUserPosition({
             userLatitude: position.coords.latitude,
             userLongitude: position.coords.longitude,
           }),
         );
-        //사용자의 진료과 선택, 위치를 기반으로 병원리스트 조회
+        //사용자의 신체부위 선택, 위치를 기반으로 병원리스트 조회
         await dispatch(
-          getHospitalList_medicalDepartment({
-            department: selectedDepart,
+          getHospitalList_bodyPart({
+            part: selectedPart,
             userLatitude: String(position.coords.latitude), //서버에서 문자열로 처리하기에 문자열로 전달
             userLongitude: String(position.coords.longitude), //서버에서 문자열로 처리하기에 문자열로 전달
           }),
@@ -148,22 +156,37 @@ const MedicalDepartmentScreen = props => {
             leadingIcon={<Icons.arrowBack />}
             centerTitle="진료과 선택"
           />
-          <CardContainer>
-            <FlatList
-              data={medicalDepartmentData}
-              keyExtractor={item => item.id}
-              numColumns={3}
-              renderItem={itemData => (
-                <MedicalDepartmentCard
-                  medicalDepartment={itemData.item.data}
-                  departmentIcon={itemData.item.icon}
-                  onPressDepartment={() =>
-                    getHospitalListHandler(itemData.item.data)
+          <Title>
+            진료 받고싶은
+            <HighlightText> 신체부위를 선택</HighlightText>해주세요!
+          </Title>
+          <ScrolleWrapper>
+            <Wrapper bottomTabHeight={bottomTabHeight}>
+              <BodyPart
+                onBodyPartSelect={selectedPart => {
+                  setSelectedBodyPart(selectedPart);
+                  if (
+                    selectedPart === '머리관련부위' ||
+                    selectedPart === '체간관련부위'
+                  ) {
+                    setShowModal(true);
+                  } else {
+                    getHospitalListHandler(selectedPart);
                   }
-                />
-              )}
-            />
-          </CardContainer>
+                }}
+              />
+            </Wrapper>
+          </ScrolleWrapper>
+          <BodyPartModal
+            value={selectedBodyPart}
+            isVisible={showModal}
+            onModalCancel={() => setShowModal(false)}
+            onBackdropPress={() => setShowModal(false)}
+            onBodyPartSelect={selectedPart => {
+              setShowModal(false);
+              getHospitalListHandler(selectedPart);
+            }}
+          />
         </View>
       )}
     </Container>
@@ -185,9 +208,21 @@ const LoadingText = styled.Text`
   text-align: center;
   color: ${props => props.theme.colors.gray3};
 `;
-const CardContainer = styled.View`
-  align-items: center;
-  padding: 10px;
+const Title = styled.Text`
+  align-self: center;
+  font-size: ${RFValue(15)}px;
+  margin-top: ${height / 20}px;
+  color: ${props => props.theme.colors.black};
+`;
+
+const HighlightText = styled.Text`
+  font-weight: bold;
+`;
+const ScrolleWrapper = styled.ScrollView`
+  margin-top: ${height / 40}px;
+`;
+const Wrapper = styled.View`
+  margin-bottom: ${props => props.bottomTabHeight + 70}px;
 `;
 
 export default MedicalDepartmentScreen;

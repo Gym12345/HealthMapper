@@ -39,21 +39,21 @@ const HospitalHomeScreen = props => {
             <HighlightText hosptial>병원을 추천</HighlightText>해드려요!
           </WrapperTitle>
           <RecommendationCard
-            id="bodyPart"
-            onPress={() => {
-              props.navigation.navigate('bodyPart');
-            }}
-            cardTitle="신체부위"
-            description={`아픈 신체부위를 선택해서 \n다양한 병원 찾기`}
-            icon={<Icons.humanBody />}
-          />
-          <RecommendationCard
             id="medicalDepartment"
             onPress={() => {
               props.navigation.navigate('medicalDepartment');
             }}
             cardTitle="진료과"
-            description={`진료과를 선택해서 \n다양한 병원 찾기 `}
+            description={`신체부위와 관련된 진료과를 선택해서 \n다양한 병원 찾기`}
+            icon={<Icons.medicalDepartment />}
+          />
+          <RecommendationCard
+            id="bodyPartGuide"
+            onPress={() => {
+              props.navigation.navigate('bodyPartGuide');
+            }}
+            cardTitle="신체부위 질문"
+            description={`안내 질문을 통해서 \n다양한 병원 찾기 `}
             icon={<Icons.medicalDepartment />}
           />
 

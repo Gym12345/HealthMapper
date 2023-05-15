@@ -13,8 +13,8 @@ import TermsScreen from '../screens/Global/Auth/TermsScreen';
 
 //HospitalNavigator_NormalUser
 import HospitalHomeScreen from '../screens/NormalUser/Hospital/HospitalHomeScreen';
-import BodyPartScreen from '../screens/NormalUser/Hospital/BodyPartScreen';
 import MedicalDepartmentScreen from '../screens/NormalUser/Hospital/MedicalDepartmentScreen';
+import BodyPartGuideScreen from '../screens/NormalUser/Hospital/BodyPartGuideScreen';
 import HospitalListScreen from '../screens/NormalUser/Hospital/HospitalListScreen';
 import HospitalDetailScreen from '../screens/NormalUser/Hospital/HospitalDetailScreen';
 import ReviewRegistScreen from '../screens/NormalUser/Hospital/ReviewRegistScreen';
@@ -79,11 +79,11 @@ const HospitalNavigator = props => {
       initialRouteName="hospitalHome"
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="hospitalHome" component={HospitalHomeScreen} />
-      <Stack.Screen name="bodyPart" component={BodyPartScreen} />
       <Stack.Screen
         name="medicalDepartment"
         component={MedicalDepartmentScreen}
       />
+      <Stack.Screen name="bodyPartGuide" component={BodyPartGuideScreen} />
       <Stack.Screen name="hospitalList" component={HospitalListScreen} />
       <Stack.Screen name="hospitalDetail" component={HospitalDetailScreen} />
       <Stack.Screen
