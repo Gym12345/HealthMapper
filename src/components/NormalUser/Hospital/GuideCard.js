@@ -19,6 +19,7 @@ const Wrapper = styled.TouchableOpacity`
   margin-vertical: 15px;
   margin-horizontal: 7px;
   align-items: center;
+  align-self: center;
   justify-content: center;
   padding-horizontal: 20px;
   padding-vertical: 10px;

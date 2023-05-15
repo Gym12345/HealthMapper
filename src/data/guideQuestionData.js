@@ -20,6 +20,11 @@ const Head_NeckGuideData = [
   },
   {
     id: 4,
+    data: '피부과',
+    guide: '피부에 뾰루지가 난 경우 \n 머리,얼굴 특정부위가 가려운 경우',
+  },
+  {
+    id: 5,
     data: '내과',
     guide: '감기 증상 없이 열이 나는 경우',
   },

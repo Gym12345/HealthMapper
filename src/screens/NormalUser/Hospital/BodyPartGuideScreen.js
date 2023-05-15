@@ -6,7 +6,6 @@ import {
   View,
   ActivityIndicator,
   Platform,
-  Dimensions,
 } from 'react-native';
 
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
@@ -179,9 +178,21 @@ const BodyPartGuideScreen = props => {
             leadingIcon={<Icons.arrowBack />}
             centerTitle={`${selectedPart} 가이드질문`}
           />
+          <MedicalDepartmentButton
+            onPress={() => {
+              props.navigation.navigate('bodyPart', {
+                screenValue: 'medicalDepartment',
+              });
+            }}>
+            <ButtonText>
+              원하는 가이드가 없으면{'\n'}다양한 진료과로 병원을 찾을 수
+              있어요(클릭)
+            </ButtonText>
+          </MedicalDepartmentButton>
           <CardContainer bottomTabHeight={bottomTabHeight}>
             <FlatList
               data={isGuideData}
+              scrollEnabled={false}
               keyExtractor={item => item.id}
               numColumns={1}
               renderItem={itemData => (
@@ -216,10 +227,23 @@ const LoadingText = styled.Text`
   text-align: center;
   color: ${props => props.theme.colors.gray3};
 `;
-const CardContainer = styled.View`
-  align-items: center;
+const CardContainer = styled.ScrollView`
   padding: 10px;
-  margin-bottom: ${props => props.bottomTabHeight + 30}px;
+  margin-bottom: ${props => props.bottomTabHeight + 70}px;
+`;
+const MedicalDepartmentButton = styled.TouchableOpacity`
+  background-color: ${props => props.theme.colors.white};
+  margin-top: 10px;
+  margin-horizontal: 7px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+`;
+const ButtonText = styled.Text`
+  text-align: center;
+  font-size: ${RFValue(13)}px;
+  font-weight: bold;
+  color: ${props => props.theme.colors.black};
 `;
 
 export default BodyPartGuideScreen;
