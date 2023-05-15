@@ -1,33 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
-// 신체부위 선택을 통해 병원리스트를 가져오는 비동기 함수 _ 일반사용자
-export const getHospitalList_bodyPart = createAsyncThunk(
-  'hospital/getHospitalList_bodyPart',
-  async ({part, userLatitude, userLongitude}) => {
-    const response = await fetch(
-      `http://localhost:8090/Health/Health1/BodyPartsControllerForJson`,
-      {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          part, //사용자가 선택한 신체부위
-          userLatitude, //현재 위치 위도
-          userLongitude, //현재 위치 경도
-        }),
-      },
-    );
-
-    if (response.ok) {
-      const resData = await response.json();
-
-      console.log(resData);
-      return resData;
-    } else {
-      throw new Error('네트워크 요청 실패');
-    }
-  },
-);
-
 // 진료과 선택을 통해 병원리스트를 가져오는 비동기 함수 _ 일반사용자
 export const getHospitalList_medicalDepartment = createAsyncThunk(
   'hospital/getHospitalList_medicalDepartment',
@@ -122,22 +94,6 @@ export const hospitalSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      //신체부위선택에 따른 병원리스트 조회 요청
-      .addCase(getHospitalList_bodyPart.pending, state => {
-        state.error = null;
-        state.isLoading = true;
-      })
-      //신체부위선택에 따른 병원리스트 조회 성공
-      .addCase(getHospitalList_bodyPart.fulfilled, (state, action) => {
-        state.error = null;
-        state.isLoading = false;
-        state.healthArr = action.payload.healthArr;
-      })
-      //신체부위선택에 따른 병원리스트 조회 거절
-      .addCase(getHospitalList_bodyPart.rejected, (state, action) => {
-        state.error = action.error;
-        state.isLoading = false;
-      })
       //진료과선택에 따른 병원리스트 조회 요청
       .addCase(getHospitalList_medicalDepartment.pending, state => {
         state.error = null;
