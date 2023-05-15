@@ -28,14 +28,13 @@ import MedicalDepartmentCard from '../../../components/NormalUser/Hospital/Medic
 import MedicalDepartmentData from '../../../data/medicalDepartmentData';
 
 const spinnerColor = '#885fff';
-const {height} = Dimensions.get('window');
 
 const MedicalDepartmentScreen = props => {
   const selectedPart = props.route.params.selectedPart; //BodyPartScreen에서 사용자가 선택한 신체부위
   const bottomTabHeight = useBottomTabBarHeight(); //바텀탭 높이 _ 스크롤뷰
   const [error, setError] = useState(null);
   const [isLocationGetting, setIsLocationGetting] = useState(false);
-  const [isMedicalDepartmentData, setIsMedicalDepartmentData] = useState([{}]);
+  const [isMedicalDepartmentData, setIsMedicalDepartmentData] = useState(null);
   const dispatch = useDispatch();
   const isGetHospitalLoading = useSelector(state => state.hospital.isLoading);
 
@@ -115,7 +114,7 @@ const MedicalDepartmentScreen = props => {
       case '발':
         return MedicalDepartmentData.footMedicalDepartmentData;
       default:
-        return MedicalDepartmentData.eyeMedicalDepartmentData;
+        return MedicalDepartmentData.totalMedicalDepartmentData;
     }
   };
 
@@ -172,6 +171,7 @@ const MedicalDepartmentScreen = props => {
     }
   }, [error]);
 
+  //화면에 신체부위 전달받아서 FlatList의 data에 신체부위와 관련된 진료과 data전달해주는 함수
   useEffect(() => {
     const medicalDepartmentData = getMedicalDepartmentData(selectedPart);
     setIsMedicalDepartmentData(medicalDepartmentData);
@@ -204,7 +204,7 @@ const MedicalDepartmentScreen = props => {
                 <MedicalDepartmentCard
                   medicalDepartment={itemData.item.data}
                   departmentIcon={itemData.item.icon}
-                  onPressDepartment={() =>
+                  onSelectDepartment={() =>
                     getHospitalListHandler(itemData.item.data)
                   }
                 />

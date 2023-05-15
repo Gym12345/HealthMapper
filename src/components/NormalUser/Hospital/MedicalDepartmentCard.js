@@ -8,7 +8,7 @@ const {width, height} = Dimensions.get('window');
 
 const MedicalDepartmentCard = props => {
   return (
-    <Wrapper activeOpacity={0.5} onPress={props.onPressDepartment}>
+    <Wrapper activeOpacity={0.5} onPress={props.onSelectDepartment}>
       {props.departmentIcon}
       <MedicalText>{props.medicalDepartment}</MedicalText>
     </Wrapper>
