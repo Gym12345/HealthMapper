@@ -49,7 +49,11 @@ const BodyPartScreen = props => {
             props.navigation.goBack();
           }}
           leadingIcon={<Icons.arrowBack />}
-          centerTitle="신체부위 선택"
+          centerTitle={
+            screenValue === 'medicalDepartment'
+              ? '신체부위 선택_진료과'
+              : '신체부위 선택_가이드질문'
+          }
         />
         {screenValue === 'medicalDepartment' ? (
           <Title>
