@@ -6,8 +6,6 @@ import {
   View,
   ActivityIndicator,
   Platform,
-  Dimensions,
-  Button,
 } from 'react-native';
 
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
@@ -77,7 +75,7 @@ const MedicalDepartmentScreen = props => {
             '앱을 사용하기 위해서는 위치 정보를 사용해야 합니다. 설정에서 위치 정보를 켜주세요.',
           );
         },
-        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+        {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
       );
     });
   };

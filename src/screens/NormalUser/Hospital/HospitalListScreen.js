@@ -62,33 +62,29 @@ const HospitalListScreen = props => {
               longitude: currentPosition.longitude,
             }}
           />
-          {healthArr.map(
-            (
-              data, //추후 병원 위도,경도 얻어오면 배열로 렌더링
-            ) => (
-              <Marker
-                key={data.id}
-                coordinate={{
-                  latitude: data.hLatitude,
-                  longitude: data.hLongitude,
-                }}
-                title={data.name}
-                description={data.department}
-                onPress={() => console.log(data)}>
-                <Image
-                  source={require('../../../aseets/Hospital/hospitalMarker.png')}
-                  style={{width: 30, height: 30}}
-                />
-              </Marker>
-            ),
-          )}
+          {healthArr.map(data => (
+            <Marker
+              key={data.id.toString()}
+              coordinate={{
+                latitude: data.hLatitude,
+                longitude: data.hLongitude,
+              }}
+              title={data.name}
+              description={data.distance.toString() + 'km'}
+              onPress={() => console.log(data)}>
+              <Image
+                source={require('../../../aseets/Hospital/hospitalMarker.png')}
+                style={{width: 30, height: 30}}
+              />
+            </Marker>
+          ))}
         </HospitalMap>
       )}
 
       <HospitalListWrapper bottomTabHeight={bottomTabHeight}>
         <FlatList
           data={sortedHealthArr}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id.toString()}
           renderItem={itemData => (
             <HospitalCard
               hospitalName={itemData.item.name}
