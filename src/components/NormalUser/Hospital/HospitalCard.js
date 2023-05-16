@@ -12,9 +12,6 @@ const HospitalCard = props => {
       <HospitalDepartment>
         진료과목 - {props.hospitalDepartment}
       </HospitalDepartment>
-      <HospitalBodyPart>
-        관련신체부위 - {props.hospitalBodyPart}
-      </HospitalBodyPart>
     </Wrapper>
   );
 };
@@ -47,10 +44,6 @@ const HospitalAddress = styled.Text`
 `;
 const HospitalDepartment = styled.Text`
   margin-top: 5px;
-  font-size: ${RFValue(11)}px;
-  color: ${props => props.theme.colors.gray3};
-`;
-const HospitalBodyPart = styled.Text`
   font-size: ${RFValue(11)}px;
   color: ${props => props.theme.colors.gray3};
 `;
