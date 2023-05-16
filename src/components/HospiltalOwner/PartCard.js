@@ -35,6 +35,7 @@ const Wrapper = styled.TouchableOpacity`
   width: ${width / 4}px;
 `;
 const PartText = styled.Text`
+  text-align: center;
   font-size: ${RFValue(13)}px;
   font-weight: ${props => (props.active ? 'bold' : 'normal')};
   color: ${props =>
