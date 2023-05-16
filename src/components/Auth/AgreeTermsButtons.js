@@ -53,11 +53,11 @@ const AgreeTermsButtons = props => {
             {isPrivacyActive ? <Icons.checkbox /> : <Icons.emptyCheckbox />}
           </IconWrapper>
           <TextButtonWrapper
-            value="개인정보취급방침"
+            value="개인정보처리방침"
             onPress={() => {
-              props.onPressTextButton('개인정보취급방침');
+              props.onPressTextButton('개인정보처리방침');
             }}>
-            <SubAgreeText>개인정보취급방침</SubAgreeText>
+            <SubAgreeText>개인정보처리방침</SubAgreeText>
             <Text>(필수)</Text>
           </TextButtonWrapper>
         </AgreeWrapper>
