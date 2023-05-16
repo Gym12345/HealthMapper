@@ -34,7 +34,31 @@ const HealthRecordScreen = props => {
   const bottomTabHeight = useBottomTabBarHeight();
 
   //건강 기록 저장 핸들러
-  const submitHealthRecordHandler = () => {};
+  const submitHealthRecordHandler = useCallback(
+    async () => {
+      setError(null);
+      try {
+        await dispatch(
+          submitHealthRecord({
+            hcYear: isSelectedYear, //현재 연도(초기값) or 선택된 연도
+            hcMonth: isSelectedMonth, //현재 월(초기값) or 선택된 월
+            hcDate: isSelectedDay, //현재 일(초기값) or 선택된 일
+            hcMemo: isMemo, //건강기록 관련 메모
+            hcUser: userId, //현재 로그인한 userId
+          }),
+        ).unwrap();
+        props.navigation.navigate('내 정보'); //정상적으로 건강기록 저장 시 내 정보 화면으로 이동
+        setIsMemo(''); //정상적으로 건강기록 저장 시 메모 초기화
+        setSelectedYear(today.getFullYear().toString()); //정상적으로 건강기록 저장 시 현재 연도로 변경
+        setSelectedMonth((today.getMonth() + 1).toString()); //정상적으로 건강기록 저장 시 현재 월로 변경
+        setSelectedDay(today.getDate().toString()); //정상적으로 건강기록 저장 시 현재 일로 변경
+      } catch (error) {
+        setError(error.message);
+      }
+    },
+    // showModal, isMemo를 의존성 배열에 전달하면서 건강기록 저장 시 state변수둘 갱신
+    [dispatch, isError, showModl, isMemo],
+  );
 
   return (
     <Container>
