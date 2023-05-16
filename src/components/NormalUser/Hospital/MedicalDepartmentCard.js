@@ -21,7 +21,7 @@ const Wrapper = styled.TouchableOpacity`
   margin-horizontal: 7px;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding-vertical: 20px;
   border-radius: 10px;
   border-color: ${props => props.theme.colors.gray7};
   border-width: 1px;
@@ -31,8 +31,8 @@ const Wrapper = styled.TouchableOpacity`
 `;
 const MedicalText = styled.Text`
   text-align: center;
-  margin-top: 5px;
-  font-size: ${RFValue(13)}px;
+  margin-top: 10px;
+  font-size: ${RFValue(12)}px;
   color: ${props => props.theme.colors.black};
 `;
 

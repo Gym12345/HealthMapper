@@ -24,7 +24,7 @@ const EyeMedicalDepartmentData = [
   },
   {
     id: 5,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -39,7 +39,7 @@ const EyeMedicalDepartmentData = [
   },
   {
     id: 8,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
@@ -68,7 +68,7 @@ const NoseMedicalDepartmentData = [
   },
   {
     id: 4,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -78,7 +78,7 @@ const NoseMedicalDepartmentData = [
   },
   {
     id: 6,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -93,7 +93,7 @@ const NoseMedicalDepartmentData = [
   },
   {
     id: 9,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
@@ -117,7 +117,7 @@ const MouthMedicalDepartmentData = [
   },
   {
     id: 3,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -127,7 +127,7 @@ const MouthMedicalDepartmentData = [
   },
   {
     id: 5,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -142,7 +142,7 @@ const MouthMedicalDepartmentData = [
   },
   {
     id: 8,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
@@ -166,7 +166,7 @@ const EarMedicalDepartmentData = [
   },
   {
     id: 3,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -176,7 +176,7 @@ const EarMedicalDepartmentData = [
   },
   {
     id: 5,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -191,7 +191,7 @@ const EarMedicalDepartmentData = [
   },
   {
     id: 8,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
@@ -235,7 +235,7 @@ const NeckMedicalDepartmentData = [
   },
   {
     id: 7,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -245,7 +245,7 @@ const NeckMedicalDepartmentData = [
   },
   {
     id: 9,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -260,7 +260,7 @@ const NeckMedicalDepartmentData = [
   },
   {
     id: 12,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
@@ -284,7 +284,7 @@ const HeadMedicalDepartmentData = [
   },
   {
     id: 3,
-    data: '정신건강\n의학과',
+    data: '정신건강의학과',
     icon: <Icons.mentalHealthDepartment />,
   },
   {
@@ -299,7 +299,7 @@ const HeadMedicalDepartmentData = [
   },
   {
     id: 6,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -309,7 +309,7 @@ const HeadMedicalDepartmentData = [
   },
   {
     id: 8,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -324,7 +324,7 @@ const HeadMedicalDepartmentData = [
   },
   {
     id: 11,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
@@ -348,7 +348,7 @@ const ChestMedicalDepartmentData = [
   },
   {
     id: 2,
-    data: '심장혈관\n흉부외과',
+    data: '심장혈관흉부외과',
     icon: <Icons.cardiovascularThoracicSurgery />,
   },
   {
@@ -378,7 +378,7 @@ const ChestMedicalDepartmentData = [
   },
   {
     id: 8,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -388,7 +388,7 @@ const ChestMedicalDepartmentData = [
   },
   {
     id: 10,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -403,12 +403,12 @@ const ChestMedicalDepartmentData = [
   },
   {
     id: 13,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
     id: 14,
-    data: '방사선\n종양학과',
+    data: '방사선종양학과',
     icon: <Icons.radiationOncologyDepartment />,
   },
   {
@@ -467,7 +467,7 @@ const StomachMedicalDepartmentData = [
   },
   {
     id: 8,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -477,7 +477,7 @@ const StomachMedicalDepartmentData = [
   },
   {
     id: 10,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -492,12 +492,12 @@ const StomachMedicalDepartmentData = [
   },
   {
     id: 13,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
     id: 14,
-    data: '방사선\n종양학과',
+    data: '방사선종양학과',
     icon: <Icons.radiationOncologyDepartment />,
   },
   {
@@ -556,7 +556,7 @@ const BackMedicalDepartmentData = [
   },
   {
     id: 8,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -566,7 +566,7 @@ const BackMedicalDepartmentData = [
   },
   {
     id: 10,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -581,12 +581,12 @@ const BackMedicalDepartmentData = [
   },
   {
     id: 13,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
     id: 14,
-    data: '방사선\n종양학과',
+    data: '방사선종양학과',
     icon: <Icons.radiationOncologyDepartment />,
   },
   {
@@ -645,7 +645,7 @@ const ShoulderMedicalDepartmentData = [
   },
   {
     id: 8,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -655,7 +655,7 @@ const ShoulderMedicalDepartmentData = [
   },
   {
     id: 10,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -670,12 +670,12 @@ const ShoulderMedicalDepartmentData = [
   },
   {
     id: 13,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
     id: 14,
-    data: '방사선\n종양학과',
+    data: '방사선종양학과',
     icon: <Icons.radiationOncologyDepartment />,
   },
   {
@@ -724,7 +724,7 @@ const ArmMedicalDepartmentData = [
   },
   {
     id: 6,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -734,7 +734,7 @@ const ArmMedicalDepartmentData = [
   },
   {
     id: 8,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -749,7 +749,7 @@ const ArmMedicalDepartmentData = [
   },
   {
     id: 11,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
@@ -793,7 +793,7 @@ const HandMedicalDepartmentData = [
   },
   {
     id: 6,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -803,7 +803,7 @@ const HandMedicalDepartmentData = [
   },
   {
     id: 8,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -818,7 +818,7 @@ const HandMedicalDepartmentData = [
   },
   {
     id: 11,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
@@ -862,7 +862,7 @@ const LegMedicalDepartmentData = [
   },
   {
     id: 6,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -872,7 +872,7 @@ const LegMedicalDepartmentData = [
   },
   {
     id: 8,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -887,7 +887,7 @@ const LegMedicalDepartmentData = [
   },
   {
     id: 11,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
@@ -931,7 +931,7 @@ const FootMedicalDepartmentData = [
   },
   {
     id: 6,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -941,7 +941,7 @@ const FootMedicalDepartmentData = [
   },
   {
     id: 8,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -956,7 +956,7 @@ const FootMedicalDepartmentData = [
   },
   {
     id: 11,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
@@ -1035,7 +1035,7 @@ const TotalMedicalDepartmentData = [
   },
   {
     id: 13,
-    data: '마취통증\n의학과',
+    data: '마취통증의학과',
     icon: <Icons.anesthesiology_PainMedicine />,
   },
   {
@@ -1050,7 +1050,7 @@ const TotalMedicalDepartmentData = [
   },
   {
     id: 16,
-    data: '소아\n청소년과',
+    data: '소아청소년과',
     icon: <Icons.pediatricsDepartment />,
   },
   {
@@ -1060,7 +1060,7 @@ const TotalMedicalDepartmentData = [
   },
   {
     id: 18,
-    data: '심장혈관\n흉부외과',
+    data: '심장혈관흉부외과',
     icon: <Icons.cardiovascularThoracicSurgery />,
   },
   {
@@ -1080,17 +1080,17 @@ const TotalMedicalDepartmentData = [
   },
   {
     id: 22,
-    data: '정신건강\n의학과',
+    data: '정신건강의학과',
     icon: <Icons.mentalHealthDepartment />,
   },
   {
     id: 23,
-    data: '진단검사\n의학과',
+    data: '진단검사의학과',
     icon: <Icons.laboratoryMedicineDepartment />,
   },
   {
     id: 24,
-    data: '방사선\n종양학과',
+    data: '방사선종양학과',
     icon: <Icons.radiationOncologyDepartment />,
   },
   {

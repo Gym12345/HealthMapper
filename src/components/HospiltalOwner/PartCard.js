@@ -25,7 +25,7 @@ const Wrapper = styled.TouchableOpacity`
   margin-horizontal: 7px;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding-vertical: 10px;
   border-radius: 30px;
   border-color: ${props =>
     props.active
@@ -36,7 +36,7 @@ const Wrapper = styled.TouchableOpacity`
 `;
 const PartText = styled.Text`
   text-align: center;
-  font-size: ${RFValue(13)}px;
+  font-size: ${RFValue(11)}px;
   font-weight: ${props => (props.active ? 'bold' : 'normal')};
   color: ${props =>
     props.active ? props.theme.colors.white : props.theme.colors.gray4};
