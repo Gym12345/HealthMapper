@@ -21,7 +21,7 @@ import HospitalDetailScreen from '../screens/NormalUser/Hospital/HospitalDetailS
 import ReviewRegistScreen from '../screens/NormalUser/Hospital/ReviewRegistScreen';
 
 //HelathNavigator_NormalUser
-import HealthScreen from '../screens/NormalUser/Health/HealthScreen';
+import HealthRecordScreen from '../screens/NormalUser/Health/HealthRecordScreen';
 
 //UserInfoNavigator_NormalUser
 import UserInfoScreen from '../screens/NormalUser/UserInformation/UserInfoScreen';
@@ -55,9 +55,9 @@ const AuthStackNavigator = props => {
 const HealthNavigator = props => {
   return (
     <Stack.Navigator
-      initialRouteName="health"
+      initialRouteName="healthRecord"
       screenOptions={{headerShown: false}}>
-      <Stack.Screen name="health" component={HealthScreen} />
+      <Stack.Screen name="healthRecord" component={HealthRecordScreen} />
     </Stack.Navigator>
   );
 };

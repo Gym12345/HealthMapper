@@ -12,7 +12,7 @@ import HealthCalendarModal from '../../../components/NormalUser/Health/HealthCal
 import HealthMemo from '../../../components/NormalUser/Health/HealthMemo';
 import MedicineMemo from '../../../components/NormalUser/Health/MedicineMemo';
 
-const HealthScreen = props => {
+const HealthRecordScreen = props => {
   const [showModl, setShowModal] = useState(false);
   const [isSelectedDate, setSelectedDate] = useState(false);
   const [isMemo, setIsMemo] = useState(null); //메모 변수
@@ -135,4 +135,4 @@ const IconContainer = styled.View`
 `;
 const IconWrapper = styled.TouchableOpacity``;
 
-export default HealthScreen;
+export default HealthRecordScreen;
