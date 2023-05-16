@@ -4,13 +4,13 @@ import {useDispatch} from 'react-redux';
 
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components';
-import HeaderBar from '../../../components/Global/HeaderBar';
-import Icons from '../../../aseets/Global/Icons';
+import HeaderBar from '../../components/Global/HeaderBar';
+import Icons from '../../aseets/Global/Icons';
 
-import SignupInputForm from '../../../components/Auth/SignupInputForm';
-import ClassSelector from '../../../components/Auth/ClassSelector';
-import AgreeTermsButtons from '../../../components/Auth/AgreeTermsButtons';
-import {signUp} from '../../../store/slices/authSlice';
+import SignupInputForm from '../../components/Auth/SignupInputForm';
+import ClassSelector from '../../components/Auth/ClassSelector';
+import AgreeTermsButtons from '../../components/Auth/AgreeTermsButtons';
+import {signUp} from '../../store/slices/authSlice';
 
 const {height} = Dimensions.get('window');
 

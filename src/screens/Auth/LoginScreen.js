@@ -5,12 +5,12 @@ import {useDispatch} from 'react-redux';
 import * as Permissions from 'react-native-permissions';
 import {RFValue} from 'react-native-responsive-fontsize';
 
-import {login, guestLogin} from '../../../store/slices/authSlice';
+import {login, guestLogin} from '../../store/slices/authSlice';
 import styled from 'styled-components';
 
-import LoginInputForm from '../../../components/Auth/LoginInputForm';
-import DivisionLine from '../../../components/Auth/DivisionLine';
-import ClassSelector from '../../../components/Auth/ClassSelector';
+import LoginInputForm from '../../components/Auth/LoginInputForm';
+import DivisionLine from '../../components/Auth/DivisionLine';
+import ClassSelector from '../../components/Auth/ClassSelector';
 
 const {height} = Dimensions.get('window');
 

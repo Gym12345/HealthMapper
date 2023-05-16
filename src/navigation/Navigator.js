@@ -7,9 +7,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icons from '../aseets/Global/Icons';
 
 //AuthNavigator
-import LoginScreen from '../screens/Global/Auth/LoginScreen';
-import SignupScreen from '../screens/Global/Auth/SignupScreen';
-import TermsScreen from '../screens/Global/Auth/TermsScreen';
+import LoginScreen from '../screens/Auth/LoginScreen';
+import SignupScreen from '../screens/Auth/SignupScreen';
+import TermsScreen from '../screens/Auth/TermsScreen';
 
 //HospitalNavigator_NormalUser
 import HospitalHomeScreen from '../screens/NormalUser/Hospital/HospitalHomeScreen';
