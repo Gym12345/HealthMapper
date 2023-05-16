@@ -140,6 +140,7 @@ const LeadingIcon = styled.TouchableOpacity`
 const TextWrapper = styled.TouchableOpacity``;
 const ButtonText = styled.Text`
   font-size: 15px;
+  color: ${props => props.theme.colors.gray1};
 `;
 
 const EmptySizedBox = styled.View`

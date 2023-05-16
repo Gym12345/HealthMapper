@@ -12,7 +12,7 @@ const MedicineMemo = props => {
       <WrapperTitle>복용중인 약을 입력해주세요!</WrapperTitle>
       <InputWrapper>
         <MemoInput
-          multiLine={true}
+          multiline={true}
           value={props.value}
           onChangeText={props.onChangeMedicine}
         />
