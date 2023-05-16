@@ -52,20 +52,16 @@ const HealthCalendarModal = props => {
       onBackdropPress={props.onBackdropPress}>
       <Calendar
         markedDates={markedDates}
-        onDayPress={day => {
-          console.log(day);
-          const selectedDate = day.dateString; //선택된 날짜
-          const formattedDate = new Date(selectedDate).toLocaleDateString(
-            'ko-KR',
-            {year: 'numeric', month: 'long', day: 'numeric'},
-          ); //한국 날짜표기로 format
-          console.log(formattedDate);
-          props.setDate(formattedDate); //건강기록 스크린에서 선택된 날짜 전달
-          setMarkedDates({[selectedDate]: {selected: true}}); //선택된 날짜에 마커
+        onDayPress={date => {
+          console.log(date);
+          setMarkedDates({[date.dateString]: {selected: true}}); //선택된 날짜에 마커
+          props.setYear(date.year); //서버로 전달할 선택된 연도
+          props.setMonth(date.month); //서버로 전달할 선택된 월
+          props.setDay(date.day); //서버로 전달할 선택된 일
           props.setVisible(false); //날짜 선택하면 showModal false
         }}
         theme={{
-          selectedDayBackgroundColor: '#885FFF',
+          selectedDayBackgroundColor: '#F53874',
           arrowColor: 'black',
           dotColor: 'green',
           todayTextColor: 'black',

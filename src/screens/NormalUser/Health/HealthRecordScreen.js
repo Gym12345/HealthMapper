@@ -1,7 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+
+import {useDispatch, useSelector} from 'react-redux';
+import {submitHealthRecord} from '../../../store/slices/healthSlice';
 
 import HeaderBar from '../../../components/Global/HeaderBar';
 import styled from 'styled-components';
@@ -13,34 +16,25 @@ import HealthMemo from '../../../components/NormalUser/Health/HealthMemo';
 import MedicineMemo from '../../../components/NormalUser/Health/MedicineMemo';
 
 const HealthRecordScreen = props => {
+  const today = new Date();
   const [showModl, setShowModal] = useState(false);
-  const [isSelectedDate, setSelectedDate] = useState(false);
+  const [isSelectedYear, setSelectedYear] = useState(
+    today.getFullYear().toString(),
+  );
+  const [isSelectedMonth, setSelectedMonth] = useState(
+    (today.getMonth() + 1).toString(),
+  );
+  const [isSelectedDay, setSelectedDay] = useState(today.getDate().toString());
   const [isMemo, setIsMemo] = useState(null); //메모 변수
-  const [isMedicien, setIsMedicine] = useState(null); //약 변수
-  const [isMemoIconActive, setIsMemoIconActive] = useState(null); //메모아이콘 활성화 변수
-  const [isMedicineIconActive, setIsMedicineIconActive] = useState(null); //약아이콘 활성화 변수
+  const [isMemoIconActive, setIsMemoIconActive] = useState(true); //메모아이콘 활성화 변수
+  const [isError, setError] = useState(null);
+  const dispatch = useDispatch();
+  const userId = useSelector(state => state.auth.userId);
 
   const bottomTabHeight = useBottomTabBarHeight();
 
-  //reduxHandler로 대체
-  const submitMemoHandler = () => {
-    console.log(
-      '현재일자:' + isSelectedDate,
-      '건강관련 메모:' + isMemo + '약물 메모' + isMedicien,
-    );
-  };
-
-  //스크린 최초 렌더링 시 현재 날짜를 isSelectedDate 변수에 저장
-  useEffect(() => {
-    const date = new Date();
-    let currentYear = date.getFullYear();
-    let currentMonth = date.getMonth() + 1;
-    let currentDay = date.getDate();
-    const todayDate = `${currentYear}년 ${
-      currentMonth < 10 ? '0' : ''
-    }${currentMonth}월 ${currentDay < 10 ? '0' : ''}${currentDay}일 `;
-    setSelectedDate(todayDate);
-  }, []);
+  //건강 기록 저장 핸들러
+  const submitHealthRecordHandler = () => {};
 
   return (
     <Container>
@@ -50,46 +44,34 @@ const HealthRecordScreen = props => {
         }}
         leadingLeftIcon={<Icons.arrowBack />}
         centerTitle="건강기록"
-        leadingRightAction={submitMemoHandler}
+        leadingRightAction={submitHealthRecordHandler}
         buttonTitle="저장"
       />
       <DateButtonWrapper onPress={() => setShowModal(true)}>
-        <CurrentDate>{isSelectedDate}</CurrentDate>
+        <CurrentDate>
+          {isSelectedYear}년 {isSelectedMonth}월 {isSelectedDay}일
+        </CurrentDate>
       </DateButtonWrapper>
       <DivisionLine />
+
       <IconContainer>
         <IconWrapper
           onPress={() => {
             setIsMemoIconActive(true);
-            setIsMedicineIconActive(false);
           }}>
           <Icons_health.memo active={isMemoIconActive} />
         </IconWrapper>
-        <IconWrapper
-          onPress={() => {
-            setIsMemoIconActive(false);
-            setIsMedicineIconActive(true);
-          }}>
-          <Icons_health.medicine active={isMedicineIconActive} />
-        </IconWrapper>
       </IconContainer>
       <DivisionLine />
+
       <ScrollWrapper>
         <MemoWrapper bottomTabHeight={bottomTabHeight}>
           {/*처음 렌더링(메모,약 아이콘 활성화 X)시 아무것도 렌더링 하지 않고 메모,약 아이콘 클릭 시 그에 맞는 컴포넌트 렌더링*/}
-          {!isMemoIconActive &&
-          !isMedicineIconActive ? null : isMemoIconActive ? (
+          {!isMemoIconActive ? null : (
             <HealthMemo
               value={isMemo}
               onChangeMemo={text => {
                 setIsMemo(text);
-              }}
-            />
-          ) : (
-            <MedicineMemo
-              value={isMedicien}
-              onChangeMedicine={text => {
-                setIsMedicine(text);
               }}
             />
           )}
@@ -99,7 +81,9 @@ const HealthRecordScreen = props => {
       <HealthCalendarModal
         isVisible={showModl}
         setVisible={setShowModal}
-        setDate={setSelectedDate}
+        setYear={setSelectedYear}
+        setMonth={setSelectedMonth}
+        setDay={setSelectedDay}
         onBackdropPress={() => setShowModal(false)}
       />
     </Container>
@@ -109,7 +93,6 @@ const HealthRecordScreen = props => {
 const Container = styled.SafeAreaView`
   background-color: ${props => props.theme.colors.white};
 `;
-const SaveButton = styled.Text``;
 const DateButtonWrapper = styled.TouchableOpacity`
   align-items: center;
   padding-vertical: 20px;
