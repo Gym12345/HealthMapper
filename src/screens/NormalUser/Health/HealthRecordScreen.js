@@ -1,4 +1,6 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
+
+import {Alert} from 'react-native';
 
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
@@ -47,13 +49,16 @@ const HealthRecordScreen = props => {
             hcUser: userId, //현재 로그인한 userId
           }),
         ).unwrap();
-        props.navigation.navigate('내 정보'); //정상적으로 건강기록 저장 시 내 정보 화면으로 이동
+        props.navigation.navigate('내 정보'); //정상적으로 건강기록 저장 시 내 정보 화면으로 이동 (추후 내정보가 아닌 내건강기록조회Screen안내가 더 좋을지도)
         setIsMemo(''); //정상적으로 건강기록 저장 시 메모 초기화
         setSelectedYear(today.getFullYear().toString()); //정상적으로 건강기록 저장 시 현재 연도로 변경
         setSelectedMonth((today.getMonth() + 1).toString()); //정상적으로 건강기록 저장 시 현재 월로 변경
         setSelectedDay(today.getDate().toString()); //정상적으로 건강기록 저장 시 현재 일로 변경
       } catch (error) {
         setError(error.message);
+        Alert.alert('저장 실패', '메모가 비어있습니다', [
+          {text: '확인', style: 'cancel'},
+        ]);
       }
     },
     // showModal, isMemo를 의존성 배열에 전달하면서 건강기록 저장 시 state변수둘 갱신
