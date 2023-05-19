@@ -58,6 +58,7 @@ const InputContainer = styled.View`
 const InputWrapper = styled.TextInput`
   padding: 10px;
   flex: 1;
+  color: ${props => props.theme.colors.black};
 `;
 const ButtonWrapper = styled.TouchableOpacity`
   margin-right: 10px;

@@ -8,6 +8,8 @@ import {RFValue} from 'react-native-responsive-fontsize';
 
 const {height, width} = Dimensions.get('window');
 
+//기존 healthMemo는 그저 memoCreate에 관한 컴포넌트
+//EditMemotModal은 기존 Memo내용을 수정하기 위한 modal컴포넌트
 const EditMemoModal = props => {
   return (
     <Modal
@@ -52,6 +54,7 @@ const InputWrapper = styled.View`
 `;
 const MemoInput = styled.TextInput`
   font-size: ${RFValue(15)}px;
+  color: ${props => props.theme.colors.black};
 `;
 
 const EditButtonWrapper = styled.TouchableOpacity`

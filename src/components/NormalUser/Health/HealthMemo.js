@@ -50,6 +50,7 @@ const InputWrapper = styled.View`
 `;
 const MemoInput = styled.TextInput`
   font-size: ${RFValue(15)}px;
+  color: ${props => props.theme.colors.black};
 `;
 
 const SubmitButton = styled.TouchableOpacity`

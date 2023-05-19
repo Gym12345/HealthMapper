@@ -92,6 +92,7 @@ const FormTitle = styled.Text`
 `;
 const HospitalTitleInput = styled.TextInput`
   font-size: ${RFValue(13)}px;
+  color: ${props => props.theme.colors.black};
   ${inputStyle}
 `;
 const AddressWrapper = styled.View``;
@@ -117,6 +118,7 @@ const ButtonText = styled.Text`
 `;
 const HospitalDomainInput = styled.TextInput`
   font-size: ${RFValue(13)}px;
+  color: ${props => props.theme.colors.black};
   ${inputStyle}
 `;
 const HospitalDescriptionWrapper = styled.View`
@@ -126,6 +128,7 @@ const HospitalDescriptionWrapper = styled.View`
 
 const HospitalDescriptionInput = styled.TextInput`
   font-size: ${RFValue(12)}px;
+  color: ${props => props.theme.colors.black};
 `;
 
 export default HospitalInputForm;

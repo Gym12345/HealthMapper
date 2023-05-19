@@ -147,6 +147,7 @@ const ReviewWrapper = styled.View`
 `;
 const ReviewInput = styled.TextInput`
   font-size: ${RFValue(13)}px;
+  color: ${props => props.theme.colors.black};
 `;
 const ReviewRegistButton = styled.TouchableOpacity`
   margin-top: ${height / 15}px;

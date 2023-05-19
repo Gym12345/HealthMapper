@@ -40,6 +40,7 @@ const InputWrapper = styled.View`
 const MemoInput = styled.TextInput`
   flex: 1;
   font-size: ${RFValue(15)}px;
+  color: ${props => props.theme.colors.black};
 `;
 
 export default MedicineMemo;
