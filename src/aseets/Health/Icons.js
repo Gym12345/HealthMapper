@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Svg, {Rect, Path, G, Circle, Use, Text, TSpan} from 'react-native-svg';
 
-//건강기록 메모 아이콘
+//건강기록 메모 아이콘 _ HealthRecordScreen
 class Memo extends Component {
   render() {
     return (
@@ -28,7 +28,7 @@ class Memo extends Component {
   }
 }
 
-//건강기록 약 아이콘
+//건강기록 약 아이콘 _ HealthRecordScreen
 class Medicine extends Component {
   render() {
     return (
@@ -45,6 +45,23 @@ class Medicine extends Component {
         <Path
           d="m81.477 170.66 35.747-85.456c-13.417 0-26.026 5.216-35.503 14.696-19.573 19.573-19.573 51.431-.244 70.76z"
           className="st0"
+        />
+      </Svg>
+    );
+  }
+}
+
+/* MyHome Icon _ HealthRecordScreen */
+class MyHome extends Component {
+  render() {
+    return (
+      <Svg width={40} height={40} fill="none" viewBox="0 0 24 24">
+        <Path
+          stroke={this.props.active ? '#F53874' : '#000'}
+          strokeWidth={1.5}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M9 20H7a2 2 0 0 1-2-2v-7.08A2 2 0 0 1 5.698 9.4l5-4.285a2 2 0 0 1 2.604 0l5 4.285A2 2 0 0 1 19 10.92V18a2 2 0 0 1-2 2h-2m-6 0v-6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6m-6 0h6"
         />
       </Svg>
     );
@@ -92,6 +109,7 @@ class MyReview extends Component {
 export default Icons = {
   memo: Memo,
   medicine: Medicine,
+  myHome: MyHome,
   myReview: MyReview,
   myHealthMemo: MyHealthMemo,
 };

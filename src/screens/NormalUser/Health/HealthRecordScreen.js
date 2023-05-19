@@ -1,22 +1,24 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
-import {Alert, Dimensions} from 'react-native';
+import {Alert, Dimensions, FlatList} from 'react-native';
 
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {submitHealthRecord} from '../../../store/slices/healthSlice';
+import {
+  submitHealthRecord,
+  getHealthRecord,
+} from '../../../store/slices/healthSlice';
 
 import HeaderBar from '../../../components/Global/HeaderBar';
 import styled from 'styled-components';
 import Icons from '../../../aseets/Global/Icons';
-import Icons_health from '../../../aseets/Health/Icons';
 
 import HealthCalendarModal from '../../../components/NormalUser/Health/HealthCalendarModal';
 import HealthMemo from '../../../components/NormalUser/Health/HealthMemo';
-
-const {height} = Dimensions.get('window');
+import MemoIconWrapper from '../../../components/NormalUser/Health/MemoIconWrapper';
+import HealthRecordCard from '../../../components/NormalUser/Health/HealthRecordCard';
 
 const HealthRecordScreen = props => {
   const today = new Date();
@@ -29,10 +31,13 @@ const HealthRecordScreen = props => {
   );
   const [isSelectedDay, setSelectedDay] = useState(today.getDate().toString());
   const [isMemo, setIsMemo] = useState(null); //메모 변수
-  const [isMemoIconActive, setIsMemoIconActive] = useState(true); //메모아이콘 활성화 변수
+  const [isMemoIconActive, setIsMemoIconActive] = useState(false); //메모아이콘 활성화 변수
+  const [isHomeIconActive, setIsHomeIconActive] = useState(true); //홈아이콘 활성화 변수
   const [isError, setError] = useState(null);
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.userId);
+  const healthRecordArr = useSelector(state => state.health.healthRecordArr);
+  const isReviesGetted = useSelector(state => state.health.isReviesGetted);
 
   const bottomTabHeight = useBottomTabBarHeight();
 
@@ -50,11 +55,12 @@ const HealthRecordScreen = props => {
             hcUser: userId, //현재 로그인한 userId
           }),
         ).unwrap();
-        props.navigation.navigate('내 정보'); //정상적으로 건강기록 저장 시 내 정보 화면으로 이동 (추후 내정보가 아닌 내건강기록조회Screen안내가 더 좋을지도)
         setIsMemo(''); //정상적으로 건강기록 저장 시 메모 초기화
         setSelectedYear(today.getFullYear().toString()); //정상적으로 건강기록 저장 시 현재 연도로 변경
         setSelectedMonth((today.getMonth() + 1).toString()); //정상적으로 건강기록 저장 시 현재 월로 변경
         setSelectedDay(today.getDate().toString()); //정상적으로 건강기록 저장 시 현재 일로 변경
+        setIsHomeIconActive(true);
+        setIsMemoIconActive(false);
       } catch (error) {
         setError(error.message);
         Alert.alert('저장 실패', '메모가 비어있습니다', [
@@ -65,6 +71,21 @@ const HealthRecordScreen = props => {
     // showModal, isMemo를 의존성 배열에 전달하면서 건강기록 저장 시 state변수둘 갱신
     [dispatch, isError, showModl, isMemo],
   );
+
+  //건강 기록 조회 핸들러
+  useEffect(() => {
+    if (isHomeIconActive) {
+      const getHealthRecordHandler = async () => {
+        try {
+          await dispatch(getHealthRecord({hcUser: userId})).unwrap();
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getHealthRecordHandler();
+      console.log('호출');
+    }
+  }, [dispatch, userId, isReviesGetted, isHomeIconActive]);
 
   return (
     <Container>
@@ -84,20 +105,41 @@ const HealthRecordScreen = props => {
       </DateButtonWrapper>
       <DivisionLine />
 
-      <IconContainer>
-        <IconWrapper
-          onPress={() => {
-            setIsMemoIconActive(true);
-          }}>
-          <Icons_health.memo active={isMemoIconActive} />
-        </IconWrapper>
-      </IconContainer>
+      {/* 아직 Icon 2개이기에 별도 함수로 관리 X -> 추후 아이콘(ex_약)추가된다면 함수관리가 유용 */}
+      <MemoIconWrapper
+        onHomeIconClick={() => {
+          setIsHomeIconActive(true);
+          setIsMemoIconActive(false);
+        }}
+        onMemoIconClick={() => {
+          setIsHomeIconActive(false);
+          setIsMemoIconActive(true);
+        }}
+        homeIconActive={isHomeIconActive}
+        memoIconActive={isMemoIconActive}
+      />
       <DivisionLine />
 
       <ScrollWrapper>
         <MemoWrapper bottomTabHeight={bottomTabHeight}>
-          {/*처음 렌더링(메모,약 아이콘 활성화 X)시 아무것도 렌더링 하지 않고 메모,약 아이콘 클릭 시 그에 맞는 컴포넌트 렌더링*/}
-          {!isMemoIconActive ? null : (
+          {/* 아직 Icon 2개이기에 삼항연산자로 -> 추후 아이콘(ex_약)추가된다면 focus가 유용할듯 */}
+          {isHomeIconActive ? ( //홈 메모
+            <FlatList
+              data={healthRecordArr}
+              keyExtractor={item => item.hcId.toString()}
+              scrollEnabled={false}
+              renderItem={item => (
+                <HealthRecordCard
+                  onSelectHealthRecord={() => {}}
+                  recordYear={item.item.hcYear}
+                  recordMonth={item.item.hcMonth}
+                  recordDay={item.item.hcDate}
+                  recordMemo={item.item.hcMemo}
+                />
+              )}
+            />
+          ) : (
+            //건강 기록 메모
             <HealthMemo
               value={isMemo}
               placeholder="건강을 기록해주세요"
@@ -141,11 +183,5 @@ const DivisionLine = styled.View`
   width: 100%;
   height: 1px;
 `;
-const IconContainer = styled.View`
-  padding: 10px;
-  flex-direction: row;
-  justify-content: space-around;
-`;
-const IconWrapper = styled.TouchableOpacity``;
 
 export default HealthRecordScreen;
