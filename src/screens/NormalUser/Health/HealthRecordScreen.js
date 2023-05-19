@@ -1,6 +1,6 @@
 import React, {useState, useCallback} from 'react';
 
-import {Alert} from 'react-native';
+import {Alert, Dimensions} from 'react-native';
 
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
@@ -15,7 +15,8 @@ import Icons_health from '../../../aseets/Health/Icons';
 
 import HealthCalendarModal from '../../../components/NormalUser/Health/HealthCalendarModal';
 import HealthMemo from '../../../components/NormalUser/Health/HealthMemo';
-import MedicineMemo from '../../../components/NormalUser/Health/MedicineMemo';
+
+const {height} = Dimensions.get('window');
 
 const HealthRecordScreen = props => {
   const today = new Date();
@@ -99,6 +100,8 @@ const HealthRecordScreen = props => {
           {!isMemoIconActive ? null : (
             <HealthMemo
               value={isMemo}
+              placeholder="건강을 기록해주세요"
+              onSubmitMemo={submitHealthRecordHandler}
               onChangeMemo={text => {
                 setIsMemo(text);
               }}
@@ -131,9 +134,7 @@ const CurrentDate = styled.Text`
   color: ${props => props.theme.colors.black};
 `;
 const ScrollWrapper = styled.ScrollView``;
-const MemoWrapper = styled.View`
-  margin-bottom: ${props => props.bottomTabHeight + 100}px;
-`;
+const MemoWrapper = styled.View``;
 const DivisionLine = styled.View`
   background-color: ${props => props.theme.colors.gray7};
   align-self: center;
