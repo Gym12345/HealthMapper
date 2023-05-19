@@ -37,7 +37,6 @@ const HealthRecordScreen = props => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.userId); //로그인한 사용자 Id
   const healthRecordArr = useSelector(state => state.health.healthRecordArr); //사용자에 해당하는 건강기록 정보
-  const isReviesGetted = useSelector(state => state.health.isReviesGetted);
 
   const bottomTabHeight = useBottomTabBarHeight();
 
@@ -85,7 +84,7 @@ const HealthRecordScreen = props => {
       getHealthRecordHandler();
       console.log('호출');
     }
-  }, [dispatch, userId, isReviesGetted, isHomeIconActive]);
+  }, [dispatch, userId, isHomeIconActive]);
 
   // 다른 bottom tab에서 해당 화면으로 돌아올 때 무조건 homeIcon Active
   useEffect(() => {
