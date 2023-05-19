@@ -10,6 +10,7 @@ import {
   submitHealthRecord,
   getHealthRecord,
   deleteHealthRecord,
+  eidtHealthRecord,
 } from '../../../store/slices/healthSlice';
 
 import HeaderBar from '../../../components/Global/HeaderBar';
@@ -20,10 +21,14 @@ import HealthCalendarModal from '../../../components/NormalUser/Health/HealthCal
 import HealthMemo from '../../../components/NormalUser/Health/HealthMemo';
 import MemoIconWrapper from '../../../components/NormalUser/Health/MemoIconWrapper';
 import HealthRecordCard from '../../../components/NormalUser/Health/HealthRecordCard';
+import EditMemoModal from '../../../components/NormalUser/Health/EditMemoModal';
 
 const HealthRecordScreen = props => {
   const today = new Date();
-  const [showModl, setShowModal] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [showMemoModal, setShowMemoModal] = useState(false);
+  const [selectedMemoCard, setSelectedMemoCard] = useState(false); //선택된 메모 카드에 대한 정보
+  const [selectedMemoValue, setSelectedMemoValue] = useState(false); //선택된 메모 카드에 대한 메모내용
   const [isSelectedYear, setSelectedYear] = useState(
     today.getFullYear().toString(),
   );
@@ -62,7 +67,6 @@ const HealthRecordScreen = props => {
         setIsHomeIconActive(true); //건강기록 저장 시 HomeIconActive
         setIsMemoIconActive(false); //건강기록 저장 시 HomeIconActive
       } catch (error) {
-        console.log(error);
         setError(error.message);
         Alert.alert('저장 실패', '메모가 비어있습니다', [
           {text: '확인', style: 'cancel'},
@@ -70,7 +74,7 @@ const HealthRecordScreen = props => {
       }
     },
     // showModal, isMemo를 의존성 배열에 전달하면서 건강기록 저장 시 state변수둘 갱신
-    [dispatch, isError, showModl, isMemo],
+    [dispatch, isError, showCalendar, isMemo],
   );
 
   //건강기록 조회 핸들러
@@ -80,7 +84,7 @@ const HealthRecordScreen = props => {
     } catch (error) {
       console.log(error);
     }
-  }, [userId, dispatch, healthRecordArr]);
+  }, [userId, dispatch]);
 
   //건강기록 삭제 핸들러
   const deleteHealthRecordHandler = useCallback(
@@ -92,6 +96,24 @@ const HealthRecordScreen = props => {
             hcId: hcId,
           }),
         ).unwrap();
+        getHealthRecordHandler();
+      } catch (error) {
+        setError(error.message);
+        console.log(error);
+      }
+    },
+    [dispatch],
+  );
+
+  //건강기록 수정 핸들러
+  const editHealthRecordHandler = useCallback(
+    async (hcId, editedMemo) => {
+      setError(null);
+      try {
+        await dispatch(
+          eidtHealthRecord({hcId: hcId, chMemo: editedMemo}),
+        ).unwrap();
+        setShowMemoModal(false);
         getHealthRecordHandler();
       } catch (error) {
         setError(error.message);
@@ -129,7 +151,7 @@ const HealthRecordScreen = props => {
         leadingRightAction={submitHealthRecordHandler}
         buttonTitle="저장"
       />
-      <DateButtonWrapper onPress={() => setShowModal(true)}>
+      <DateButtonWrapper onPress={() => setShowCalendar(true)}>
         <CurrentDate>
           {isSelectedYear}년 {isSelectedMonth}월 {isSelectedDay}일
         </CurrentDate>
@@ -161,7 +183,11 @@ const HealthRecordScreen = props => {
               scrollEnabled={false}
               renderItem={itemData => (
                 <HealthRecordCard
-                  onSelectHealthRecord={() => {}}
+                  onSelectHealthRecord={() => {
+                    setShowMemoModal(true);
+                    setSelectedMemoCard(itemData.item);
+                    setSelectedMemoValue(itemData.item.hcMemo);
+                  }}
                   onDeleteHealthRecord={() => {
                     return Alert.alert(
                       null,
@@ -199,12 +225,28 @@ const HealthRecordScreen = props => {
       </ScrollWrapper>
 
       <HealthCalendarModal
-        isVisible={showModl}
-        setVisible={setShowModal}
+        isVisible={showCalendar}
+        setVisible={setShowCalendar}
         setYear={setSelectedYear}
         setMonth={setSelectedMonth}
         setDay={setSelectedDay}
-        onBackdropPress={() => setShowModal(false)}
+        onBackdropPress={() => setShowCalendar(false)}
+      />
+      {/* 건강기록 카드 클릭시 그에 해당하는 메모모달컴포넌트*/}
+      <EditMemoModal
+        isVisible={showMemoModal}
+        setVisible={setShowMemoModal}
+        onBackdropPress={() => setShowMemoModal(false)}
+        onChangeMemoInput={text => {
+          setSelectedMemoValue(text);
+        }}
+        onEditMemo={() => {
+          editHealthRecordHandler(selectedMemoCard.hcId, selectedMemoValue);
+        }}
+        memoValue={selectedMemoValue}
+        selectedYear={selectedMemoCard.hcYear}
+        selectedMonth={selectedMemoCard.hcMonth}
+        selectedDay={selectedMemoCard.hcDate}
       />
     </Container>
   );

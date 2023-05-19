@@ -62,6 +62,7 @@ const SubmitButton = styled.TouchableOpacity`
 `;
 const ButtonText = styled.Text`
   font-size: ${RFValue(15)}px;
+  font-weight: bold;
   color: ${props => props.theme.colors.gray7};
 `;
 

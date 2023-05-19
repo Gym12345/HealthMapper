@@ -86,11 +86,40 @@ export const deleteHealthRecord = createAsyncThunk(
   },
 );
 
+// 건강기록 수정 함수
+export const eidtHealthRecord = createAsyncThunk(
+  'health/editHealthRecord',
+  async ({hcId, chMemo}) => {
+    const response = await fetch(
+      'http://localhost:8090/Health/Health1/HealthCareMemoUpdateControllerForJson',
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          hcId,
+          chMemo,
+        }),
+      },
+    );
+
+    const resData = await response.json();
+    console.log(resData.success);
+
+    if (resData.success) {
+      return resData;
+    } else {
+      console.log('메모 삭제 실패:' + resData.success);
+      throw new Error('네트워크 요청 실패');
+    }
+  },
+);
+
 const initialState = {
   error: null,
   isRecordSubmitted: false,
   isGettedHealthRecord: false,
   isDeletedHealthRecord: false,
+  isEditedHealthRecord: false,
   healthRecordArr: null, //서버를 통해 전달받은 유저 건강기록 정보
 };
 
@@ -139,6 +168,19 @@ export const healthSlice = createSlice({
       .addCase(deleteHealthRecord.rejected, (state, action) => {
         state.error = action.error.message;
         state.isDeletedHealthRecord = false;
+      })
+      //건강기록 수정 액션
+      .addCase(eidtHealthRecord.pending, state => {
+        state.error = null;
+        state.isEditedHealthRecord = false;
+      })
+      .addCase(eidtHealthRecord.fulfilled, (state, action) => {
+        state.error = action.error;
+        state.isEditedHealthRecord = true;
+      })
+      .addCase(eidtHealthRecord.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isEditedHealthRecord = false;
       }),
 });
 
