@@ -36,9 +36,13 @@ const BodyPartScreen = props => {
     }
     //HospitalHome화면에서 신체부위 질문 버튼 클릭인 경우, 신체부위 선택하면 그에 관련된 신체부위 질문 화면으로 navigate
     else if (screenValue === 'bodyPartGuide') {
-      props.navigation.navigate('bodyPartGuide', {
-        selectedPart: selectedPart,
-      });
+      if (selectedPart === '머리관련부위') {
+        setShowModal(true);
+      } else {
+        props.navigation.navigate('bodyPartGuide', {
+          selectedPart: selectedPart,
+        });
+      }
     }
   };
   return (

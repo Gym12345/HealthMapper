@@ -1,10 +1,9 @@
-//머리관련부위질문 (눈, 코, 입, 귀, 머리, 목)
-const Head_NeckGuideData = [
+//눈관련부위질문
+const EyeGuideData = [
   {
     id: 1,
     data: '신경과',
-    guide:
-      '눈 앞이 캄캄해지거나 두통과 어지럼증이 있는 경우 \n 목이 뻐근하고 저린 경우',
+    guide: '눈 앞이 캄캄해지거나 두통과 어지럼증이 있는 경우',
   },
   {
     id: 2,
@@ -14,19 +13,76 @@ const Head_NeckGuideData = [
   },
   {
     id: 3,
+    data: '피부과',
+    guide: '눈 근처에 뾰루지가 난 경우',
+  },
+];
+
+//코관련부위질문
+const NoseGuideData = [
+  {
+    id: 1,
+    data: '이비인후과',
+    guide: '코가 자주 막히고 비염, 축농증의 증상이 있는 경우',
+  },
+  {
+    id: 2,
+    data: '피부과',
+    guide: '코 근처에 뾰루지가 난 경우',
+  },
+];
+
+//입관련부위질문
+const MouthGuideData = [
+  {
+    id: 1,
+    data: '치과',
+    guide: '입 안에서 지속적인 통증이 있는 경우 \n 심한 충치가 생긴 경우',
+  },
+  {
+    id: 2,
+    data: '내과',
+    guide: '지속적인 구취가 나는 경우 \n 입 안의 작은 발진이 생긴 경우',
+  },
+];
+
+//귀관련부위질문
+const EarGuideData = [
+  {
+    id: 1,
     data: '이비인후과',
     guide:
-      '코가 자주 막히고 비염, 축농증의 증상이 있는 경우 \n 귀에 이상한 소리가 주기적으로 들리는 경우 \n목이 전체적으로 부은 것 같은 경우',
+      '이명이 지속적으로 들리는 경우 \n 귀 내부의 염증, 이물질이 있는 경우',
+  },
+];
+
+//머리관련부위질문
+const HeadGuideData = [
+  {
+    id: 1,
+    data: '신경과',
+    guide:
+      '눈 앞이 캄캄해지거나 두통과 어지럼증이 있는 경우 \n 두통이 지속적으로 발생하는 경우',
   },
   {
-    id: 4,
+    id: 2,
     data: '피부과',
-    guide: '피부에 뾰루지가 난 경우 \n 머리,얼굴 특정부위가 가려운 경우',
+    guide:
+      '두피가 지속적으로 가려운 경우 \n 두피에서 지속적으로 냄새가 나는 경우 \n 모발 탈모가 심한 경우',
+  },
+];
+
+//목관련부위질문
+const NeckGuideData = [
+  {
+    id: 1,
+    data: '신경과',
+    guide: '목이 뻐근하고 저린 경우',
   },
   {
-    id: 5,
-    data: '내과',
-    guide: '감기 증상 없이 열이 나는 경우',
+    id: 2,
+    data: '이비인후과',
+    guide: '목이 전체적으로 부은 것 같은 경우',
   },
 ];
 
@@ -121,9 +177,14 @@ const Leg_FootGuideData = [
 ];
 
 const GuideQuestionData = {
-  head_NeckGuideData: Head_NeckGuideData, //머리관련 가이드질문
+  eyeGuideData: EyeGuideData, // 눈관련 가이드질문
+  noseGuideData: NoseGuideData, // 코관련 가이드질문
+  mouthGuideData: MouthGuideData, // 입관련 가이드질문
+  earGuideData: EarGuideData, // 귀관련 가이드질문
+  headGuideData: HeadGuideData, // 머리관련 가이드질문
+  neckGuideData: NeckGuideData, // 목관련 가이드질문
   trunkGuideData: TrunkGuideData, //체간(몸통)관련 가이드질문
-  shoulderGuideData: ShoulderGuideData, // 어깨관련 가이드질문
+  shoulderGuideData: ShoulderGuideData, //어깨관련 가이드질문
   arm_HandGuideData: Arm_HandGuideData, //팔,손관련 가이드질문
   leg_FootGuideData: Leg_FootGuideData, //다리,발관련 가이드질문
 };

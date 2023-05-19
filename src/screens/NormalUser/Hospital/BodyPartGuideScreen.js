@@ -84,8 +84,18 @@ const BodyPartGuideScreen = props => {
   // 신체부위 선택에 따른 가이드질문 get 함수
   const getGuideData = selectedPart => {
     switch (selectedPart) {
-      case '머리관련부위':
-        return GuideQuestionData.head_NeckGuideData;
+      case '눈':
+        return GuideQuestionData.eyeGuideData;
+      case '코':
+        return GuideQuestionData.noseGuideData;
+      case '입':
+        return GuideQuestionData.mouthGuideData;
+      case '귀':
+        return GuideQuestionData.earGuideData;
+      case '머리':
+        return GuideQuestionData.headGuideData;
+      case '목':
+        return GuideQuestionData.neckGuideData;
       case '체간관련부위':
         return GuideQuestionData.trunkGuideData;
       case '어깨':
