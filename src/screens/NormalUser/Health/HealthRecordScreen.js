@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   submitHealthRecord,
   getHealthRecord,
+  deleteHealthRecord,
 } from '../../../store/slices/healthSlice';
 
 import HeaderBar from '../../../components/Global/HeaderBar';
@@ -61,6 +62,7 @@ const HealthRecordScreen = props => {
         setIsHomeIconActive(true); //건강기록 저장 시 HomeIconActive
         setIsMemoIconActive(false); //건강기록 저장 시 HomeIconActive
       } catch (error) {
+        console.log(error);
         setError(error.message);
         Alert.alert('저장 실패', '메모가 비어있습니다', [
           {text: '확인', style: 'cancel'},
@@ -71,20 +73,40 @@ const HealthRecordScreen = props => {
     [dispatch, isError, showModl, isMemo],
   );
 
+  //건강기록 조회 핸들러
+  const getHealthRecordHandler = useCallback(async () => {
+    try {
+      await dispatch(getHealthRecord({hcUser: userId})).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [userId, dispatch, healthRecordArr]);
+
+  //건강기록 삭제 핸들러
+  const deleteHealthRecordHandler = useCallback(
+    async hcId => {
+      setError(null);
+      try {
+        await dispatch(
+          deleteHealthRecord({
+            hcId: hcId,
+          }),
+        ).unwrap();
+        getHealthRecordHandler();
+      } catch (error) {
+        setError(error.message);
+        console.log(error);
+      }
+    },
+    [dispatch],
+  );
+
   //건강 기록 조회 핸들러
   useEffect(() => {
     if (isHomeIconActive) {
-      const getHealthRecordHandler = async () => {
-        try {
-          await dispatch(getHealthRecord({hcUser: userId})).unwrap();
-        } catch (error) {
-          console.log(error);
-        }
-      };
       getHealthRecordHandler();
-      console.log('호출');
     }
-  }, [dispatch, userId, isHomeIconActive]);
+  }, [isHomeIconActive]);
 
   // 다른 bottom tab에서 해당 화면으로 돌아올 때 무조건 homeIcon Active
   useEffect(() => {
@@ -137,13 +159,28 @@ const HealthRecordScreen = props => {
               data={healthRecordArr}
               keyExtractor={item => item.hcId.toString()}
               scrollEnabled={false}
-              renderItem={item => (
+              renderItem={itemData => (
                 <HealthRecordCard
                   onSelectHealthRecord={() => {}}
-                  recordYear={item.item.hcYear}
-                  recordMonth={item.item.hcMonth}
-                  recordDay={item.item.hcDate}
-                  recordMemo={item.item.hcMemo}
+                  onDeleteHealthRecord={() => {
+                    return Alert.alert(
+                      null,
+                      '삭제한 내용은 복구되지 않습니다.\n정말로 취소하시겠습니까?',
+                      [
+                        {text: '아니오', style: 'cancel'},
+                        {
+                          text: '예',
+                          onPress: () => {
+                            deleteHealthRecordHandler(itemData.item.hcId);
+                          },
+                        },
+                      ],
+                    );
+                  }}
+                  recordYear={itemData.item.hcYear}
+                  recordMonth={itemData.item.hcMonth}
+                  recordDay={itemData.item.hcDate}
+                  recordMemo={itemData.item.hcMemo}
                 />
               )}
             />

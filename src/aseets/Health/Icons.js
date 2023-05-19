@@ -68,6 +68,28 @@ class MyHome extends Component {
   }
 }
 
+/* HealthRecordDeleteIcon _ HealthRecordScreen */
+class HealthRecordDelete extends Component {
+  render() {
+    return (
+      <Svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={25}
+        height={25}
+        fill="none"
+        viewBox="0 0 24 24">
+        <Path
+          stroke="#000"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M10 12v5M14 12v5M4 7h16M6 10v8a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-8M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2H9V5Z"
+        />
+      </Svg>
+    );
+  }
+}
+
 /* MyHealthMemo(내 건강기록 조회 Icon) Icon */
 class MyHealthMemo extends Component {
   render() {
@@ -110,6 +132,7 @@ export default Icons = {
   memo: Memo,
   medicine: Medicine,
   myHome: MyHome,
+  healthRecordDelete: HealthRecordDelete,
   myReview: MyReview,
   myHealthMemo: MyHealthMemo,
 };

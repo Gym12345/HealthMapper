@@ -1,18 +1,26 @@
-import React from 'react';
 import {Dimensions} from 'react-native';
 
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components';
 
+import Icons from '../../../aseets/Health/Icons';
+
 const {height} = Dimensions.get('window');
 const HealthRecordCard = props => {
   return (
     <CardWrapper onPress={props.onSelectHealthRecord}>
-      <DateWrapper>
-        <RecordYear>{props.recordYear}년</RecordYear>
-        <RecordMonth>{props.recordMonth}월</RecordMonth>
-        <RecordDay>{props.recordDay}일</RecordDay>
-      </DateWrapper>
+      <RowDirectionWrapper>
+        <DateWrapper>
+          <RecordYear>{props.recordYear}년</RecordYear>
+          <RecordMonth>{props.recordMonth}월</RecordMonth>
+          <RecordDay>{props.recordDay}일</RecordDay>
+        </DateWrapper>
+        <IconContainer>
+          <IconWrapper onPress={props.onDeleteHealthRecord}>
+            <Icons.healthRecordDelete />
+          </IconWrapper>
+        </IconContainer>
+      </RowDirectionWrapper>
       <RecordMemo>{props.recordMemo}</RecordMemo>
     </CardWrapper>
   );
@@ -28,6 +36,11 @@ const CardWrapper = styled.TouchableOpacity`
   border-width: 1px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4);
   elevation: 8;
+`;
+const RowDirectionWrapper = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 const DateWrapper = styled.View`
   flex-direction: row;
@@ -46,6 +59,11 @@ const RecordDay = styled.Text`
   margin-left: 5px;
   color: ${props => props.theme.colors.gray4};
 `;
+const IconContainer = styled.View`
+  flex-direction: row;
+`;
+const IconWrapper = styled.TouchableOpacity``;
+
 const RecordMemo = styled.Text`
   margin-top: ${height / 80}px;
   font-size: ${RFValue(17)}px;
