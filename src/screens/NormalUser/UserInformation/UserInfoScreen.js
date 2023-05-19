@@ -48,7 +48,12 @@ const UserInfoScreen = props => {
         </UserIdText>
       </UserWrapper>
       <DivisionLine />
-      <UserInfo onCheckHealthMemo={() => {}} onCheckMyReview={() => {}} />
+      <UserInfo
+        onCheckHealthMemo={() => {
+          props.navigation.navigate('건강기록');
+        }}
+        onCheckMyReview={() => {}}
+      />
       <ButtonWrapper onPress={logoutHandler}>
         <LogoutButtonText>로그아웃</LogoutButtonText>
       </ButtonWrapper>

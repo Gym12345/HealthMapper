@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 
-import {Alert, Dimensions, FlatList} from 'react-native';
+import {Alert, FlatList} from 'react-native';
 
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
@@ -35,8 +35,8 @@ const HealthRecordScreen = props => {
   const [isHomeIconActive, setIsHomeIconActive] = useState(true); //홈아이콘 활성화 변수
   const [isError, setError] = useState(null);
   const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.userId);
-  const healthRecordArr = useSelector(state => state.health.healthRecordArr);
+  const userId = useSelector(state => state.auth.userId); //로그인한 사용자 Id
+  const healthRecordArr = useSelector(state => state.health.healthRecordArr); //사용자에 해당하는 건강기록 정보
   const isReviesGetted = useSelector(state => state.health.isReviesGetted);
 
   const bottomTabHeight = useBottomTabBarHeight();
@@ -59,8 +59,8 @@ const HealthRecordScreen = props => {
         setSelectedYear(today.getFullYear().toString()); //정상적으로 건강기록 저장 시 현재 연도로 변경
         setSelectedMonth((today.getMonth() + 1).toString()); //정상적으로 건강기록 저장 시 현재 월로 변경
         setSelectedDay(today.getDate().toString()); //정상적으로 건강기록 저장 시 현재 일로 변경
-        setIsHomeIconActive(true);
-        setIsMemoIconActive(false);
+        setIsHomeIconActive(true); //건강기록 저장 시 HomeIconActive
+        setIsMemoIconActive(false); //건강기록 저장 시 HomeIconActive
       } catch (error) {
         setError(error.message);
         Alert.alert('저장 실패', '메모가 비어있습니다', [
@@ -86,6 +86,16 @@ const HealthRecordScreen = props => {
       console.log('호출');
     }
   }, [dispatch, userId, isReviesGetted, isHomeIconActive]);
+
+  // 다른 bottom tab에서 해당 화면으로 돌아올 때 무조건 homeIcon Active
+  useEffect(() => {
+    const subscribeHomeIcon = props.navigation.addListener('focus', () => {
+      setIsHomeIconActive(true);
+      setIsMemoIconActive(false);
+    });
+
+    return subscribeHomeIcon;
+  }, [props.navigation]);
 
   return (
     <Container>
