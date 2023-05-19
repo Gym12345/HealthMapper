@@ -6,7 +6,7 @@ export const getHospitalList_medicalDepartment = createAsyncThunk(
   async ({department, userLatitude, userLongitude}) => {
     console.log(department, userLatitude, userLongitude);
     const response = await fetch(
-      `http://172.30.1.57:8090/Health/Health1/MedicalDepartmentControllerForJson`,
+      `http://localhost:8090/Health/Health1/MedicalDepartmentControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -43,7 +43,7 @@ export const submitHospitalInfo = createAsyncThunk(
     reqLongitude, //요청받은 병원 경도
   }) => {
     const response = await fetch(
-      `http://172.30.1.57:8090/Health/Health1/HosOwnersRequestControllerForJson`,
+      `http://localhost:8090/Health/Health1/HosOwnersRequestControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
