@@ -5,7 +5,7 @@ export const submitHealthRecord = createAsyncThunk(
   'health/submitHealthRecord',
   async ({hcYear, hcMonth, hcDate, hcMemo, hcUser}) => {
     const response = await fetch(
-      'http://localhost:8090/Health/Health1/HealthCareMemoCreateControllerForJson',
+      'http://172.30.1.59:8090/Health/Health1/HealthCareMemoCreateControllerForJson',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -32,9 +32,38 @@ export const submitHealthRecord = createAsyncThunk(
   },
 );
 
+// 건강기록 조회 함수
+export const getHealthRecord = createAsyncThunk(
+  'health/getHealthRecord',
+  async ({hcUser}) => {
+    const response = await fetch(
+      'http://172.30.1.59:8090/Health/Health1/HealthCareMemoListControllerForJson',
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          hcUser,
+        }),
+      },
+    );
+
+    const resData = await response.json();
+
+    if (response.ok) {
+      console.log(resData);
+      return resData;
+    } else {
+      console.log('메모 조회 실패');
+      throw new Error('네트워크 요청 실패');
+    }
+  },
+);
+
 const initialState = {
   error: null,
   isRecordSubmitted: false,
+  isGettedHealthRecor: false,
+  healthRecordArr: null, //서버를 통해 전달받은 유저 건강기록 정보
 };
 
 export const healthSlice = createSlice({
@@ -54,6 +83,19 @@ export const healthSlice = createSlice({
       .addCase(submitHealthRecord.rejected, (state, action) => {
         state.error = action.error.message;
         state.isRecordSubmitted = false;
+      })
+      .addCase(getHealthRecord.pending, state => {
+        state.error = null;
+        state.isGettedHealthRecor = false;
+      })
+      .addCase(getHealthRecord.fulfilled, (state, action) => {
+        state.error = action.error;
+        state.isGettedHealthRecor = true;
+        state.healthRecordArr = action.payload.hcareArr;
+      })
+      .addCase(getHealthRecord.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isGettedHealthRecor = false;
       }),
 });
 
