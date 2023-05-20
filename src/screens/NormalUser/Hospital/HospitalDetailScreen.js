@@ -15,7 +15,7 @@ import ReviewCard from '../../../components/NormalUser/Hospital/ReviewCard';
 const {height} = Dimensions.get('window');
 
 const HospitalDetailScreen = props => {
-  const selectedHospital = props.route.params.selectedHospital; //HospitalListScreen에서 전달 받은 병원정보
+  const selectedHospital = props.route.params.selectedHospital; //HospitalListScreen 혹은 MyReviewScreen에서 전달 받은 병원정보
   const reviewArr = useSelector(state => state.review.reviewArr); //병원에 등록되어있는 리뷰 state
   const reviewRegisted = useSelector(state => state.review.isReviewRegistered); //리뷰등록 후 병원상세화면에서 리뷰 업데이트를 위한 state
   const userClass = useSelector(state => state.auth.userClass); //게스트로그인 시 리뷰 기능을 제공하지 않기 위한 class state
@@ -34,6 +34,10 @@ const HospitalDetailScreen = props => {
       },
     ]);
   }, [showLoginScreen]);
+
+  useEffect(() => {
+    console.log(selectedHospital);
+  }, []);
 
   //HospitalDetailScreen 최초 진입 시 리뷰조회
   useEffect(() => {
