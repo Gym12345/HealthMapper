@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import Icons from '../../../aseets/Global/Icons';
 
 import {logout} from '../../../store/slices/authSlice';
+import {checkMyReview_NormalUSer} from '../../../store/slices/reviewSlice';
 
 import UserInfo from '../../../components/NormalUser/Info/UserInfo';
 
@@ -32,6 +33,16 @@ const UserInfoScreen = props => {
     }
   }, [dispatch]);
 
+  //내 리뷰 조회 핸들러
+  const checkMyReviewHandler = useCallback(async () => {
+    try {
+      await dispatch(checkMyReview_NormalUSer({userId: userId})).unwrap();
+      props.navigation.navigate('myReview'); //리뷰 조회 성공 시 내리뷰 화면으로 이동 (다음화면에서 state.myReviewArr활용)
+    } catch (error) {
+      console.log(error);
+    }
+  }, [dispatch, userId]);
+
   return (
     <Container>
       <HeaderBar.leftCenter
@@ -52,7 +63,7 @@ const UserInfoScreen = props => {
         onCheckHealthMemo={() => {
           props.navigation.navigate('건강기록');
         }}
-        onCheckMyReview={() => {}}
+        onCheckMyReview={checkMyReviewHandler}
       />
       <ButtonWrapper onPress={logoutHandler}>
         <LogoutButtonText>로그아웃</LogoutButtonText>
