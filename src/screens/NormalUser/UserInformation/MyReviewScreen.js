@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {FlatList} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -27,16 +27,20 @@ const MyReviewScreen = props => {
     async selectedHospital => {
       try {
         await dispatch(getHospitalByReview({hName: selectedHospital.hName}));
-        console.log(hospitalArrByReview);
-        props.navigation.navigate('hospitalDetail', {
-          selectedHospital: hospitalArrByReview[0],
-        });
       } catch (error) {
         console.log(error);
       }
     },
-    [dispatch, isGettedHosByReview, hospitalArrByReview],
+    [dispatch],
   );
+
+  useEffect(() => {
+    if (isGettedHosByReview) {
+      props.navigation.navigate('hospitalDetail', {
+        selectedHospital: hospitalArrByReview[0],
+      });
+    }
+  }, [isGettedHosByReview, hospitalArrByReview, props.navigation]);
 
   return (
     <Container bottomTabHeight={bottomTabHeight}>
