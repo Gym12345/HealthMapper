@@ -10,7 +10,7 @@ import {
   submitHealthRecord,
   getHealthRecord,
   deleteHealthRecord,
-  eidtHealthRecord,
+  editHealthRecord,
 } from '../../../store/slices/healthSlice';
 
 import HeaderBar from '../../../components/Global/HeaderBar';
@@ -29,6 +29,10 @@ const HealthRecordScreen = props => {
   const [showMemoModal, setShowMemoModal] = useState(false);
   const [selectedMemoCard, setSelectedMemoCard] = useState(false); //선택된 메모 카드에 대한 정보
   const [selectedMemoValue, setSelectedMemoValue] = useState(false); //선택된 메모 카드에 대한 메모내용
+  const [isMemo, setIsMemo] = useState(null); //메모 변수
+  const [isMemoIconActive, setIsMemoIconActive] = useState(false); //메모아이콘 활성화 변수
+  const [isHomeIconActive, setIsHomeIconActive] = useState(true); //홈아이콘 활성화 변수
+  const [isError, setError] = useState(null);
   const [isSelectedYear, setSelectedYear] = useState(
     today.getFullYear().toString(),
   );
@@ -36,10 +40,6 @@ const HealthRecordScreen = props => {
     (today.getMonth() + 1).toString(),
   );
   const [isSelectedDay, setSelectedDay] = useState(today.getDate().toString());
-  const [isMemo, setIsMemo] = useState(null); //메모 변수
-  const [isMemoIconActive, setIsMemoIconActive] = useState(false); //메모아이콘 활성화 변수
-  const [isHomeIconActive, setIsHomeIconActive] = useState(true); //홈아이콘 활성화 변수
-  const [isError, setError] = useState(null);
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.userId); //로그인한 사용자 Id
   const healthRecordArr = useSelector(state => state.health.healthRecordArr); //사용자에 해당하는 건강기록 정보
@@ -111,7 +111,7 @@ const HealthRecordScreen = props => {
       setError(null);
       try {
         await dispatch(
-          eidtHealthRecord({hcId: hcId, chMemo: editedMemo}),
+          editHealthRecord({hcId: hcId, chMemo: editedMemo}),
         ).unwrap();
         setShowMemoModal(false);
         getHealthRecordHandler();

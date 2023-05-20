@@ -28,6 +28,7 @@ export const reviewRegist = createAsyncThunk(
   },
 );
 
+// hospitalDetailScreen에서 쓰이는 병원에 해당하는 조회컨트롤러
 export const getReview = createAsyncThunk(
   'review/getReview',
   async selectedHospitalName => {

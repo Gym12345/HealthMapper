@@ -87,7 +87,7 @@ export const deleteHealthRecord = createAsyncThunk(
 );
 
 // 건강기록 수정 함수
-export const eidtHealthRecord = createAsyncThunk(
+export const editHealthRecord = createAsyncThunk(
   'health/editHealthRecord',
   async ({hcId, chMemo}) => {
     const response = await fetch(
@@ -170,15 +170,15 @@ export const healthSlice = createSlice({
         state.isDeletedHealthRecord = false;
       })
       //건강기록 수정 액션
-      .addCase(eidtHealthRecord.pending, state => {
+      .addCase(editHealthRecord.pending, state => {
         state.error = null;
         state.isEditedHealthRecord = false;
       })
-      .addCase(eidtHealthRecord.fulfilled, (state, action) => {
+      .addCase(editHealthRecord.fulfilled, (state, action) => {
         state.error = action.error;
         state.isEditedHealthRecord = true;
       })
-      .addCase(eidtHealthRecord.rejected, (state, action) => {
+      .addCase(editHealthRecord.rejected, (state, action) => {
         state.error = action.error.message;
         state.isEditedHealthRecord = false;
       }),
