@@ -20,7 +20,7 @@ const ReviewCard = props => {
           enableHalfStar={false}
           rating={props.rating}
           enableSwiping={props.enableSwiping}
-          onChange={props.onPressStart}
+          onChange={props.onPressStar}
           color="#885FFF"
         />
       </RowDirectionWrapper>

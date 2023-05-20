@@ -108,7 +108,7 @@ const HospitalDetailScreen = props => {
                   enableSwiping={false}
                   starSize={RFValue(20)}
                   rating={data.hrRate}
-                  onPressStart={() => {
+                  onPressStar={() => {
                     console.log(data);
                   }}
                   hiddenUserId={
