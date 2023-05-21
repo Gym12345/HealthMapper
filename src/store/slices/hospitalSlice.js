@@ -6,7 +6,7 @@ export const getHospitalList_medicalDepartment = createAsyncThunk(
   async ({department, userLatitude, userLongitude}) => {
     console.log(department, userLatitude, userLongitude);
     const response = await fetch(
-      `http://172.30.1.57:8090/Health/Health1/MedicalDepartmentControllerForJson`,
+      `http://localhost:8090/Health/Health1/MedicalDepartmentControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -43,7 +43,7 @@ export const submitHospitalInfo = createAsyncThunk(
     reqLongitude, //요청받은 병원 경도
   }) => {
     const response = await fetch(
-      `http://172.30.1.57:8090/Health/Health1/HosOwnersRequestControllerForJson`,
+      `http://localhost:8090/Health/Health1/HosOwnersRequestControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -72,14 +72,40 @@ export const submitHospitalInfo = createAsyncThunk(
   },
 );
 
+// 병원 조회 비동기 함수 _ 병원 소유자
+export const getMyHospitalInfo = createAsyncThunk(
+  'hospital/getMyHospitalInfo',
+  async ({hName}) => {
+    const response = await fetch(
+      `http://localhost:8090/Health/Health1/OneHospitalInfoControllerForJson`,
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({hName}),
+      },
+    );
+    // 서버에서 응답받은 데이터
+    const resData = await response.json();
+    if (response.ok) {
+      console.log('병원 조회성공:', resData);
+      return resData;
+    } else {
+      console.log('병원 조회실패', resData);
+      throw new Error('네트워크 요청 실패');
+    }
+  },
+);
+
 const initialState = {
   isLoading: false,
+  isCheckedHospitalInfo: false,
   error: null,
   healthArr: null, //서버를 통해 전달받은 병원정보
   distance: null,
   userLatitude: null, //사용자 현재 위도 위치
   userLongitude: null, //사용자 현재 경도 위치
-  myHospitalName: null, //병원등록자가 관리자에게 요청한 자신의 병원이름
+  myHospitalName: null, //병원등록자가 병원 등록 요청한 병원이름
+  myHospitalInfo: null, //자신의 병원 정보
 };
 
 // getHospitalList_BodyPart와 getHospitalList_MedicalDepartment 같은 상태를 정의하기에 하나의 buulder로
@@ -95,18 +121,16 @@ export const hospitalSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      //진료과선택에 따른 병원리스트 조회 요청
+      //진료과선택에 따른 병원리스트 get
       .addCase(getHospitalList_medicalDepartment.pending, state => {
         state.error = null;
         state.isLoading = true;
       })
-      //진료과선택에 따른 병원리스트 조회 성공
       .addCase(getHospitalList_medicalDepartment.fulfilled, (state, action) => {
         state.error = null;
         state.isLoading = false;
         state.healthArr = action.payload.healthArr;
       })
-      //진료과선택에 따른 병원리스트 조회 거절
       .addCase(getHospitalList_medicalDepartment.rejected, (state, action) => {
         state.error = action.error;
         state.isLoading = false;
@@ -116,17 +140,28 @@ export const hospitalSlice = createSlice({
         state.error = null;
         state.isLoading = true;
       })
-      //관리자에게게 병원 등록 요청 성공
       .addCase(submitHospitalInfo.fulfilled, (state, action) => {
         state.error = null;
         state.isLoading = false;
-        state.myHospitalName = action.payload.reqName; // 요청한 병원 이름 state변수에 저장
-        console.log(state.myHospitalName);
+        state.myHospitalName = action.payload.reqName; // 요청한 병원 이름 state변수에 저장 _ 병원등록자가 자신의 병원 조회에 쓰이는 변수
       })
-      //관리자에게 병원 등록 거절
       .addCase(submitHospitalInfo.rejected, (state, action) => {
         state.error = action.error;
         state.isLoading = false;
+      })
+      //자신의 병원 get _ 병원소유자
+      .addCase(getMyHospitalInfo.pending, state => {
+        state.error = null;
+        state.isCheckedHospitalInfo = false;
+      })
+      .addCase(getMyHospitalInfo.fulfilled, (state, action) => {
+        state.error = null;
+        state.isCheckedHospitalInfo = true;
+        state.myHospitalInfo = action.payload.OneHealthArrJson; // 자신의 병원 정보
+      })
+      .addCase(getMyHospitalInfo.rejected, (state, action) => {
+        state.error = action.error;
+        state.isCheckedHospitalInfo = false;
       });
   },
 });
