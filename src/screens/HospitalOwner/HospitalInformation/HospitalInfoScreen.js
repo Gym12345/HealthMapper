@@ -37,12 +37,31 @@ const UserInfoScreen = props => {
     }
   }, [dispatch]);
 
-  //병원 소유자의 병원 get 핸들러
+  //관리자에게 승인됐을 시 병원 소유자의 병원 get 핸들러
   //관리자가 병원 승인을 안 한 경우에는 Alert문으로 병원소유자에게 안내
   const getMyHospitalHandler = useCallback(async () => {
     try {
       await dispatch(getMyHospitalInfo({hName: myHospitalName})).unwrap();
       props.navigation.navigate('myHospital');
+    } catch (error) {
+      Alert.alert(
+        '병원 불러오기 실패',
+        '병원을 등록하지 않았거나 \n아직 병원 승인이 나지 않았어요',
+        [{text: '확인'}],
+      );
+    }
+  }, [dispatch, myHospitalName]);
+
+  const checkMyHospitalReviewHandler = useCallback(async () => {
+    console.log(myHospitalName);
+    try {
+      //먼저 관리자에게 승인 됐을 시 병원을 get할 수 있는지 먼저 확인
+      await dispatch(getMyHospitalInfo({hName: myHospitalName})).unwrap();
+      //승인이 되고 병원을 get할 수 있다면 병원에 관한 review조회 진입
+      await dispatch(
+        checkHospitalReview_HospitalOwner({hName: myHospitalName}),
+      ).unwrap();
+      props.navigation.navigate('myHospitalReview');
     } catch (error) {
       Alert.alert(
         '병원 불러오기 실패',
@@ -71,7 +90,7 @@ const UserInfoScreen = props => {
       <MyHospitalInfo
         onCheckHospital={getMyHospitalHandler}
         onUpdateHospital={() => {}}
-        onCheckReview={() => {}}
+        onCheckReview={checkMyHospitalReviewHandler}
       />
       <ButtonWrapper activeOpacity={0.5} onPress={logoutHandler}>
         <LogoutButtonText>로그아웃</LogoutButtonText>
