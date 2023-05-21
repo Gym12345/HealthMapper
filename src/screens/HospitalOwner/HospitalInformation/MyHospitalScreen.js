@@ -10,6 +10,7 @@ import Icons from '../../../aseets/Global/Icons';
 
 const {height} = Dimensions.get('window');
 
+//병원등록자가 등록한 병원 화면
 const MyHospitalScreen = props => {
   const myHospitalInfo = useSelector(state => state.hospital.myHospitalInfo);
   const userId = useSelector(state => state.auth.userId);
@@ -54,7 +55,7 @@ const HospitalTitle = styled.Text`
   margin-top: ${height / 20}px;
   font-size: ${RFValue(20)}px;
   font-weight: bold;
-  color: ${props => props.theme.colors.patientColor};
+  color: ${props => props.theme.colors.hospitalOwnerColor};
 `;
 const HospitalAddress = styled.Text`
   margin-top: ${height / 40}px;

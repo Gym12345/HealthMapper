@@ -26,6 +26,7 @@ import HealthRecordScreen from '../screens/NormalUser/Health/HealthRecordScreen'
 //UserInfoNavigator_NormalUser
 import UserInfoScreen from '../screens/NormalUser/UserInformation/UserInfoScreen';
 import MyReviewScreen from '../screens/NormalUser/UserInformation/MyReviewScreen';
+import MyHospitalReviewScreen from '../screens/HospitalOwner/HospitalInformation/MyHospitalReviewScreen';
 
 //HospitalRegeistNavigator_HospitalOwner
 import HospitalRegistScreen from '../screens/HospitalOwner/HospitalRegist/HospitalRegistScreen';
@@ -119,6 +120,10 @@ const HospitalInfoNavigator = props => {
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="hospitalInfo" component={HospitalInfoScreen} />
       <Stack.Screen name="myHospital" component={MyHospitalScreen} />
+      <Stack.Screen
+        name="myHospitalReview"
+        component={MyHospitalReviewScreen}
+      />
     </Stack.Navigator>
   );
 };
