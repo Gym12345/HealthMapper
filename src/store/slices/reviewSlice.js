@@ -84,7 +84,7 @@ export const getHospitalByReview = createAsyncThunk(
   'review/getHospitalByReview',
   async ({hName}) => {
     const response = await fetch(
-      `http://172.30.1.57:8090/Health/Health1/ShowHospitalByReviewForJson`,
+      `http://localhost:8090/Health/Health1/ShowHospitalByReviewForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -104,19 +104,16 @@ export const getHospitalByReview = createAsyncThunk(
   },
 );
 
-//자신의 병원정보를 불러오고 그다음에 구현
-{
-  /* 
-// hospitalInfoScreen에서 쓰이는 자신의 병원 리뷰 조회 컨트롤러
+// MyHospitalReviewScreen에서 쓰이는 병원소유자의 자신 병원 리뷰 조회 액션 함수
 export const checkHospitalReview_HospitalOwner = createAsyncThunk(
   'review/checkHospitalReview_HospitalOwner',
-  async ({userId}) => {
+  async ({hName}) => {
     const response = await fetch(
-      `http://172.30.1.57:8090/Health/Health1/ShowOneHospitalReviewNormalControllerForJson`,
+      `http://localhost:8090/Health/Health1/ShowOneHospitalReviewNormalControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({userId}),
+        body: JSON.stringify({hName}),
       },
     );
 
@@ -131,8 +128,6 @@ export const checkHospitalReview_HospitalOwner = createAsyncThunk(
     }
   },
 );
-*/
-}
 
 initialState = {
   error: null,
@@ -143,6 +138,7 @@ initialState = {
   reviewArr: [], //리뷰관련 정보 state _ 병원 상세 화면에서 활용되는 리뷰들
   myReviewArr: [], //내리뷰 관련 정보 state _ 일반사용자의 리뷰
   hospitalArrByReview: [], //리뷰에 해당되는 병원 정보 state _ 리뷰 선택에 해당되는 병원 정보
+  myHospitalReview: [], //병원소유자의 병원 리뷰 관련 정보 state
 };
 
 export const reviewSlice = createSlice({
@@ -202,6 +198,20 @@ export const reviewSlice = createSlice({
         state.hospitalArrByReview = action.payload.hospitalArrByReview;
       })
       .addCase(getHospitalByReview.rejected, (state, action) => {
+        state.error = action.error;
+        state.isGettedHosByReview = false;
+      })
+      //병원 소유자의 병원 리뷰조회_MyHospitalReviewScreen에서(HospitalOwner)
+      .addCase(checkHospitalReview_HospitalOwner.pending, state => {
+        state.error = null;
+        state.isGettedHosByReview = false;
+      })
+      .addCase(checkHospitalReview_HospitalOwner.fulfilled, (state, action) => {
+        state.error = null;
+        state.isGettedHosByReview = true;
+        state.myHospitalReview = action.payload.myHospitalReview;
+      })
+      .addCase(checkHospitalReview_HospitalOwner.rejected, (state, action) => {
         state.error = action.error;
         state.isGettedHosByReview = false;
       }),
