@@ -1242,8 +1242,8 @@ class MyHospital extends Component {
   }
 }
 
-/* HospitalUpdate(병원 정보수정 Icon) Icon */
-class HospitalUpdate extends Component {
+/* HospitalRegist(병원 등록하러가기 Icon) Icon */
+class HospitalRegist extends Component {
   render() {
     return (
       <Svg
@@ -1345,6 +1345,6 @@ export default Icons = {
 
   //Icon _ HospitalInfoScreen*/
   myHospital: MyHospital,
-  hospitalUpdate: HospitalUpdate,
+  hospitalRegist: HospitalRegist,
   myHospitalReview: MyHospitalReview,
 };

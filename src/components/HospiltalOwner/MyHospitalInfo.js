@@ -9,15 +9,15 @@ const MyHospitalInfo = props => {
     <Wrapper>
       <RowDirectionButtonWrapper
         activeOpacity={0.5}
-        onPress={props.onCheckHospital}>
-        <Icons.myHospital />
-        <ButtonTitle>내 병원 조회</ButtonTitle>
+        onPress={props.onUpdateHospital}>
+        <Icons.hospitalRegist />
+        <ButtonTitle>병원 등록하러 가기</ButtonTitle>
       </RowDirectionButtonWrapper>
       <RowDirectionButtonWrapper
         activeOpacity={0.5}
-        onPress={props.onUpdateHospital}>
-        <Icons.hospitalUpdate />
-        <ButtonTitle>내 병원정보 수정</ButtonTitle>
+        onPress={props.onCheckHospital}>
+        <Icons.myHospital />
+        <ButtonTitle>내 병원</ButtonTitle>
       </RowDirectionButtonWrapper>
       <RowDirectionButtonWrapper
         activeOpacity={0.5}
