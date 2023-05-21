@@ -1,11 +1,13 @@
-import React, {useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 import {Alert, Dimensions} from 'react-native';
 
 import {useSelector, useDispatch} from 'react-redux';
+
+import {checkHospitalReview_HospitalOwner} from '../../../store/slices/reviewSlice';
+import {getMyHospitalInfo} from '../../../store/slices/hospitalSlice';
 import {logout} from '../../../store/slices/authSlice';
 
 import {RFValue} from 'react-native-responsive-fontsize';
-
 import HeaderBar from '../../../components/Global/HeaderBar';
 import styled from 'styled-components';
 import Icons from '../../../aseets/Global/Icons';
@@ -15,6 +17,7 @@ import MyHospitalInfo from '../../../components/HospiltalOwner/MyHospitalInfo';
 const {height} = Dimensions.get('window');
 const UserInfoScreen = props => {
   const userId = useSelector(state => state.auth.userId);
+  const myHospitalName = useSelector(state => state.hospital.myHospitalName);
   const dispatch = useDispatch();
 
   //로그아웃 핸들러
@@ -34,6 +37,21 @@ const UserInfoScreen = props => {
     }
   }, [dispatch]);
 
+  //병원 소유자의 병원 get 핸들러
+  //관리자가 병원 승인을 안 한 경우에는 Alert문으로 병원소유자에게 안내
+  const getMyHospitalHandler = useCallback(async () => {
+    try {
+      await dispatch(getMyHospitalInfo({hName: myHospitalName})).unwrap();
+      props.navigation.navigate('myHospital');
+    } catch (error) {
+      Alert.alert(
+        '병원 불러오기 실패',
+        '병원을 등록하지 않았거나 \n아직 병원 승인이 나지 않았어요',
+        [{text: '확인'}],
+      );
+    }
+  }, [dispatch, myHospitalName]);
+
   return (
     <Container>
       <HeaderBar.leftCenter
@@ -51,7 +69,7 @@ const UserInfoScreen = props => {
       </UserWrapper>
       <DivisionLine />
       <MyHospitalInfo
-        onCheckHospital={() => {}}
+        onCheckHospital={getMyHospitalHandler}
         onUpdateHospital={() => {}}
         onCheckReview={() => {}}
       />
