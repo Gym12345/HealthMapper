@@ -6,7 +6,7 @@ export const getHospitalList_medicalDepartment = createAsyncThunk(
   async ({department, userLatitude, userLongitude}) => {
     console.log(department, userLatitude, userLongitude);
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/MedicalDepartmentControllerForJson`,
+      `http://172.30.1.57:8090/Health/Health1/MedicalDepartmentControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -43,7 +43,7 @@ export const submitHospitalInfo = createAsyncThunk(
     reqLongitude, //요청받은 병원 경도
   }) => {
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/HosOwnersRequestControllerForJson`,
+      `http://172.30.1.57:8090/Health/Health1/HosOwnersRequestControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -64,6 +64,7 @@ export const submitHospitalInfo = createAsyncThunk(
     const resData = await response.json();
     if (response.ok) {
       console.log('병원 요청성공:', resData);
+      return resData;
     } else {
       console.log('병원 요청실패', resData);
       throw new Error(resData.message);
@@ -78,7 +79,7 @@ const initialState = {
   distance: null,
   userLatitude: null, //사용자 현재 위도 위치
   userLongitude: null, //사용자 현재 경도 위치
-  requestArr: null, //병원등록자가 관리자에게 요청한 자신의 병원정보
+  myHospitalName: null, //병원등록자가 관리자에게 요청한 자신의 병원이름
 };
 
 // getHospitalList_BodyPart와 getHospitalList_MedicalDepartment 같은 상태를 정의하기에 하나의 buulder로
@@ -116,9 +117,11 @@ export const hospitalSlice = createSlice({
         state.isLoading = true;
       })
       //관리자에게게 병원 등록 요청 성공
-      .addCase(submitHospitalInfo.fulfilled, state => {
+      .addCase(submitHospitalInfo.fulfilled, (state, action) => {
         state.error = null;
         state.isLoading = false;
+        state.myHospitalName = action.payload.reqName; // 요청한 병원 이름 state변수에 저장
+        console.log(state.myHospitalName);
       })
       //관리자에게 병원 등록 거절
       .addCase(submitHospitalInfo.rejected, (state, action) => {
