@@ -39,7 +39,7 @@ const HospitalRegistScreen = props => {
   const [isButtonActive, setIsButtonActive] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  //병원 등록할 때 마지막 값인 "모든병원"은 안쓰이므로 새로운 데이터배열 생성해서 FlatList에 전달
+  //진료과 카드를 렌더링할 때 마지막 값인 "모든병원"은 안쓰이므로 새로운 데이터배열 생성해서 FlatList에 전달
   const registMedicalDepartmentData =
     medicalDepartmentData.totalMedicalDepartmentData.slice(0, -1);
 
