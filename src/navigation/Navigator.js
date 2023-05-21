@@ -3,6 +3,7 @@ import {Alert, BackHandler} from 'react-native';
 import {useSelector} from 'react-redux';
 
 import {createStackNavigator} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icons from '../aseets/Global/Icons';
 
@@ -132,6 +133,7 @@ const MainNavigator = props => {
   // authSlice에서 가져온 userClass
   const userClass = useSelector(state => state.auth.userClass);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const myHospitalName = useSelector(state => state.hospital.myHospitalName);
 
   // 게스트 사용자에게 로그인 안내 알림창. _건강기록, 내정보와 같은 탭을 눌렀을 때 필요함.
   const ShowLoginScreen = useCallback(() => {
@@ -142,6 +144,20 @@ const MainNavigator = props => {
       },
     ]);
   }, [ShowLoginScreen]);
+
+  // 병원 등록요청을 한 상태에서 병원 등록 탭을 눌렀을 때 진입을 막는 함수 (병원 등록은 1번만 가능)
+  const ShowHospitalRegistrationAlert = useCallback(() => {
+    if (myHospitalName) {
+      Alert.alert('안내', '이미 병원 등록요청을 하셨습니다', [
+        {
+          text: '확인',
+          onPress: () => {
+            props.navigation.navigate('내 병원 정보');
+          },
+        },
+      ]);
+    }
+  }, [ShowHospitalRegistrationAlert, props.navigation]);
 
   //게스트로그인 혹은 로그인한 userClass가 일반사용자(환자)인 경우
   if (userClass === 'normalUser' || userClass === 'guest') {
@@ -199,7 +215,7 @@ const MainNavigator = props => {
   else if (isLoggedIn & (userClass === 'hospitalOwner')) {
     return (
       <Tab.Navigator
-        initialRouteName="병원 등록"
+        initialRouteName="내 병원 정보"
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: hospitalOwnerColor, //바텀탭 Icon focus색상
@@ -207,7 +223,11 @@ const MainNavigator = props => {
         }}>
         <Tab.Screen
           name="병원등록"
-          component={HospitalRegistNavigator}
+          component={
+            myHospitalName
+              ? ShowHospitalRegistrationAlert
+              : HospitalRegistNavigator
+          }
           options={{
             tabBarIcon: ({focused, color}) => {
               return focused ? (

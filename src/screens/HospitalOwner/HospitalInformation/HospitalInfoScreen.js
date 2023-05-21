@@ -46,14 +46,13 @@ const UserInfoScreen = props => {
     } catch (error) {
       Alert.alert(
         '병원 불러오기 실패',
-        '병원을 등록하지 않았거나 \n아직 병원 승인이 나지 않았어요',
+        '병원을 등록하지 않았거나 \n아직 병원 승인이 완료되지 않았어요',
         [{text: '확인'}],
       );
     }
   }, [dispatch, myHospitalName]);
 
   const checkMyHospitalReviewHandler = useCallback(async () => {
-    console.log(myHospitalName);
     try {
       //먼저 관리자에게 승인 됐을 시 병원을 get할 수 있는지 먼저 확인
       await dispatch(getMyHospitalInfo({hName: myHospitalName})).unwrap();
@@ -65,21 +64,30 @@ const UserInfoScreen = props => {
     } catch (error) {
       Alert.alert(
         '병원 불러오기 실패',
-        '병원을 등록하지 않았거나 \n아직 병원 승인이 나지 않았어요',
+        '병원을 등록하지 않았거나 \n아직 병원 승인이 완료되지 않았어요',
         [{text: '확인'}],
       );
     }
   }, [dispatch, myHospitalName]);
 
+  //병원등록을 했는지, 안했는지에 대한 확인 함수 및 그에 따른 navigate함수
+  const validateHospitalRegistration = () => {
+    console.log(myHospitalName);
+    //이미 병원등록을 했을 시에는 병원등록 화면 진입X
+    if (myHospitalName) {
+      return Alert.alert('안내', '이미 병원 등록요청을 하셨습니다', [
+        {text: '확인'},
+      ]);
+    }
+    //병원 등록을 하지 않았다면 병원등록 화면 진입O
+    else {
+      props.navigation.navigate('병원등록');
+    }
+  };
+
   return (
     <Container>
-      <HeaderBar.leftCenter
-        leadingAction={() => {
-          props.navigation.goBack();
-        }}
-        leadingIcon={<Icons.arrowBack />}
-        centerTitle="병원 정보"
-      />
+      <HeaderBar.centerOnly centerTitle="내 병원 정보" />
       <UserWrapper>
         <Icons.hospitalUserProfile />
         <UserIdText>
@@ -88,8 +96,8 @@ const UserInfoScreen = props => {
       </UserWrapper>
       <DivisionLine />
       <MyHospitalInfo
+        onRegistHospital={validateHospitalRegistration}
         onCheckHospital={getMyHospitalHandler}
-        onUpdateHospital={() => {}}
         onCheckReview={checkMyHospitalReviewHandler}
       />
       <ButtonWrapper activeOpacity={0.5} onPress={logoutHandler}>

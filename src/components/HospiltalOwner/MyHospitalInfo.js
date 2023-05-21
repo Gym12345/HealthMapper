@@ -9,7 +9,7 @@ const MyHospitalInfo = props => {
     <Wrapper>
       <RowDirectionButtonWrapper
         activeOpacity={0.5}
-        onPress={props.onUpdateHospital}>
+        onPress={props.onRegistHospital}>
         <Icons.hospitalRegist />
         <ButtonTitle>병원 등록하러 가기</ButtonTitle>
       </RowDirectionButtonWrapper>
