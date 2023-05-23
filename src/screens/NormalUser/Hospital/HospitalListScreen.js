@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Image, Dimensions} from 'react-native';
+import {FlatList, Image, Dimensions, Button} from 'react-native';
 
+import {RFValue} from 'react-native-responsive-fontsize';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {useSelector} from 'react-redux';
@@ -26,6 +27,7 @@ const HospitalListScreen = props => {
   const userLongitude = useSelector(state => state.hospital.userLongitude);
 
   const [currentPosition, setCurrentPosition] = useState(null);
+  const [selectedHospital, setSelectedHospital] = useState(null);
 
   //useEffect를 사용해 병원 리스트 스크린 진입 시 사용자 위치 가져오기(비동기)
   useEffect(() => {
@@ -71,7 +73,7 @@ const HospitalListScreen = props => {
               }}
               title={data.name}
               description={data.distance.toString() + 'km'}
-              onPress={() => console.log(data)}>
+              onPress={() => setSelectedHospital(data)}>
               <Image
                 source={require('../../../aseets/Hospital/hospitalMarker.png')}
                 style={{width: 30, height: 30}}
@@ -80,27 +82,49 @@ const HospitalListScreen = props => {
           ))}
         </HospitalMap>
       )}
-
-      <HospitalListWrapper bottomTabHeight={bottomTabHeight}>
-        <FlatList
-          data={sortedHealthArr}
-          keyExtractor={item => item.id.toString()}
-          renderItem={itemData => (
-            <HospitalCard
-              hospitalName={itemData.item.name}
-              hospitalBodyPart={itemData.item.part}
-              hospitalDepartment={itemData.item.department}
-              hospitalAddress={itemData.item.address}
-              distance={itemData.item.distance}
-              onSelectHospital={() => {
-                props.navigation.navigate('hospitalDetail', {
-                  selectedHospital: itemData.item,
-                });
-              }}
-            />
-          )}
-        />
-      </HospitalListWrapper>
+      {selectedHospital === null ? (
+        <HospitalListWrapper bottomTabHeight={bottomTabHeight}>
+          <FlatList
+            data={sortedHealthArr}
+            keyExtractor={item => item.id.toString()}
+            renderItem={itemData => (
+              <HospitalCard
+                hospitalName={itemData.item.name}
+                hospitalBodyPart={itemData.item.part}
+                hospitalDepartment={itemData.item.department}
+                hospitalAddress={itemData.item.address}
+                distance={itemData.item.distance}
+                onSelectHospital={() => {
+                  props.navigation.navigate('hospitalDetail', {
+                    selectedHospital: itemData.item,
+                  });
+                }}
+              />
+            )}
+          />
+        </HospitalListWrapper>
+      ) : (
+        <>
+          <ShowTotalButton
+            onPress={() => {
+              setSelectedHospital(null);
+            }}>
+            <ButtonText>전체 병원리스트 보기</ButtonText>
+          </ShowTotalButton>
+          <HospitalCard
+            hospitalName={selectedHospital.name}
+            hospitalBodyPart={selectedHospital.part}
+            hospitalDepartment={selectedHospital.department}
+            hospitalAddress={selectedHospital.address}
+            distance={selectedHospital.distance}
+            onSelectHospital={() => {
+              props.navigation.navigate('hospitalDetail', {
+                selectedHospital: selectedHospital,
+              });
+            }}
+          />
+        </>
+      )}
     </Container>
   );
 };
@@ -117,6 +141,19 @@ const HospitalMap = styled(MapView)`
 const HospitalListWrapper = styled.View`
   flex: 1;
   margin-top: 10px;
+`;
+const ShowTotalButton = styled.TouchableOpacity`
+  align-self: center;
+  align-items: center;
+  padding-vertical: 10px;
+  background-color: ${props => props.theme.colors.patientColor};
+  width: 100%;
+  margin-bottom: 10px;
+`;
+const ButtonText = styled.Text`
+  color: ${props => props.theme.colors.white};
+  font-size: ${RFValue(15)}px;
+  font-weight: bold;
 `;
 
 export default HospitalListScreen;
