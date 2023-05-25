@@ -45,10 +45,15 @@ const TermsScreen = props => {
             업체에 제공하거나 위탁하지 않습니다.
           </SubText>
           <SubTitle>정보주체의 권리, 의무 및 그 행사 방법</SubTitle>
-          <SubText style={{marginBottom: 50}}>
+          <SubText>
             "HealthMapper"는 사용자가 언제든지 자신의 개인정보를 조회하거나
             수정할 수 있으며, 개인정보 처리에 대한 동의 철회를 요청할 수
             있습니다.
+          </SubText>
+          <SubTitle>기타</SubTitle>
+          <SubText style={{marginBottom: 50}}>
+            본 약관에 명시되지 않은 사항은 관련 법령 및 서비스 제공자의 지침에
+            따릅니다.
           </SubText>
         </TermsWrapper>
       ) : (
@@ -78,6 +83,11 @@ const TermsScreen = props => {
           <SubText>
             본 약관에 명시되지 않은 사항은 관련 법령 및 서비스 제공자의 지침에
             따릅니다.
+          </SubText>
+          <SubTitle>출처</SubTitle>
+          <SubText>
+            본 서비스는 경기데이터드림의 경기도 병원 현황 데이터를 기반해 맞춤형
+            병원을 추천해드립니다.
           </SubText>
         </TermsWrapper>
       )}
