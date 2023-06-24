@@ -91,7 +91,7 @@ const HospitalDetailScreen = props => {
           </HospitalDepartment>
           <ImageButtonWrapper
             onPress={() => {
-              Linking.openURL(`https://&{selectedHospital.domain}`);
+              Linking.openURL(`https://${selectedHospital.domain}`);
             }}>
             <Image
               //source={{uri: selectedHospital.image}}

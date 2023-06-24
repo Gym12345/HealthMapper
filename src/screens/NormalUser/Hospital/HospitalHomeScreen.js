@@ -57,8 +57,8 @@ const HospitalHomeScreen = props => {
                 screenValue: 'bodyPartGuide',
               });
             }}
-            cardTitle="신체부위 질문"
-            description={`안내 질문을 통해서 \n다양한 병원 찾기 `}
+            cardTitle="가이드 질문"
+            description={`여러 가이드 질문을 통해서 \n다양한 병원 찾기 `}
             icon={<Icons.bodyPartGuide />}
           />
 
