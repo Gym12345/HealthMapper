@@ -6,7 +6,7 @@ export const getHospitalList_medicalDepartment = createAsyncThunk(
   async ({department, userLatitude, userLongitude}) => {
     console.log(department, userLatitude, userLongitude);
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/MedicalDepartmentControllerForJson`,
+      `http://210.102.178.98:60005/Health1/Health1/MedicalDepartmentControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -43,7 +43,7 @@ export const submitHospitalInfo = createAsyncThunk(
     reqLongitude, //요청받은 병원 경도
   }) => {
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/HosOwnersRequestControllerForJson`,
+      `http://210.102.178.98:60005/Health1/Health1/HosOwnersRequestControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -77,7 +77,7 @@ export const getMyHospitalInfo = createAsyncThunk(
   'hospital/getMyHospitalInfo',
   async ({hName}) => {
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/OneHospitalInfoControllerForJson`,
+      `http://210.102.178.98:60005/Health1/Health1/OneHospitalInfoControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -125,15 +125,18 @@ export const hospitalSlice = createSlice({
       .addCase(getHospitalList_medicalDepartment.pending, state => {
         state.error = null;
         state.isLoading = true;
+        console.log('1');
       })
       .addCase(getHospitalList_medicalDepartment.fulfilled, (state, action) => {
         state.error = null;
         state.isLoading = false;
         state.healthArr = action.payload.healthArr;
+        console.log('2');
       })
       .addCase(getHospitalList_medicalDepartment.rejected, (state, action) => {
         state.error = action.error;
         state.isLoading = false;
+        console.log('3');
       })
       //관리자에게 병원 등록 요청
       .addCase(submitHospitalInfo.pending, state => {

@@ -4,7 +4,7 @@ export const reviewRegist = createAsyncThunk(
   'review/regist',
   async ({hName, userId, hrComment, hrRate}) => {
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/HospitalReviewInsertControllerForJson`,
+      `http://210.102.178.98:60005/Health1/Health1/HospitalReviewInsertControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -33,7 +33,7 @@ export const getReview = createAsyncThunk(
   'review/getReview',
   async selectedHospitalName => {
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/HospitalReviewListControllerForJson`,
+      `http://210.102.178.98:60005/Health1/Health1/HospitalReviewListControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -59,7 +59,7 @@ export const checkMyReview_NormalUSer = createAsyncThunk(
   'review/checkMyReview_NormalUSer',
   async ({userId}) => {
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/ShowMyReviewNormalControllerForJson`,
+      `http://210.102.178.98:60005/Health1/Health1/ShowMyReviewNormalControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -84,7 +84,7 @@ export const getHospitalByReview = createAsyncThunk(
   'review/getHospitalByReview',
   async ({hName}) => {
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/ShowHospitalByReviewForJson`,
+      `http://210.102.178.98:60005/Health1/Health1/ShowHospitalByReviewForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -109,7 +109,7 @@ export const checkHospitalReview_HospitalOwner = createAsyncThunk(
   'review/checkHospitalReview_HospitalOwner',
   async ({hName}) => {
     const response = await fetch(
-      `http://localhost:8090/Health/Health1/ShowOneHospitalReviewNormalControllerForJson`,
+      `http://210.102.178.98:60005/Health1/Health1/ShowOneHospitalReviewNormalControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

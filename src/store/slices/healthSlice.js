@@ -5,7 +5,7 @@ export const submitHealthRecord = createAsyncThunk(
   'health/submitHealthRecord',
   async ({hcYear, hcMonth, hcDate, hcMemo, hcUser}) => {
     const response = await fetch(
-      'http://localhost:8090/Health/Health1/HealthCareMemoCreateControllerForJson',
+      'http://210.102.178.98:60005/Health1/Health1/HealthCareMemoCreateControllerForJson',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -37,7 +37,7 @@ export const getHealthRecord = createAsyncThunk(
   'health/getHealthRecord',
   async ({hcUser}) => {
     const response = await fetch(
-      'http://localhost:8090/Health/Health1/HealthCareMemoListControllerForJson',
+      'http://210.102.178.98:60005/Health1/Health1/HealthCareMemoListControllerForJson',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -64,7 +64,7 @@ export const deleteHealthRecord = createAsyncThunk(
   'health/deleteHealthRecord',
   async ({hcId}) => {
     const response = await fetch(
-      'http://localhost:8090/Health/Health1/HealthCareMemoDeleteControllerForJson',
+      'http://210.102.178.98:60005/Health1/Health1/HealthCareMemoDeleteControllerForJson',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -91,7 +91,7 @@ export const editHealthRecord = createAsyncThunk(
   'health/editHealthRecord',
   async ({hcId, chMemo}) => {
     const response = await fetch(
-      'http://localhost:8090/Health/Health1/HealthCareMemoUpdateControllerForJson',
+      'http://210.102.178.98:60005/Health1/Health1/HealthCareMemoUpdateControllerForJson',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
