@@ -64,6 +64,7 @@ yarn-error.log
 
 # react-native-config
 .env
+apiKey.js
 ios/tmp.xcconfig
 
 # git manage

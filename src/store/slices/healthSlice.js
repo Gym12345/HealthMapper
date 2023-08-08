@@ -1,11 +1,14 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import config from '../../../apiKey';
+
+const API_KEY = config.apiKey;
 
 // 건강기록 저장 함수
 export const submitHealthRecord = createAsyncThunk(
   'health/submitHealthRecord',
   async ({hcYear, hcMonth, hcDate, hcMemo, hcUser}) => {
     const response = await fetch(
-      'http://210.102.178.98:60005/Health1/Health1/HealthCareMemoCreateControllerForJson',
+      `http://${API_KEY}/Health1/Health1/HealthCareMemoCreateControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -37,7 +40,7 @@ export const getHealthRecord = createAsyncThunk(
   'health/getHealthRecord',
   async ({hcUser}) => {
     const response = await fetch(
-      'http://210.102.178.98:60005/Health1/Health1/HealthCareMemoListControllerForJson',
+      `http://${API_KEY}/Health1/Health1/HealthCareMemoListControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -64,7 +67,7 @@ export const deleteHealthRecord = createAsyncThunk(
   'health/deleteHealthRecord',
   async ({hcId}) => {
     const response = await fetch(
-      'http://210.102.178.98:60005/Health1/Health1/HealthCareMemoDeleteControllerForJson',
+      `http://${API_KEY}/Health1/Health1/HealthCareMemoDeleteControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -91,7 +94,7 @@ export const editHealthRecord = createAsyncThunk(
   'health/editHealthRecord',
   async ({hcId, chMemo}) => {
     const response = await fetch(
-      'http://210.102.178.98:60005/Health1/Health1/HealthCareMemoUpdateControllerForJson',
+      `http://${API_KEY}/Health1/Health1/HealthCareMemoUpdateControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

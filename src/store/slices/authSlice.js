@@ -1,11 +1,14 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import config from '../../../apiKey';
+
+const API_KEY = config.apiKey;
 
 //비동기 처리 로그인 API 요청함수 _ 로그인 경로3
 export const login = createAsyncThunk(
   'auth/login',
   async ({userId, userPw, userClass}) => {
     const response = await fetch(
-      'http://210.102.178.98:60005/Health1/Health1/LoginControllerForJson',
+      `http://${API_KEY}/Health1/Health1/LoginControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -37,7 +40,7 @@ export const signUp = createAsyncThunk(
   'auth/signUp',
   async ({userId, userPw, userName, userClass}) => {
     const response = await fetch(
-      'http://210.102.178.98:60005/Health1/Health1/SignUpControllerForJson',
+      `http://${API_KEY}/Health1/Health1/SignUpControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

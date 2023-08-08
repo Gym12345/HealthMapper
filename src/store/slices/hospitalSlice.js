@@ -1,4 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import config from '../../../apiKey';
+
+const API_KEY = config.apiKey;
 
 // 진료과 선택을 통해 병원리스트를 가져오는 비동기 함수 _ 일반사용자
 export const getHospitalList_medicalDepartment = createAsyncThunk(
@@ -6,7 +9,7 @@ export const getHospitalList_medicalDepartment = createAsyncThunk(
   async ({department, userLatitude, userLongitude}) => {
     console.log(department, userLatitude, userLongitude);
     const response = await fetch(
-      `http://210.102.178.98:60005/Health1/Health1/MedicalDepartmentControllerForJson`,
+      `http://${API_KEY}/Health1/Health1/MedicalDepartmentControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -43,7 +46,7 @@ export const submitHospitalInfo = createAsyncThunk(
     reqLongitude, //요청받은 병원 경도
   }) => {
     const response = await fetch(
-      `http://210.102.178.98:60005/Health1/Health1/HosOwnersRequestControllerForJson`,
+      `http://${API_KEY}/Health1/Health1/HosOwnersRequestControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -77,7 +80,7 @@ export const getMyHospitalInfo = createAsyncThunk(
   'hospital/getMyHospitalInfo',
   async ({hName}) => {
     const response = await fetch(
-      `http://210.102.178.98:60005/Health1/Health1/OneHospitalInfoControllerForJson`,
+      `http://${API_KEY}/Health1/Health1/OneHospitalInfoControllerForJson`,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
