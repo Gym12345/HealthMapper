@@ -65,3 +65,23 @@ yarn-error.log
 # react-native-config
 .env
 ios/tmp.xcconfig
+
+# git manage
+__tests__
+.bundle/
+.vscode/
+android/
+ios/
+.eslintrc.js
+.gitmessage
+.node-version
+.prettierrc.js
+.ruby-version
+.watchmanconfig
+babel.config.js
+Gemfile
+Gemfile.lock
+index.js
+metro.config.js
+package-lock.json
+tsconfig.json
