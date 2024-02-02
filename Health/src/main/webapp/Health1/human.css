@@ -1,0 +1,129 @@
+@charset "UTF-8";
+
+
+
+.human-body {
+  width: 200px;
+  height: 500px;
+  position: relative;
+}
+
+
+.head {
+  width: 30px;
+  height: 30px;
+  background-color: blue;
+  border-radius: 50% 50% 50% 50%;
+  position: absolute;
+  top: 50px;
+  left: 85px;
+}
+.head:hover {
+    background-color: red;
+
+}
+
+
+.torso {
+  width: 70px;
+  height: 140px;
+  background-color: blue;
+  position: absolute;
+  top: 80px;
+  left: 65px;
+}
+.torso:hover {
+    background-color: red;
+
+}
+
+
+.shoulder {
+  width: 10px;
+  height: 20px;
+  background-color: blue;
+  position: absolute;
+  top: 80px;
+}
+.shoulder:hover {
+    background-color: red;
+
+}
+
+.shoulder-left {
+  	
+  left:55px;
+  
+}
+.shoulder-right {
+  right:55px;
+ 
+}
+
+.arm {
+  width: 10px;
+  height: 80px;
+  background-color: blue;
+  position: absolute;
+  top: 100px;
+}
+.arm:hover {
+    background-color: red;
+
+}
+
+.arm-left {
+  	
+  left:55px;
+  
+}
+.arm-right {
+  right:55px;
+ 
+}
+
+
+
+.leg {
+  width: 20px;
+  height: 80px;
+  background-color: blue;
+  position: absolute;
+  top:220px ;
+}
+.leg:hover {
+    background-color: red;
+
+}
+
+.leg-left {
+  left: 65px;
+ 
+}
+
+.leg-right {
+  right: 65px;
+  
+}
+
+.foot {
+  width: 40px;
+  height: 10px;
+  background-color: orange;
+  position: absolute;
+  top:300px;
+}
+.foot:hover {
+    background-color: red;
+
+}
+
+.foot-left {
+  left: 45px;
+ 
+}
+
+.foot-right {
+  right: 45px;
+  
+}
